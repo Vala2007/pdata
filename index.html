@@ -1,0 +1,1024 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>King+Rook vs King+Pawn on a7 (KRKPA7) &#8212; KRKPA7 - Análisis de Ajedrez</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Análisis exploratorio de datos (EDA)" href="eda.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpeg" class="logo__image only-light" alt="KRKPA7 - Análisis de Ajedrez - Home"/>
+    <img src="_static/logo.jpeg" class="logo__image only-dark pst-js-only" alt="KRKPA7 - Análisis de Ajedrez - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    King+Rook vs King+Pawn on a7 (KRKPA7)
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="eda.html">Análisis exploratorio de datos (EDA)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/index.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>King+Rook vs King+Pawn on a7 (KRKPA7)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contexto">Contexto</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#el-dataset">El dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observacion-sobre-los-codigos">Observación sobre los códigos</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo-del-analisis">Objetivo del análisis</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="king-rook-vs-king-pawn-on-a7-krkpa7">
+<h1>King+Rook vs King+Pawn on a7 (KRKPA7)<a class="headerlink" href="#king-rook-vs-king-pawn-on-a7-krkpa7" title="Link to this heading">#</a></h1>
+<p><strong>Autores:</strong> Valamy Donado y Abraham Navarro<br />
+<strong>Fecha:</strong> 2026-08-23</p>
+<hr class="docutils" />
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<section id="contexto">
+<h3>Contexto<a class="headerlink" href="#contexto" title="Link to this heading">#</a></h3>
+<p>Hay tres fases reconocidas en una partida de ajedrez: <strong>apertura</strong>, donde predomina el desarrollo de las piezas y el control del centro; <strong>medio juego</strong>, donde se producen maniobras de defensa y ataque contra el rey del oponente o sus debilidades; y <strong>final</strong>, donde, generalmente después de varios intercambios de piezas, la promoción de peones se convierte en el tema dominante.</p>
+<p>Uno de los aspectos más fascinantes del ajedrez es el estudio de los finales, donde el número de piezas se reduce y el juego se vuelve más teórico y preciso. Uno de ellos es el de <strong>Rey+Torre vs Rey+Peón</strong>.</p>
+</section>
+<hr class="docutils" />
+<section id="el-dataset">
+<h3>El dataset<a class="headerlink" href="#el-dataset" title="Link to this heading">#</a></h3>
+<p>El dataset <strong>KRKPA7</strong> (<strong>K</strong>ing + <strong>R</strong>ook vs <strong>K</strong>ing + <strong>P</strong>awn on <strong>a7</strong>) contiene las posiciones del final de ajedrez de 3,196 partidas, correspondientes al final <strong>Rey + Torre (blancas) vs Rey + Peón (negras)</strong> en la posición a7, es decir, con el peón negro a punto de coronar (el tablero se mira desde la perspectiva del negro). Fueron generadas y descritas originalmente por <strong>Alen D. Shapiro</strong> en su tesis doctoral (1983).</p>
+<p>Cada posición está representada por <strong>36 variables categóricas</strong> que describen características específicas del tablero.</p>
+<p>La variable objetivo (<code class="docutils literal notranslate"><span class="pre">class</span></code>) indica si las blancas pueden ganar (<code class="docutils literal notranslate"><span class="pre">won</span></code>) o no (<code class="docutils literal notranslate"><span class="pre">nowin</span></code>).</p>
+<p>Tabla de variables del dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Diccionario con toda la información de las variables</span>
+<span class="n">variables_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Variable&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;wkblk&quot;</span><span class="p">,</span> <span class="s2">&quot;wknwy&quot;</span><span class="p">,</span> <span class="s2">&quot;wkna8&quot;</span><span class="p">,</span> <span class="s2">&quot;wkona&quot;</span><span class="p">,</span> <span class="s2">&quot;wkspr&quot;</span><span class="p">,</span> <span class="s2">&quot;wkxbq&quot;</span><span class="p">,</span> <span class="s2">&quot;wkxcr&quot;</span><span class="p">,</span> <span class="s2">&quot;wkxbp&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;whxbp&quot;</span><span class="p">,</span> <span class="s2">&quot;wxqsq&quot;</span><span class="p">,</span> <span class="s2">&quot;cntxt&quot;</span><span class="p">,</span> <span class="s2">&quot;dsopp&quot;</span><span class="p">,</span> <span class="s2">&quot;dwipd&quot;</span><span class="p">,</span> <span class="s2">&quot;hdchk&quot;</span><span class="p">,</span> <span class="s2">&quot;katri&quot;</span><span class="p">,</span> <span class="s2">&quot;mulch&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;qxmsq&quot;</span><span class="p">,</span> <span class="s2">&quot;r2ar8&quot;</span><span class="p">,</span> <span class="s2">&quot;reskd&quot;</span><span class="p">,</span> <span class="s2">&quot;reskr&quot;</span><span class="p">,</span> <span class="s2">&quot;rimmx&quot;</span><span class="p">,</span> <span class="s2">&quot;rkxwp&quot;</span><span class="p">,</span> <span class="s2">&quot;rxmsq&quot;</span><span class="p">,</span> <span class="s2">&quot;simpl&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;skach&quot;</span><span class="p">,</span> <span class="s2">&quot;skewr&quot;</span><span class="p">,</span> <span class="s2">&quot;skrxp&quot;</span><span class="p">,</span> <span class="s2">&quot;spcop&quot;</span><span class="p">,</span> <span class="s2">&quot;stlmt&quot;</span><span class="p">,</span> <span class="s2">&quot;thrsk&quot;</span><span class="p">,</span> <span class="s2">&quot;bkcti&quot;</span><span class="p">,</span> <span class="s2">&quot;bkna8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bknck&quot;</span><span class="p">,</span> <span class="s2">&quot;bkovl&quot;</span><span class="p">,</span> <span class="s2">&quot;bkpos&quot;</span><span class="p">,</span> <span class="s2">&quot;btoeg&quot;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Nombre_Real&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;White King in the way&quot;</span><span class="p">,</span> <span class="s2">&quot;White King No Way&quot;</span><span class="p">,</span> <span class="s2">&quot;White King on a8&quot;</span><span class="p">,</span> <span class="s2">&quot;White King on a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;White King Support Rook&quot;</span><span class="p">,</span> <span class="s2">&quot;Black King attacked by promoted Pawn&quot;</span><span class="p">,</span> <span class="s2">&quot;White King attack Critical square&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;White King captures Black Pawn&quot;</span><span class="p">,</span> <span class="s2">&quot;White attack Black Pawn&quot;</span><span class="p">,</span> <span class="s2">&quot;White control Queen Square&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Context (edge)&quot;</span><span class="p">,</span> <span class="s2">&quot;Diagonal Opposite&quot;</span><span class="p">,</span> <span class="s2">&quot;Distance to intersect point&quot;</span><span class="p">,</span> <span class="s2">&quot;Hidden Check&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;King Attack Three&quot;</span><span class="p">,</span> <span class="s2">&quot;Multiple Checks&quot;</span><span class="p">,</span> <span class="s2">&quot;Queen Square&quot;</span><span class="p">,</span> <span class="s2">&quot;Rook to A or Rank 8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Reskewer Delayed&quot;</span><span class="p">,</span> <span class="s2">&quot;Reskewer&quot;</span><span class="p">,</span> <span class="s2">&quot;Rook in Middle&quot;</span><span class="p">,</span> <span class="s2">&quot;Rook captures Pawn&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Rook attacks mating square&quot;</span><span class="p">,</span> <span class="s2">&quot;Simple pattern&quot;</span><span class="p">,</span> <span class="s2">&quot;Skewer after Checks&quot;</span><span class="p">,</span> <span class="s2">&quot;Skewer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Skewer or attack Pawn&quot;</span><span class="p">,</span> <span class="s2">&quot;Special Opposition&quot;</span><span class="p">,</span> <span class="s2">&quot;Stalemate&quot;</span><span class="p">,</span> <span class="s2">&quot;Threat Skewer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Black King Control The Intersect&quot;</span><span class="p">,</span> <span class="s2">&quot;Black King on a8&quot;</span><span class="p">,</span> <span class="s2">&quot;Black King Check&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Black King Overloaded&quot;</span><span class="p">,</span> <span class="s2">&quot;Black King Position (potential skewer)&quot;</span><span class="p">,</span> <span class="s2">&quot;Black to Egress&quot;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Significado&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;El rey blanco está en el camino de la torre blanca en una situación de doble ataque&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey blanco obstruye el movimiento de la torre blanca hacia la casilla de coronación (a8)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey blanco está en la posición a8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey blanco está en la columna &#39;a&#39;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Puede el rey blanco apoyar a la torre blanca en una horquilla (fork)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey blanco es atacado por el peón negro promocionado&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Puede el rey blanco atacar la casilla crítica (b7)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey blanco captura el peón negro&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;La torre blanca ataca al peón negro en dirección x&lt;0, y=0?&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Una o más piezas blancas controlan la casilla de coronación (a8)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey negro está en un borde del tablero y no en a8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Están los reyes en oposición normal (separados por una casilla vacía en línea recta)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Distancia del rey blanco al punto de intersección de la torre blanca&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Hay un jaque oculto sobre las negras&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Algún rey controla el punto de intersección&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Pueden las blancas renovar el jaque con ventaja&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;La casilla de mate es atacada por el peón negro promocionado&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;La torre blanca tiene acceso seguro a la columna A o a la fila 8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Puede el rey negro ser re-clavado (reskewered) a través de una clavada diferida&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Puede la torre blanca sola renovar la amenaza de doble ataque?&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Puede la torre blanca ser capturada de forma inmediata y segura&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;La torre blanca amenaza al peón negro (solo en dirección x&lt;0, y=0)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;La torre blanca ataca una casilla de mate de forma segura&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Se aplica un patrón muy simple (ahogado, clavada diferida o jaque perpetuo)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey negro puede ser clavado tras uno o más jaques de la torre blanca&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Posibilidad de clavada (skewer)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;La torre blanca logra una clavada o el rey blanco ataca el peón negro&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Hay un patrón de oposición especial presente&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey blanco está en ahogado, o el avance del peón negro fuerza el ahogado&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Hay una amenaza de clavada (skewer) acechando&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey negro puede controlar el punto de intersección&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey negro está en a8&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey negro está en jaque&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey negro está sobrecargado y no puede cubrir los puntos de intersección de la torre blanca&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey negro está en posición de posible clavada (skewer)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El rey negro está a una casilla del borde relevante&quot;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Niveles&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;g, l&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;n, b, w&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, n&quot;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Significado_Niveles&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=está en un borde (no a8), f=no está en un borde (o está en a8)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;g=distancia ≤ 2 (bueno para blancas), l=distancia &gt; 2 (malo para blancas)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;n=ninguno, b=negro, w=blanco&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=se aplica, f=no se aplica&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=puede ser clavado tras jaques, f=no puede&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=clavada, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=hay, f=no hay&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=hay riesgo de ahogado, f=no hay riesgo de ahogado&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=hay amenaza de clavada, f=no hay&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=en a8, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=jaque, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=sobrecargado, f=no sobrecargado&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=posición de skewer, f=no&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;t=si, n=no&quot;</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Crear DataFrame</span>
+<span class="n">tabla_variables</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">variables_data</span><span class="p">)</span>
+
+<span class="c1"># Mostrar la tabla en Jupyter</span>
+<span class="n">tabla_variables</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variable</th>
+      <th>Nombre_Real</th>
+      <th>Significado</th>
+      <th>Niveles</th>
+      <th>Significado_Niveles</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>wkblk</td>
+      <td>White King in the way</td>
+      <td>El rey blanco está en el camino de la torre bl...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>wknwy</td>
+      <td>White King No Way</td>
+      <td>El rey blanco obstruye el movimiento de la tor...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>wkna8</td>
+      <td>White King on a8</td>
+      <td>El rey blanco está en la posición a8</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>wkona</td>
+      <td>White King on a</td>
+      <td>El rey blanco está en la columna 'a'</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>wkspr</td>
+      <td>White King Support Rook</td>
+      <td>Puede el rey blanco apoyar a la torre blanca e...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>wkxbq</td>
+      <td>Black King attacked by promoted Pawn</td>
+      <td>El rey blanco es atacado por el peón negro pro...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>wkxcr</td>
+      <td>White King attack Critical square</td>
+      <td>Puede el rey blanco atacar la casilla crítica ...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>wkxbp</td>
+      <td>White King captures Black Pawn</td>
+      <td>El rey blanco captura el peón negro</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>whxbp</td>
+      <td>White attack Black Pawn</td>
+      <td>La torre blanca ataca al peón negro en direcci...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>wxqsq</td>
+      <td>White control Queen Square</td>
+      <td>Una o más piezas blancas controlan la casilla ...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>cntxt</td>
+      <td>Context (edge)</td>
+      <td>El rey negro está en un borde del tablero y no...</td>
+      <td>t, f</td>
+      <td>t=está en un borde (no a8), f=no está en un bo...</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>dsopp</td>
+      <td>Diagonal Opposite</td>
+      <td>Están los reyes en oposición normal (separados...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>dwipd</td>
+      <td>Distance to intersect point</td>
+      <td>Distancia del rey blanco al punto de intersecc...</td>
+      <td>g, l</td>
+      <td>g=distancia ≤ 2 (bueno para blancas), l=distan...</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>hdchk</td>
+      <td>Hidden Check</td>
+      <td>Hay un jaque oculto sobre las negras</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>katri</td>
+      <td>King Attack Three</td>
+      <td>Algún rey controla el punto de intersección</td>
+      <td>n, b, w</td>
+      <td>n=ninguno, b=negro, w=blanco</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>mulch</td>
+      <td>Multiple Checks</td>
+      <td>Pueden las blancas renovar el jaque con ventaja</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>qxmsq</td>
+      <td>Queen Square</td>
+      <td>La casilla de mate es atacada por el peón negr...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>r2ar8</td>
+      <td>Rook to A or Rank 8</td>
+      <td>La torre blanca tiene acceso seguro a la colum...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>reskd</td>
+      <td>Reskewer Delayed</td>
+      <td>Puede el rey negro ser re-clavado (reskewered)...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>reskr</td>
+      <td>Reskewer</td>
+      <td>Puede la torre blanca sola renovar la amenaza ...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>rimmx</td>
+      <td>Rook in Middle</td>
+      <td>Puede la torre blanca ser capturada de forma i...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>rkxwp</td>
+      <td>Rook captures Pawn</td>
+      <td>La torre blanca amenaza al peón negro (solo en...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>rxmsq</td>
+      <td>Rook attacks mating square</td>
+      <td>La torre blanca ataca una casilla de mate de f...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>simpl</td>
+      <td>Simple pattern</td>
+      <td>Se aplica un patrón muy simple (ahogado, clava...</td>
+      <td>t, f</td>
+      <td>t=se aplica, f=no se aplica</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>skach</td>
+      <td>Skewer after Checks</td>
+      <td>El rey negro puede ser clavado tras uno o más ...</td>
+      <td>t, f</td>
+      <td>t=puede ser clavado tras jaques, f=no puede</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>skewr</td>
+      <td>Skewer</td>
+      <td>Posibilidad de clavada (skewer)</td>
+      <td>t, f</td>
+      <td>t=clavada, f=no</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>skrxp</td>
+      <td>Skewer or attack Pawn</td>
+      <td>La torre blanca logra una clavada o el rey bla...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>spcop</td>
+      <td>Special Opposition</td>
+      <td>Hay un patrón de oposición especial presente</td>
+      <td>t, f</td>
+      <td>t=hay, f=no hay</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>stlmt</td>
+      <td>Stalemate</td>
+      <td>El rey blanco está en ahogado, o el avance del...</td>
+      <td>t, f</td>
+      <td>t=hay riesgo de ahogado, f=no hay riesgo de ah...</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>thrsk</td>
+      <td>Threat Skewer</td>
+      <td>Hay una amenaza de clavada (skewer) acechando</td>
+      <td>t, f</td>
+      <td>t=hay amenaza de clavada, f=no hay</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>bkcti</td>
+      <td>Black King Control The Intersect</td>
+      <td>El rey negro puede controlar el punto de inter...</td>
+      <td>t, f</td>
+      <td>t=si, f=no</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>bkna8</td>
+      <td>Black King on a8</td>
+      <td>El rey negro está en a8</td>
+      <td>t, f</td>
+      <td>t=en a8, f=no</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>bknck</td>
+      <td>Black King Check</td>
+      <td>El rey negro está en jaque</td>
+      <td>t, f</td>
+      <td>t=jaque, f=no</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>bkovl</td>
+      <td>Black King Overloaded</td>
+      <td>El rey negro está sobrecargado y no puede cubr...</td>
+      <td>t, f</td>
+      <td>t=sobrecargado, f=no sobrecargado</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>bkpos</td>
+      <td>Black King Position (potential skewer)</td>
+      <td>El rey negro está en posición de posible clava...</td>
+      <td>t, f</td>
+      <td>t=posición de skewer, f=no</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>btoeg</td>
+      <td>Black to Egress</td>
+      <td>El rey negro está a una casilla del borde rele...</td>
+      <td>t, n</td>
+      <td>t=si, n=no</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="observacion-sobre-los-codigos">
+<h3>Observación sobre los códigos<a class="headerlink" href="#observacion-sobre-los-codigos" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">g</span></code> y <code class="docutils literal notranslate"><span class="pre">w</span></code> representan el mismo concepto general (acción o característica de las blancas), pero su uso depende de la variable específica:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">w</span></code> (White)</strong>: Se usa cuando la variable indica directamente una acción o posición de las blancas.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">g</span></code> (Good)</strong>: Se usa en la variable <code class="docutils literal notranslate"><span class="pre">dwipd</span></code> para indicar una posición favorable para las blancas (good/ganancia).</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="objetivo-del-analisis">
+<h2>Objetivo del análisis<a class="headerlink" href="#objetivo-del-analisis" title="Link to this heading">#</a></h2>
+<p>El presente trabajo tiene como objetivo identificar factores y patrones que determinan si:</p>
+<ul class="simple">
+<li><p>Las blancas logran capturar al peón o dar mate al rey negro (<code class="docutils literal notranslate"><span class="pre">won</span></code>)</p></li>
+<li><p>Las negras logran coronar su peón en a8 (transformarlo en una dama, torre, alfil o caballo), o consiguen tablas por ahogado (<code class="docutils literal notranslate"><span class="pre">nowin</span></code>)</p></li>
+</ul>
+<p>Se visualizan las relaciones entre las variables y la clase objetivo mediante técnicas de análisis exploratorio de datos (EDA).</p>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="eda.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Análisis exploratorio de datos (EDA)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contexto">Contexto</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#el-dataset">El dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observacion-sobre-los-codigos">Observación sobre los códigos</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo-del-analisis">Objetivo del análisis</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Valamy Donado y Abraham Navarro
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
