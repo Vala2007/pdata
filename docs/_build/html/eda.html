@@ -1,0 +1,1343 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Análisis exploratorio de datos (EDA) &#8212; KRKPA7 - Análisis de Ajedrez</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'eda';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="King+Rook vs King+Pawn on a7 (KRKPA7)" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpeg" class="logo__image only-light" alt="KRKPA7 - Análisis de Ajedrez - Home"/>
+    <img src="_static/logo.jpeg" class="logo__image only-dark pst-js-only" alt="KRKPA7 - Análisis de Ajedrez - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    King+Rook vs King+Pawn on a7 (KRKPA7)
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Análisis exploratorio de datos (EDA)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Feda.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/eda.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Análisis exploratorio de datos (EDA)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#librerias">Librerías</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asignar-nombres-de-columnas-en-el-dataset">Asignar nombres de columnas en el dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-target-class">Análisis de la variable target “class”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-independientes">Análisis de las variables independientes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado-class-vs-independientes">Análisis bivariado class vs independientes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaciones-entre-variables-predictoras">Relaciones entre variables predictoras</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-exploratorio-de-datos-eda">
+<h1>Análisis exploratorio de datos (EDA)<a class="headerlink" href="#analisis-exploratorio-de-datos-eda" title="Link to this heading">#</a></h1>
+<section id="librerias">
+<h2>Librerías<a class="headerlink" href="#librerias" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">chi2_contingency</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="c1"># Configurar visualización</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="asignar-nombres-de-columnas-en-el-dataset">
+<h2>Asignar nombres de columnas en el dataset<a class="headerlink" href="#asignar-nombres-de-columnas-en-el-dataset" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Nombres de columnas</span>
+<span class="n">nombres</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;wkblk&quot;</span><span class="p">,</span> <span class="s2">&quot;wknwy&quot;</span><span class="p">,</span> <span class="s2">&quot;wkna8&quot;</span><span class="p">,</span> <span class="s2">&quot;wkona&quot;</span><span class="p">,</span> <span class="s2">&quot;wkspr&quot;</span><span class="p">,</span> <span class="s2">&quot;wkxbq&quot;</span><span class="p">,</span> <span class="s2">&quot;wkxcr&quot;</span><span class="p">,</span> <span class="s2">&quot;wkxbp&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;whxbp&quot;</span><span class="p">,</span> <span class="s2">&quot;wxqsq&quot;</span><span class="p">,</span> <span class="s2">&quot;cntxt&quot;</span><span class="p">,</span> <span class="s2">&quot;dsopp&quot;</span><span class="p">,</span> <span class="s2">&quot;dwipd&quot;</span><span class="p">,</span> <span class="s2">&quot;hdchk&quot;</span><span class="p">,</span> <span class="s2">&quot;katri&quot;</span><span class="p">,</span> <span class="s2">&quot;mulch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;qxmsq&quot;</span><span class="p">,</span> <span class="s2">&quot;r2ar8&quot;</span><span class="p">,</span> <span class="s2">&quot;reskd&quot;</span><span class="p">,</span> <span class="s2">&quot;reskr&quot;</span><span class="p">,</span> <span class="s2">&quot;rimmx&quot;</span><span class="p">,</span> <span class="s2">&quot;rkxwp&quot;</span><span class="p">,</span> <span class="s2">&quot;rxmsq&quot;</span><span class="p">,</span> <span class="s2">&quot;simpl&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;skach&quot;</span><span class="p">,</span> <span class="s2">&quot;skewr&quot;</span><span class="p">,</span> <span class="s2">&quot;skrxp&quot;</span><span class="p">,</span> <span class="s2">&quot;spcop&quot;</span><span class="p">,</span> <span class="s2">&quot;stlmt&quot;</span><span class="p">,</span> <span class="s2">&quot;thrsk&quot;</span><span class="p">,</span> <span class="s2">&quot;bkcti&quot;</span><span class="p">,</span> <span class="s2">&quot;bkna8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bknck&quot;</span><span class="p">,</span> <span class="s2">&quot;bkovl&quot;</span><span class="p">,</span> <span class="s2">&quot;bkpos&quot;</span><span class="p">,</span> <span class="s2">&quot;btoeg&quot;</span><span class="p">,</span> <span class="s2">&quot;class&quot;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="analisis-de-la-variable-target-class">
+<h2>Análisis de la variable target “class”<a class="headerlink" href="#analisis-de-la-variable-target-class" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cargar datos</span>
+<span class="n">datos</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;kr-vs-kp.data&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">nombres</span><span class="p">)</span>
+
+<span class="c1"># Convertir a tipo &#39;category&#39; (equivalente a factor en R)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">datos</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">datos</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">datos</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+
+<span class="c1"># Inspección inicial</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dimensiones:&quot;</span><span class="p">,</span> <span class="n">datos</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Tipos de datos:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">datos</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Primeras filas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">datos</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valores nulos por columna:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">datos</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">No hay NAs en el dataset.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimensiones: (3196, 37)
+
+Tipos de datos:
+wkblk    category
+wknwy    category
+wkna8    category
+wkona    category
+wkspr    category
+wkxbq    category
+wkxcr    category
+wkxbp    category
+whxbp    category
+wxqsq    category
+cntxt    category
+dsopp    category
+dwipd    category
+hdchk    category
+katri    category
+mulch    category
+qxmsq    category
+r2ar8    category
+reskd    category
+reskr    category
+rimmx    category
+rkxwp    category
+rxmsq    category
+simpl    category
+skach    category
+skewr    category
+skrxp    category
+spcop    category
+stlmt    category
+thrsk    category
+bkcti    category
+bkna8    category
+bknck    category
+bkovl    category
+bkpos    category
+btoeg    category
+class    category
+dtype: object
+
+Primeras filas:
+  wkblk wknwy wkna8 wkona wkspr wkxbq wkxcr wkxbp whxbp wxqsq cntxt dsopp  \
+0     f     f     f     f     f     f     f     f     f     f     f     f   
+1     f     f     f     f     t     f     f     f     f     f     f     f   
+2     f     f     f     f     t     f     t     f     f     f     f     f   
+3     f     f     f     f     f     f     f     f     t     f     f     f   
+4     f     f     f     f     f     f     f     f     f     f     f     f   
+
+  dwipd hdchk katri mulch qxmsq r2ar8 reskd reskr rimmx rkxwp rxmsq simpl  \
+0     l     f     n     f     f     t     f     f     f     f     f     f   
+1     l     f     n     f     f     t     f     f     f     f     f     f   
+2     l     f     n     f     f     t     f     f     f     f     f     f   
+3     l     f     n     f     f     t     f     f     f     t     f     f   
+4     l     f     n     f     f     t     f     f     f     f     f     t   
+
+  skach skewr skrxp spcop stlmt thrsk bkcti bkna8 bknck bkovl bkpos btoeg  \
+0     f     t     f     f     f     f     f     f     f     t     t     n   
+1     f     t     f     f     f     f     f     f     f     t     t     n   
+2     f     t     f     f     f     f     f     f     f     t     t     n   
+3     f     t     f     f     f     f     f     f     f     t     t     n   
+4     f     t     f     f     f     f     f     f     f     t     t     n   
+
+  class  
+0   won  
+1   won  
+2   won  
+3   won  
+4   won  
+Valores nulos por columna:
+wkblk    0
+wknwy    0
+wkna8    0
+wkona    0
+wkspr    0
+wkxbq    0
+wkxcr    0
+wkxbp    0
+whxbp    0
+wxqsq    0
+cntxt    0
+dsopp    0
+dwipd    0
+hdchk    0
+katri    0
+mulch    0
+qxmsq    0
+r2ar8    0
+reskd    0
+reskr    0
+rimmx    0
+rkxwp    0
+rxmsq    0
+simpl    0
+skach    0
+skewr    0
+skrxp    0
+spcop    0
+stlmt    0
+thrsk    0
+bkcti    0
+bkna8    0
+bknck    0
+bkovl    0
+bkpos    0
+btoeg    0
+class    0
+dtype: int64
+
+No hay NAs en el dataset.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tabla de frecuencias</span>
+<span class="n">tabla_target</span> <span class="o">=</span> <span class="n">datos</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">tabla_target</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;Frecuencia&#39;</span><span class="p">]</span>
+<span class="n">tabla_target</span><span class="p">[</span><span class="s1">&#39;Porcentaje&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">tabla_target</span><span class="p">[</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">tabla_target</span><span class="p">[</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">tabla_target</span><span class="p">[</span><span class="s1">&#39;Etiqueta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tabla_target</span><span class="p">[</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; (&quot;</span> <span class="o">+</span> <span class="n">tabla_target</span><span class="p">[</span><span class="s1">&#39;Porcentaje&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%)&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tabla de frecuencias de class:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabla_target</span><span class="p">)</span>
+
+<span class="c1"># Gráfico de barras </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">tabla_target</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">,</span> 
+            <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2E86C1&#39;</span><span class="p">,</span> <span class="s1">&#39;#E74C3C&#39;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">tabla_target</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">20</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Etiqueta&#39;</span><span class="p">],</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución de la variable target&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Clase&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Gráfico de torta</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">tabla_target</span><span class="p">[</span><span class="s1">&#39;Frecuencia&#39;</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="n">tabla_target</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">],</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">,</span> 
+        <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2E86C1&#39;</span><span class="p">,</span> <span class="s1">&#39;#E74C3C&#39;</span><span class="p">],</span> <span class="n">startangle</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distribución de la variable target&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tabla de frecuencias de class:
+   class  Frecuencia  Porcentaje      Etiqueta
+0    won        1669        52.2  1669 (52.2%)
+1  nowin        1527        47.8  1527 (47.8%)
+</pre></div>
+</div>
+<img alt="_images/ac2e6eba850b994e855eadd41e334774768b89f1c449faed093adb988e75ff01.png" src="_images/ac2e6eba850b994e855eadd41e334774768b89f1c449faed093adb988e75ff01.png" />
+<img alt="_images/d9bf926a384c2604697690137849a8eff040aa4e9d8016c388da4209f51450f9.png" src="_images/d9bf926a384c2604697690137849a8eff040aa4e9d8016c388da4209f51450f9.png" />
+</div>
+</div>
+<p>En 1669 partidas, el 52.2%, resultó ‘won’, es decir que las blancas ganaron, y en 1527 partidas, el 47.8%, resultó ‘nowin’, es decir que el peón negro logró coronar o las negras consiguieron tablas; la diferencia entre ambas clases es de solo 4.4 puntos porcentuales, lo que indica que el dataset no tiene un sesgo significativo hacia ninguna clase.</p>
+</section>
+<section id="analisis-de-las-variables-independientes">
+<h2>Análisis de las variables independientes<a class="headerlink" href="#analisis-de-las-variables-independientes" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcular frecuencias</span>
+<span class="n">vars_predictoras</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">datos</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="s1">&#39;class&#39;</span><span class="p">]</span>
+
+<span class="n">frecuencias_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">vars_predictoras</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">valor</span> <span class="ow">in</span> <span class="n">datos</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">datos</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">==</span> <span class="n">valor</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">pct</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">n</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">datos</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">frecuencias_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="n">var</span><span class="p">,</span> <span class="s1">&#39;valor&#39;</span><span class="p">:</span> <span class="n">valor</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="n">n</span><span class="p">,</span> <span class="s1">&#39;porcentaje&#39;</span><span class="p">:</span> <span class="n">pct</span><span class="p">})</span>
+
+<span class="n">frecuencias</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">frecuencias_list</span><span class="p">)</span>
+
+<span class="c1"># Variables con 2 niveles</span>
+<span class="n">binarias</span> <span class="o">=</span> <span class="n">frecuencias</span><span class="p">[</span><span class="n">frecuencias</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;variable&#39;</span><span class="p">)[</span><span class="s1">&#39;valor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;nunique&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">binarias_pivot</span> <span class="o">=</span> <span class="n">binarias</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;valor&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;porcentaje&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variables binarias (2 niveles):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">binarias_pivot</span><span class="p">)</span>
+
+<span class="c1"># Variables con 3 niveles</span>
+<span class="n">ternarias</span> <span class="o">=</span> <span class="n">frecuencias</span><span class="p">[</span><span class="n">frecuencias</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;variable&#39;</span><span class="p">)[</span><span class="s1">&#39;valor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;nunique&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">ternarias_pivot</span> <span class="o">=</span> <span class="n">ternarias</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;valor&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;porcentaje&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Variables ternarias (3 niveles):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ternarias_pivot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variables binarias (2 niveles):
+valor         f     g     l     n     t
+variable                               
+bkcti      82.3   0.0   0.0   0.0  17.7
+bkna8      94.5   0.0   0.0   0.0   5.5
+bknck      62.1   0.0   0.0   0.0  37.9
+bkovl      37.2   0.0   0.0   0.0  62.8
+bkpos      26.6   0.0   0.0   0.0  73.4
+btoeg       0.0   0.0   0.0  75.3  24.7
+cntxt      56.9   0.0   0.0   0.0  43.1
+dsopp      89.5   0.0   0.0   0.0  10.5
+dwipd       0.0  31.0  69.0   0.0   0.0
+hdchk      99.5   0.0   0.0   0.0   0.5
+mulch      95.1   0.0   0.0   0.0   4.9
+qxmsq      97.0   0.0   0.0   0.0   3.0
+r2ar8      31.3   0.0   0.0   0.0  68.7
+reskd      99.2   0.0   0.0   0.0   0.8
+reskr      84.9   0.0   0.0   0.0  15.1
+rimmx      81.7   0.0   0.0   0.0  18.3
+rkxwp      80.0   0.0   0.0   0.0  20.0
+rxmsq      94.3   0.0   0.0   0.0   5.7
+simpl      61.8   0.0   0.0   0.0  38.2
+skach      99.7   0.0   0.0   0.0   0.3
+skewr      30.7   0.0   0.0   0.0  69.3
+skrxp      94.5   0.0   0.0   0.0   5.5
+spcop     100.0   0.0   0.0   0.0   0.0
+stlmt      98.5   0.0   0.0   0.0   1.5
+thrsk      95.7   0.0   0.0   0.0   4.3
+whxbp      62.0   0.0   0.0   0.0  38.0
+wkblk      88.8   0.0   0.0   0.0  11.2
+wkna8      96.2   0.0   0.0   0.0   3.8
+wknwy      93.0   0.0   0.0   0.0   7.0
+wkona      89.9   0.0   0.0   0.0  10.1
+wkspr      66.6   0.0   0.0   0.0  33.4
+wkxbp      78.2   0.0   0.0   0.0  21.8
+wkxbq      53.9   0.0   0.0   0.0  46.1
+wkxcr      63.4   0.0   0.0   0.0  36.6
+wxqsq      69.6   0.0   0.0   0.0  30.4
+
+Variables ternarias (3 niveles):
+valor       b     n     w
+variable                 
+katri     7.0  79.0  14.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se muestra el porcentaje de cada característica (<code class="docutils literal notranslate"><span class="pre">t</span></code>, <code class="docutils literal notranslate"><span class="pre">f</span></code>, <code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">g</span></code>, <code class="docutils literal notranslate"><span class="pre">l</span></code>) para cada variable, en particular, solo 2 de alguna de las 6, ya que son binarias. Se puede observar que la mayoría poseen <code class="docutils literal notranslate"><span class="pre">t</span></code> y <code class="docutils literal notranslate"><span class="pre">f</span></code>, true y false, a excepción de <code class="docutils literal notranslate"><span class="pre">dwipd</span></code>, con <code class="docutils literal notranslate"><span class="pre">g</span></code> y <code class="docutils literal notranslate"><span class="pre">l</span></code>.</p>
+<p>Se muestra el porcentaje de cada característica (<code class="docutils literal notranslate"><span class="pre">n</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">w</span></code>) para la variable ternaria.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colores_personalizados</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="s1">&#39;#2E86C1&#39;</span><span class="p">,</span>   
+    <span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="s1">&#39;#E74C3C&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="s1">&#39;#95A5A6&#39;</span><span class="p">,</span>   
+    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;#4A4A4A&#39;</span><span class="p">,</span>   
+    <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="s1">&#39;#F39C12&#39;</span><span class="p">,</span>   
+    <span class="s1">&#39;g&#39;</span><span class="p">:</span> <span class="s1">&#39;#27AE60&#39;</span><span class="p">,</span>   
+    <span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="s1">&#39;#8E44AD&#39;</span>    
+<span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">graficar_pastel</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+    <span class="n">tabla</span> <span class="o">=</span> <span class="n">datos</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">tabla</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;valor&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]</span>
+    <span class="n">tabla</span><span class="p">[</span><span class="s1">&#39;Porcentaje&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">tabla</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">tabla</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">tabla</span><span class="p">[</span><span class="s1">&#39;Etiqueta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tabla</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">tabla</span><span class="p">[</span><span class="s1">&#39;Porcentaje&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
+    
+    <span class="n">colores_usar</span> <span class="o">=</span> <span class="p">[</span><span class="n">colores_personalizados</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="s1">&#39;#999999&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tabla</span><span class="p">[</span><span class="s1">&#39;valor&#39;</span><span class="p">]]</span>
+    
+    <span class="n">ax</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">tabla</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">],</span> <span class="n">labels</span><span class="o">=</span><span class="n">tabla</span><span class="p">[</span><span class="s1">&#39;valor&#39;</span><span class="p">],</span> <span class="n">autopct</span><span class="o">=</span><span class="k">lambda</span> <span class="n">pct</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">pct</span><span class="o">/</span><span class="mi">100</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">tabla</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]),</span><span class="mi">0</span><span class="p">))</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">pct</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">,</span>
+           <span class="n">colors</span><span class="o">=</span><span class="n">colores_usar</span><span class="p">,</span> <span class="n">startangle</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">textprops</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+<span class="c1"># Crear grid de gráficos (9 filas x 4 columnas = 36 variables)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">28</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vars_predictoras</span><span class="p">):</span>
+    <span class="n">graficar_pastel</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="c1"># Ocultar ejes vacíos</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vars_predictoras</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Distribución de todas las variables predictoras&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cc1bd36e68fc7e6f7f51bcd45cb8a59ee3dc3bb99a82830195af5fc6f4255595.png" src="_images/cc1bd36e68fc7e6f7f51bcd45cb8a59ee3dc3bb99a82830195af5fc6f4255595.png" />
+</div>
+</div>
+<p>whxbp: La torre blanca ataca al peón negro en el 38% de las posiciones .
+wxqsq: Las blancas controlan la casilla de coronación (a8) en el 30.4% de las posiciones.
+cntxt: El rey negro está en el borde del tablero en el 43.1% de las posiciones, lo que lo hace más vulnerable a clavadas.
+También vemos que las tácticas avanzadas son extremadamente raras (Jaque oculto (hdchk) con 0.5%, re-clavada diferida (reskd) con 0.8%, oposición especial (spcop) con 0%, y clavada tras jaques (skach) con 0.3%), sin embargo, la posibilidad de una clavada (skewer) está presente en el 30.7% de las posiciones (skewr), lo que la convierte en una amenaza real.</p>
+<p><strong>Variables del rey blanco (wk…)</strong>:
+Se observa que el rey blanco rara vez bloquea a su propia torre (wkblk: 88.8% falso) o se encuentra en a8 (wkna8: 96.2% falso). Sin embargo, en un porcentaje significativo de posiciones (36.6%), el rey blanco puede atacar la casilla crítica b7 (wkxcr), lo que indica que las blancas tienen oportunidades de presión sobre el peón negro.</p>
+<p><strong>Variables del rey negro (bk…)</strong>:
+El rey negro está bajo presión en un porcentaje significativo de posiciones: en el 37.9% está en jaque (bknck), en el 37.2%** está sobrecargado (bkvol), y en el 26.6% está en posición de posible clavada (bkpos).</p>
+</section>
+<section id="analisis-bivariado-class-vs-independientes">
+<h2>Análisis bivariado class vs independientes<a class="headerlink" href="#analisis-bivariado-class-vs-independientes" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Función Cramér&#39;s V</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cramers_v</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">confusion_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">chi2</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">chi2</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+
+<span class="c1"># Calcular matriz de Cramér&#39;s V</span>
+<span class="n">vars_todas</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">n_vars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vars_todas</span><span class="p">)</span>
+<span class="n">cramer_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_vars</span><span class="p">,</span> <span class="n">n_vars</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">var1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vars_todas</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">var2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vars_todas</span><span class="p">):</span>
+        <span class="n">cramer_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cramers_v</span><span class="p">(</span><span class="n">datos</span><span class="p">[</span><span class="n">var1</span><span class="p">],</span> <span class="n">datos</span><span class="p">[</span><span class="n">var2</span><span class="p">])</span>
+
+<span class="n">cramer_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cramer_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">vars_todas</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">vars_todas</span><span class="p">)</span>
+
+<span class="c1"># Extraer asociación con class</span>
+<span class="n">asociacion_class</span> <span class="o">=</span> <span class="n">cramer_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># &lt;--- ORDEN ASCENDENTE para que el mayor quede arriba</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Top 10 variables más asociadas con class:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">asociacion_class</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> 
+
+<span class="c1"># Heatmap de Cramér&#39;s V</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cramer_df</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+            <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">annot_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de asociación (Cramér</span><span class="se">\&#39;</span><span class="s1">s V) - KRKPA7&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Gráfico de barras top 10 </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">asociacion_class</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> 
+
+<span class="c1"># Añadir etiquetas de valor al lado de cada barra</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">asociacion_class</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">v</span> <span class="o">+</span> <span class="mf">0.005</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>  
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Top 10 factores relacionados con class&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Cramér</span><span class="se">\&#39;</span><span class="s1">s V&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Variable&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Agregar frecuencia de cada variable</span>
+<span class="n">frecuencia_vars</span> <span class="o">=</span> <span class="n">datos</span><span class="p">[</span><span class="n">vars_predictoras</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+<span class="c1"># Crear DataFrame con Cramér&#39;s V y frecuencia</span>
+<span class="n">top_vars</span> <span class="o">=</span> <span class="n">asociacion_class</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">top_vars</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span> <span class="s1">&#39;cramer&#39;</span><span class="p">]</span>
+<span class="n">top_vars</span><span class="p">[</span><span class="s1">&#39;frecuencia&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_vars</span><span class="p">[</span><span class="s1">&#39;variable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">frecuencia_vars</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top 10 variables más asociadas con class:
+bkpos    0.145834
+mulch    0.156883
+wkxcr    0.163178
+r2ar8    0.163851
+bkna8    0.195180
+katri    0.219707
+wkxbp    0.232149
+bknck    0.364620
+wxqsq    0.379420
+rimmx    0.451473
+Name: class, dtype: float64
+</pre></div>
+</div>
+<img alt="_images/8b91cda53e7694de2f9f961e9220b63261625a554d01687d3abbb645c11aadfa.png" src="_images/8b91cda53e7694de2f9f961e9220b63261625a554d01687d3abbb645c11aadfa.png" />
+<img alt="_images/70f3f804f8cc882540c9ea76a8684b6eaaa908a4aee28e22de794336a4b8fd13.png" src="_images/70f3f804f8cc882540c9ea76a8684b6eaaa908a4aee28e22de794336a4b8fd13.png" />
+</div>
+</div>
+<p>El heatmap muestra la fuerza de la asociación entre las variables predictoras y la variable objetivo (<code class="docutils literal notranslate"><span class="pre">class</span></code>).
+Los valores más altos (azul oscuro) indican una relación más fuerte con el resultado del final de ajedrez. Los valores más bajos (blanco) sugieren que la variable es prácticamente independiente de si la posición es ganable o no.</p>
+<p>El análisis de asociación con Cramér’s V revela que las variables más relacionadas con el resultado (<code class="docutils literal notranslate"><span class="pre">won</span></code>/<code class="docutils literal notranslate"><span class="pre">nowin</span></code>) son:</p>
+<p><code class="docutils literal notranslate"><span class="pre">rimmx</span></code> (0.45): Captura segura de la torre blanca. Si la torre blanca puede ser capturada de forma segura por las negras, las blancas pierden su principal ventaja.
+<code class="docutils literal notranslate"><span class="pre">wxqsq</span></code> (0.38): Control blanco de la casilla de coronación (a8). Si las blancas controlan a8, evitan que el peón negro corone.
+<code class="docutils literal notranslate"><span class="pre">bknck</span></code> (0.365): Rey negro en jaque. Si el rey negro está en jaque, las blancas están haciendo una amenaza directa que puede llevar a la victoria.
+<code class="docutils literal notranslate"><span class="pre">wkxbp</span></code> (0.233): Rey blanco captura el peón negro. Si el rey blanco puede capturar el peón, las blancas ganan de inmediato.
+<code class="docutils literal notranslate"><span class="pre">katri</span></code> (0.22): Control del punto de intersección. Si el rey blanco controla el punto de intersección, puede evitar que su propia torre sea clavada.</p>
+<p>Ahora miremos las cuentas de <code class="docutils literal notranslate"><span class="pre">won</span></code> y <code class="docutils literal notranslate"><span class="pre">nowin</span></code> para cada variable en una tabla de contingencia:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  
+
+<span class="n">tabla_contingencia_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">vars_predictoras</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">class_val</span> <span class="ow">in</span> <span class="n">datos</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">datos</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="p">((</span><span class="n">datos</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">class_val</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">datos</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="o">==</span> <span class="n">cat</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">total_class</span> <span class="o">=</span> <span class="p">(</span><span class="n">datos</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">class_val</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="n">pct</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">n</span> <span class="o">/</span> <span class="n">total_class</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">tabla_contingencia_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s1">&#39;Class&#39;</span><span class="p">:</span> <span class="n">class_val</span><span class="p">,</span>
+                    <span class="s1">&#39;Variable&#39;</span><span class="p">:</span> <span class="n">var</span><span class="p">,</span>
+                    <span class="s1">&#39;Categoria&#39;</span><span class="p">:</span> <span class="n">cat</span><span class="p">,</span>
+                    <span class="s1">&#39;Frecuencia&#39;</span><span class="p">:</span> <span class="n">n</span><span class="p">,</span>
+                    <span class="s1">&#39;Porcentaje&#39;</span><span class="p">:</span> <span class="n">pct</span>
+                <span class="p">})</span>
+
+<span class="n">tabla_contingencia</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tabla_contingencia_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabla_contingencia</span><span class="p">)</span>  <span class="c1"># &lt;--- Ahora se ven todas las filas</span>
+
+<span class="c1"># Restaurar configuración por defecto (opcional)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     Class Variable Categoria  Frecuencia  Porcentaje
+0      won    wkblk         f        1482        88.8
+1      won    wkblk         t         187        11.2
+2    nowin    wkblk         f        1357        88.9
+3    nowin    wkblk         t         170        11.1
+4      won    wknwy         f        1550        92.9
+5      won    wknwy         t         119         7.1
+6    nowin    wknwy         f        1421        93.1
+7    nowin    wknwy         t         106         6.9
+8      won    wkna8         f        1634        97.9
+9      won    wkna8         t          35         2.1
+10   nowin    wkna8         f        1442        94.4
+11   nowin    wkna8         t          85         5.6
+12     won    wkona         f        1507        90.3
+13     won    wkona         t         162         9.7
+14   nowin    wkona         f        1367        89.5
+15   nowin    wkona         t         160        10.5
+16     won    wkspr         f        1141        68.4
+17     won    wkspr         t         528        31.6
+18   nowin    wkspr         f         988        64.7
+19   nowin    wkspr         t         539        35.3
+20     won    wkxbq         f         788        47.2
+21     won    wkxbq         t         881        52.8
+22   nowin    wkxbq         f         934        61.2
+23   nowin    wkxbq         t         593        38.8
+24     won    wkxcr         f        1184        70.9
+25     won    wkxcr         t         485        29.1
+26   nowin    wkxcr         f         842        55.1
+27   nowin    wkxcr         t         685        44.9
+28     won    wkxbp         f        1459        87.4
+29     won    wkxbp         t         210        12.6
+30   nowin    wkxbp         f        1041        68.2
+31   nowin    wkxbp         t         486        31.8
+32     won    whxbp         f        1100        65.9
+33     won    whxbp         t         569        34.1
+34   nowin    whxbp         f         880        57.6
+35   nowin    whxbp         t         647        42.4
+36     won    wxqsq         f        1441        86.3
+37     won    wxqsq         t         228        13.7
+38   nowin    wxqsq         f         784        51.3
+39   nowin    wxqsq         t         743        48.7
+40     won    cntxt         f         895        53.6
+41     won    cntxt         t         774        46.4
+42   nowin    cntxt         f         922        60.4
+43   nowin    cntxt         t         605        39.6
+44     won    dsopp         f        1486        89.0
+45     won    dsopp         t         183        11.0
+46   nowin    dsopp         f        1374        90.0
+47   nowin    dsopp         t         153        10.0
+48     won    dwipd         l        1225        73.4
+49     won    dwipd         g         444        26.6
+50   nowin    dwipd         l         980        64.2
+51   nowin    dwipd         g         547        35.8
+52     won    hdchk         f        1669       100.0
+53   nowin    hdchk         f        1512        99.0
+54   nowin    hdchk         t          15         1.0
+55     won    katri         n        1242        74.4
+56     won    katri         w         348        20.9
+57     won    katri         b          79         4.7
+58   nowin    katri         n        1284        84.1
+59   nowin    katri         w          98         6.4
+60   nowin    katri         b         145         9.5
+61     won    mulch         f        1642        98.4
+62     won    mulch         t          27         1.6
+63   nowin    mulch         f        1398        91.6
+64   nowin    mulch         t         129         8.4
+65     won    qxmsq         f        1615        96.8
+66     won    qxmsq         t          54         3.2
+67   nowin    qxmsq         f        1484        97.2
+68   nowin    qxmsq         t          43         2.8
+69     won    r2ar8         t        1025        61.4
+70     won    r2ar8         f         644        38.6
+71   nowin    r2ar8         t        1171        76.7
+72   nowin    r2ar8         f         356        23.3
+73     won    reskd         f        1651        98.9
+74     won    reskd         t          18         1.1
+75   nowin    reskd         f        1519        99.5
+76   nowin    reskd         t           8         0.5
+77     won    reskr         f        1413        84.7
+78     won    reskr         t         256        15.3
+79   nowin    reskr         f        1301        85.2
+80   nowin    reskr         t         226        14.8
+81     won    rimmx         f        1085        65.0
+82     won    rimmx         t         584        35.0
+83   nowin    rimmx         f        1527       100.0
+84     won    rkxwp         f        1270        76.1
+85     won    rkxwp         t         399        23.9
+86   nowin    rkxwp         f        1286        84.2
+87   nowin    rkxwp         t         241        15.8
+88     won    rxmsq         f        1606        96.2
+89     won    rxmsq         t          63         3.8
+90   nowin    rxmsq         f        1407        92.1
+91   nowin    rxmsq         t         120         7.9
+92     won    simpl         f         996        59.7
+93     won    simpl         t         673        40.3
+94   nowin    simpl         f         979        64.1
+95   nowin    simpl         t         548        35.9
+96     won    skach         f        1667        99.9
+97     won    skach         t           2         0.1
+98   nowin    skach         f        1518        99.4
+99   nowin    skach         t           9         0.6
+100    won    skewr         t        1130        67.7
+101    won    skewr         f         539        32.3
+102  nowin    skewr         t        1086        71.1
+103  nowin    skewr         f         441        28.9
+104    won    skrxp         f        1625        97.4
+105    won    skrxp         t          44         2.6
+106  nowin    skrxp         f        1396        91.4
+107  nowin    skrxp         t         131         8.6
+108    won    spcop         f        1669       100.0
+109  nowin    spcop         f        1526        99.9
+110  nowin    spcop         t           1         0.1
+111    won    stlmt         f        1669       100.0
+112  nowin    stlmt         f        1480        96.9
+113  nowin    stlmt         t          47         3.1
+114    won    thrsk         f        1585        95.0
+115    won    thrsk         t          84         5.0
+116  nowin    thrsk         f        1475        96.6
+117  nowin    thrsk         t          52         3.4
+118    won    bkcti         f        1297        77.7
+119    won    bkcti         t         372        22.3
+120  nowin    bkcti         f        1334        87.4
+121  nowin    bkcti         t         193        12.6
+122    won    bkna8         f        1649        98.8
+123    won    bkna8         t          20         1.2
+124  nowin    bkna8         f        1372        89.8
+125  nowin    bkna8         t         155        10.2
+126    won    bknck         f        1319        79.0
+127    won    bknck         t         350        21.0
+128  nowin    bknck         f         665        43.5
+129  nowin    bknck         t         862        56.5
+130    won    bkovl         t        1017        60.9
+131    won    bkovl         f         652        39.1
+132  nowin    bkovl         t         990        64.8
+133  nowin    bkovl         f         537        35.2
+134    won    bkpos         t        1328        79.6
+135    won    bkpos         f         341        20.4
+136  nowin    bkpos         t        1017        66.6
+137  nowin    bkpos         f         510        33.4
+138    won    btoeg         n        1257        75.3
+139    won    btoeg         t         412        24.7
+140  nowin    btoeg         n        1150        75.3
+141  nowin    btoeg         t         377        24.7
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">graficar_barras_agrupadas</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">mostrar_leyenda</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">df_plot</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="n">var</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">)</span>
+    <span class="n">df_plot</span><span class="p">[</span><span class="s1">&#39;porcentaje&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_plot</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">)[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c1"># Gráfico de barras</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_plot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#E74C3C&#39;</span><span class="p">,</span> <span class="s1">&#39;#2E86C1&#39;</span><span class="p">])</span>
+    
+    <span class="c1"># Añadir etiquetas de n y porcentaje sobre cada barra </span>
+    <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">containers</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">container</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">container</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">n_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">container</span><span class="p">]</span>
+                <span class="n">p_values</span> <span class="o">=</span> <span class="n">df_plot</span><span class="p">[</span><span class="s1">&#39;porcentaje&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">n_values</span><span class="p">)]</span>
+                <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">(</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s1">%)&#39;</span> <span class="k">for</span> <span class="n">h</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">n_values</span><span class="p">,</span> <span class="n">p_values</span><span class="p">)]</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">bar_label</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>  
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+    
+    <span class="c1"># Configurar gráfico</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span> 
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    
+    <span class="n">y_max</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">*</span> <span class="mf">1.15</span><span class="p">)</span>
+
+    <span class="c1"># Leyenda </span>
+    <span class="k">if</span> <span class="n">mostrar_leyenda</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Clase&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">title_fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span> 
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+    
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>  <span class="c1"># &lt;--- AUMENTADO</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>  <span class="c1"># &lt;--- AUMENTADO</span>
+
+
+<span class="c1"># Crear grid de gráficos (figura más grande)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">35</span><span class="p">))</span>  
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="c1"># Graficar todas las variables (solo la primera con leyenda)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vars_predictoras</span><span class="p">):</span>
+    <span class="n">mostrar_leyenda</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">graficar_barras_agrupadas</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">mostrar_leyenda</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vars_predictoras</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Distribución de variables por clase&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1ce648be0a0d4c999fa11bdda8f09a19ff80b1bb182575f2b10cc0f993ba11d2.png" src="_images/1ce648be0a0d4c999fa11bdda8f09a19ff80b1bb182575f2b10cc0f993ba11d2.png" />
+</div>
+</div>
+<p><strong>Factores asociados con la victoria (<code class="docutils literal notranslate"><span class="pre">won</span></code>)</strong>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">katri</span></code> (w): Cuando el rey blanco controla el punto de intersección (<code class="docutils literal notranslate"><span class="pre">katri</span> <span class="pre">=</span> <span class="pre">w</span></code>), la proporción de <code class="docutils literal notranslate"><span class="pre">won</span></code> (20.9%) es más del triple que en <code class="docutils literal notranslate"><span class="pre">nowin</span></code> (6.4%). Controlar el punto de intersección impide que la torre blanca sea clavada.</p>
+<p><code class="docutils literal notranslate"><span class="pre">rkxwp</span></code> (t): Cuando la torre blanca amenaza al peón negro (<code class="docutils literal notranslate"><span class="pre">rkxwp</span> <span class="pre">=</span> <span class="pre">t</span></code>), el 23.9% de los casos son <code class="docutils literal notranslate"><span class="pre">won</span></code> y el 15.8% son <code class="docutils literal notranslate"><span class="pre">nowin</span></code>. La amenaza de la torre sobre el peón favorece a las blancas, pero no es un factor determinante por sí solo.</p>
+<p><code class="docutils literal notranslate"><span class="pre">bkpos</span></code> (t): Cuando el rey negro está en posición de posible clavada (<code class="docutils literal notranslate"><span class="pre">bkpos</span> <span class="pre">=</span> <span class="pre">t</span></code>), es ligeramente más común en <code class="docutils literal notranslate"><span class="pre">won</span></code> (79.6%) que en <code class="docutils literal notranslate"><span class="pre">nowin</span></code> (66.6%). Sin embargo, la diferencia no es muy grande, lo que indica que no es un factor determinante por sí solo. La posición del rey negro en posible clavada puede favorecer a las blancas, pero otros factores son más importantes.</p>
+<p><strong>Factores asociados con la no victoria (<code class="docutils literal notranslate"><span class="pre">nowin</span></code>)</strong>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">rimmx</span></code> (f): Cuando la torre blanca no puede ser capturada de forma segura por el rey negro (<code class="docutils literal notranslate"><span class="pre">rimmx</span> <span class="pre">=</span> <span class="pre">f</span></code>), se da el 100% de los casos de <code class="docutils literal notranslate"><span class="pre">nowin</span></code>. Esto significa que, si la torre está segura pero no puede atacar el peón, este corona sin oposición. Esta es la relación más fuerte.</p>
+<p><code class="docutils literal notranslate"><span class="pre">bkna8</span></code> (t): Cuando el rey negro está en a8 (<code class="docutils literal notranslate"><span class="pre">bkna8</span> <span class="pre">=</span> <span class="pre">t</span></code>), es 5 veces más frecuente en <code class="docutils literal notranslate"><span class="pre">nowin</span></code> (10.2%) que en <code class="docutils literal notranslate"><span class="pre">won</span></code> (1.2%). Esto indica que la presencia del rey negro en a8 es un predictor fuerte de <code class="docutils literal notranslate"><span class="pre">nowin</span></code>, ya que el rey negro defiende la casilla de coronación y protege el peón.</p>
+<p><code class="docutils literal notranslate"><span class="pre">bknck</span></code> (t): Cuando el rey negro está en jaque (<code class="docutils literal notranslate"><span class="pre">bknck</span> <span class="pre">=</span> <span class="pre">t</span></code>), es 2.7 veces más frecuente en <code class="docutils literal notranslate"><span class="pre">nowin</span></code> (56.5%) que en <code class="docutils literal notranslate"><span class="pre">won</span></code> (21.0%). Esto indica que el jaque al rey negro no siempre es favorable para las blancas.</p>
+<p><code class="docutils literal notranslate"><span class="pre">wkxbp</span></code> (t): Cuando el rey blanco puede capturar el peón (<code class="docutils literal notranslate"><span class="pre">wkxbp</span> <span class="pre">=</span> <span class="pre">t</span></code>), es 2.5 veces más frecuente en <code class="docutils literal notranslate"><span class="pre">nowin</span></code> (31.8%) que en <code class="docutils literal notranslate"><span class="pre">won</span></code> (12.6%). Esto es contra intuitivo, ya que se esperaría que capturar el peón llevara a la victoria, pero los datos muestran lo contrario.</p>
+<p><code class="docutils literal notranslate"><span class="pre">wxqsq</span></code> (t): Cuando las blancas controlan la casilla de coronación a8 (<code class="docutils literal notranslate"><span class="pre">wxqsq</span> <span class="pre">=</span> <span class="pre">t</span></code>), es 3.5 veces más frecuente en <code class="docutils literal notranslate"><span class="pre">nowin</span></code> (48.7%) que en <code class="docutils literal notranslate"><span class="pre">won</span></code> (13.7%). Esto es contra intuitivo también.</p>
+<p><strong>Variables con poca diferencia</strong>:</p>
+<p>Las variables <code class="docutils literal notranslate"><span class="pre">wkblk</span></code>, <code class="docutils literal notranslate"><span class="pre">wknwy</span></code>, <code class="docutils literal notranslate"><span class="pre">dsopp</span></code>, <code class="docutils literal notranslate"><span class="pre">qxmsq</span></code>, <code class="docutils literal notranslate"><span class="pre">reskd</span></code>, <code class="docutils literal notranslate"><span class="pre">reskr</span></code> y <code class="docutils literal notranslate"><span class="pre">btoeg</span></code> presentan distribuciones muy  entre <code class="docutils literal notranslate"><span class="pre">won</span></code> y <code class="docutils literal notranslate"><span class="pre">nowin</span></code>, lo que indica que podrían no ser útiles para predecir el resultado.</p>
+</section>
+<section id="relaciones-entre-variables-predictoras">
+<h2>Relaciones entre variables predictoras<a class="headerlink" href="#relaciones-entre-variables-predictoras" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcular Cramér&#39;s V solo entre predictoras</span>
+<span class="n">vars_pred</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">datos</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="s1">&#39;class&#39;</span><span class="p">]</span>
+<span class="n">n_pred</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vars_pred</span><span class="p">)</span>
+<span class="n">cramer_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_pred</span><span class="p">,</span> <span class="n">n_pred</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">var1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vars_pred</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">var2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vars_pred</span><span class="p">):</span>
+        <span class="n">cramer_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cramers_v</span><span class="p">(</span><span class="n">datos</span><span class="p">[</span><span class="n">var1</span><span class="p">],</span> <span class="n">datos</span><span class="p">[</span><span class="n">var2</span><span class="p">])</span>
+
+<span class="n">cramer_pred_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cramer_pred</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">vars_pred</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">vars_pred</span><span class="p">)</span>
+
+<span class="c1"># Heatmap de predictoras (TAMAÑO CORREGIDO)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>  <span class="c1"># &lt;--- REDUCIDO</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cramer_pred_df</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">annot_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">})</span>  <span class="c1"># &lt;--- TEXTO MÁS PEQUEÑO</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Asociación entre variables predictoras (Cramér</span><span class="se">\&#39;</span><span class="s1">s V)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Top 5 pares de predictoras</span>
+<span class="n">pares_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_pred</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_pred</span><span class="p">):</span>
+        <span class="n">pares_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;var1&#39;</span><span class="p">:</span> <span class="n">vars_pred</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;var2&#39;</span><span class="p">:</span> <span class="n">vars_pred</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="s1">&#39;cramer&#39;</span><span class="p">:</span> <span class="n">cramer_pred</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]})</span>
+
+<span class="n">pares_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pares_list</span><span class="p">)</span>
+
+<span class="c1"># Ordenar descendente y tomar los 5 mayores</span>
+<span class="n">top5_pares</span> <span class="o">=</span> <span class="n">pares_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;cramer&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Crear etiqueta con el par de variables</span>
+<span class="n">top5_pares</span><span class="p">[</span><span class="s1">&#39;par&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">top5_pares</span><span class="p">[</span><span class="s1">&#39;var1&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; ↔ &#39;</span> <span class="o">+</span> <span class="n">top5_pares</span><span class="p">[</span><span class="s1">&#39;var2&#39;</span><span class="p">]</span>
+
+<span class="c1"># Gráfico de barras horizontal</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">top5_pares</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;par&#39;</span><span class="p">)[</span><span class="s1">&#39;cramer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>  
+
+<span class="c1"># Añadir etiquetas de valor al lado de cada barra</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">top5_pares</span><span class="p">[</span><span class="s1">&#39;cramer&#39;</span><span class="p">]):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">v</span> <span class="o">+</span> <span class="mf">0.005</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Top 5 pares de variables predictoras con mayor asociación&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Cramér</span><span class="se">\&#39;</span><span class="s1">s V&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d34a033b5e96f3ee8f1c6bee71c0e84afa05a67501c7cc4c4548cb1c2ba2344b.png" src="_images/d34a033b5e96f3ee8f1c6bee71c0e84afa05a67501c7cc4c4548cb1c2ba2344b.png" />
+<img alt="_images/53ab7324940cab39facc2978e7bfc145c800c5f1c682398d53bb5d6d4023fc68.png" src="_images/53ab7324940cab39facc2978e7bfc145c800c5f1c682398d53bb5d6d4023fc68.png" />
+</div>
+</div>
+<p>Para evaluar si existen variables redundantes (que miden información similar), se calculó la matriz de Cramer’s V excluyendo la variable objetivo <code class="docutils literal notranslate"><span class="pre">class</span></code>. Los valores más altos indican que dos variables están asociadas entre sí, lo que sugiere que podrían estar midiendo conceptos relacionados:</p>
+<p><code class="docutils literal notranslate"><span class="pre">whxbp</span></code> ↔ <code class="docutils literal notranslate"><span class="pre">wkxbp</span></code> (0.67) Captura del peón negro por la torre blanca vs captura por el rey blanco. Ambas miden si el peón puede ser capturado, lo que sugiere que están altamente relacionadas.</p>
+<p><code class="docutils literal notranslate"><span class="pre">rkxwp</span></code> ↔ <code class="docutils literal notranslate"><span class="pre">whxbp</span></code> (0.639) Amenaza de la torre blanca sobre el peón vs ataque de la torre blanca al peón. Miden conceptos similares, ambos de la torre blanca sobre el peón negro.</p>
+<p><code class="docutils literal notranslate"><span class="pre">bkovl</span></code> ↔ <code class="docutils literal notranslate"><span class="pre">r2ar8</span></code> (0.591) Rey negro sobrecargado vs acceso de la torre blanca a la columna A o fila 8. Si la torre blanca tiene acceso, el rey negro se sobrecarga al tener que defender múltiples amenazas.</p>
+<p><code class="docutils literal notranslate"><span class="pre">cntxt</span></code> ↔ <code class="docutils literal notranslate"><span class="pre">skewr</span></code> (0.579) Rey negro en el borde (no a8) vs posibilidad de clavada. Si el rey negro está en el borde, es más vulnerable a una clavada de la torre blanca.</p>
+<p><code class="docutils literal notranslate"><span class="pre">wkxbp</span></code> ↔ <code class="docutils literal notranslate"><span class="pre">wkxcr</span></code> (0.564) Rey blanco captura el peón vs rey blanco ataca b7. Ambas miden la capacidad del rey blanco para presionar al peón negro.</p>
+<p>Ninguno de estos valores superan el 0.7, lo que indica que no hay variables altamente redundantes, es decir, que presenten multicolinealidad muy alta. Sin embargo, las relaciones moderadas (0.5 - 0.67) sugieren que algunos pares de variables miden conceptos relacionados desde diferentes perspectivas.</p>
+</section>
+<section id="conclusiones">
+<h2>Conclusiones<a class="headerlink" href="#conclusiones" title="Link to this heading">#</a></h2>
+<p>El análisis exploratorio permitió identificar los principales factores que determinan el resultado
+del final de ajedrez Rey+Torre (blancas) vs Rey+Peón (negras) en a7.</p>
+<ol class="arabic simple">
+<li><p>La variable objetivo ‘class’ presenta una distribución prácticamente balanceada (52.2% won, 47.8% nowin).</p></li>
+<li><p>La mayoría de las variables predictoras son binarias (t/f), con excepción de dwipd (g/l) y katri (única ternaria: n/b/w).</p></li>
+<li><p>Tácticas avanzadas como el jaque oculto (hdchk, 0.5%), la re-clavada diferida (reskd, 0.8%),
+la clavada tras jaques (skach, 0.3%) y la oposición especial (spcop, 0%) son muy raras.</p></li>
+<li><p>La variable más determinante es rimmx (Cramér’s V = 0.45): cuando la torre blanca no puede ser capturada
+de forma segura (rimmx = f), se da el 100% de los casos de nowin.</p></li>
+<li><p>Otras variables con alta asociación: wxqsq (0.38) y bknck (0.365).</p></li>
+<li><p>No hay variables altamente redundantes (ninguna supera 0.7 de Cramér’s V).</p></li>
+<li><p>El resultado del final depende de la combinación de múltiples factores, destacando:</p>
+<ul class="simple">
+<li><p>Seguridad de la torre (rimmx)</p></li>
+<li><p>Control del punto de intersección (katri)</p></li>
+<li><p>Posición del rey negro (bkna8, bknck)</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">King+Rook vs King+Pawn on a7 (KRKPA7)</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#librerias">Librerías</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asignar-nombres-de-columnas-en-el-dataset">Asignar nombres de columnas en el dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-target-class">Análisis de la variable target “class”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-independientes">Análisis de las variables independientes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado-class-vs-independientes">Análisis bivariado class vs independientes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaciones-entre-variables-predictoras">Relaciones entre variables predictoras</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Valamy Donado y Abraham Navarro
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
