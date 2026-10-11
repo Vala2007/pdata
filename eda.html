@@ -301,6 +301,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asignar-nombres-de-columnas-en-el-dataset">Asignar nombres de columnas en el dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-target-class">Análisis de la variable target “class”</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-independientes">Análisis de las variables independientes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-supuestos">Verificación de supuestos</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado-class-vs-independientes">Análisis bivariado class vs independientes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaciones-entre-variables-predictoras">Relaciones entre variables predictoras</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones</a></li>
@@ -8194,8 +8195,8 @@ Se observa que el rey blanco rara vez bloquea a su propia torre (wkblk: 88.8% fa
 <p>Variables del rey negro (bk…):
 El rey negro está bajo presión en un porcentaje significativo de posiciones: en el 37.9% está en jaque (bknck), en el 37.2%** está sobrecargado (bkvol), y en el 26.6% está en posición de posible clavada (bkpos).</p>
 </section>
-<section id="analisis-bivariado-class-vs-independientes">
-<h2>Análisis bivariado class vs independientes<a class="headerlink" href="#analisis-bivariado-class-vs-independientes" title="Permalink to this heading">#</a></h2>
+<section id="verificacion-de-supuestos">
+<h2>Verificación de supuestos<a class="headerlink" href="#verificacion-de-supuestos" title="Permalink to this heading">#</a></h2>
 <p>Verifiquemos los supuestos de la V de Cramer</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -8237,14 +8238,79 @@ El rey negro está bajo presión en un porcentaje significativo de posiciones: e
     <span class="n">resultados_class</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">verificar_supuestos</span><span class="p">(</span><span class="n">datos</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="n">datos</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">],</span> <span class="n">var</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">))</span>
 
 <span class="n">verif_class</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">resultados_class</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">verif_class</span><span class="p">)</span>
 
 <span class="n">cumplen</span> <span class="o">=</span> <span class="p">(</span><span class="n">verif_class</span><span class="p">[</span><span class="s1">&#39;Cumple&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Sí&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">verif_class</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Resumen: </span><span class="si">{</span><span class="n">cumplen</span><span class="si">}</span><span class="s2"> de </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2"> variables cumplen los supuestos con class&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cumplen</span><span class="si">}</span><span class="s2"> de </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2"> variables cumplen los supuestos con class&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>35 de 36 variables cumplen los supuestos con class
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mostrar la que no cumple</span>
+<span class="n">no_cumplen</span> <span class="o">=</span> <span class="n">verif_class</span><span class="p">[</span><span class="n">verif_class</span><span class="p">[</span><span class="s1">&#39;Cumple&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No&#39;</span><span class="p">][[</span><span class="s1">&#39;Variable 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Variable 2&#39;</span><span class="p">]]</span>
 
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">no_cumplen</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">no_cumplen</span> <span class="o">=</span> <span class="n">no_cumplen</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">no_cumplen</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">no_cumplen</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">no_cumplen</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;N&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variable(s) que no cumplen los supuestos frente a class:&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">no_cumplen</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Todas las variables cumplen los supuestos frente a class.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variable(s) que no cumplen los supuestos frente a class:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="n">resultados_pares</span> <span class="o">=</span> <span class="p">[]</span>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variable 1</th>
+      <th>Variable 2</th>
+    </tr>
+    <tr>
+      <th>N</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>spcop</td>
+      <td>class</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resultados_pares</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">var1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vars_predictoras</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">var2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vars_predictoras</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">:</span>
@@ -8255,12 +8321,714 @@ El rey negro está bajo presión en un porcentaje significativo de posiciones: e
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total de pares evaluados: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">verif_pares</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pares que cumplen: </span><span class="si">{</span><span class="p">(</span><span class="n">verif_pares</span><span class="p">[</span><span class="s1">&#39;Cumple&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;Sí&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pares que NO cumplen: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pares_problematicos</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pares que no cumplen: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pares_problematicos</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pares_problematicos</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">pares_problematicos</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">% c</span><span class="s1">eldas OK&#39;</span><span class="p">))</span>
+    <span class="c1"># Desactivar el colapso de filas</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">pares_ordenados</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">pares_problematicos</span>
+        <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">% c</span><span class="s1">eldas OK&#39;</span><span class="p">)</span>
+        <span class="p">[[</span><span class="s1">&#39;Variable 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Variable 2&#39;</span><span class="p">]]</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">pares_ordenados</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pares_ordenados</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">pares_ordenados</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;N&#39;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Pares con problemas de frecuencia esperada:&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">pares_ordenados</span><span class="p">)</span>
+
+    <span class="c1"># Restaurar configuración</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ningún par presenta problemas de frecuencia esperada.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total de pares evaluados: 630
+Pares que cumplen: 508
+Pares que no cumplen: 122
+
+Pares con problemas de frecuencia esperada:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variable 1</th>
+      <th>Variable 2</th>
+    </tr>
+    <tr>
+      <th>N</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>cntxt</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>r2ar8</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>wkxbp</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>skach</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>whxbp</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>wxqsq</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>simpl</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>mulch</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>hdchk</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>rxmsq</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>dsopp</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>rkxwp</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>dwipd</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>rimmx</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>reskd</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>reskr</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>wkxbq</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>wkspr</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>wkxcr</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>spcop</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>wkona</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>wknwy</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>spcop</td>
+      <td>bkna8</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>spcop</td>
+      <td>bknck</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>skrxp</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>wkna8</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>spcop</td>
+      <td>thrsk</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>skewr</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>spcop</td>
+      <td>bkovl</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>wkblk</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>spcop</td>
+      <td>bkpos</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>katri</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>spcop</td>
+      <td>btoeg</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>qxmsq</td>
+      <td>spcop</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>spcop</td>
+      <td>bkcti</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>hdchk</td>
+      <td>katri</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>katri</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>katri</td>
+      <td>reskd</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>qxmsq</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>reskd</td>
+      <td>rimmx</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>reskd</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>reskd</td>
+      <td>reskr</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>reskd</td>
+      <td>skrxp</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>r2ar8</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>reskd</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>qxmsq</td>
+      <td>thrsk</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>qxmsq</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>reskd</td>
+      <td>rxmsq</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>reskd</td>
+      <td>thrsk</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>wkblk</td>
+      <td>hdchk</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>reskd</td>
+      <td>bkna8</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>skrxp</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>skach</td>
+      <td>btoeg</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>skach</td>
+      <td>bkpos</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>skach</td>
+      <td>bkovl</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>skach</td>
+      <td>bknck</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>skach</td>
+      <td>bkna8</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>skach</td>
+      <td>bkcti</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>skach</td>
+      <td>thrsk</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>skach</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>skach</td>
+      <td>skrxp</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>skach</td>
+      <td>skewr</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>simpl</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>rxmsq</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>rxmsq</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>rkxwp</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>rimmx</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>reskr</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>reskd</td>
+      <td>bkcti</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>qxmsq</td>
+      <td>reskd</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>hdchk</td>
+      <td>bkpos</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>mulch</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>wxqsq</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>wxqsq</td>
+      <td>hdchk</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>whxbp</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>wkxbp</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>wkxbp</td>
+      <td>hdchk</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>wkxcr</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>wkspr</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>wkona</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>wkona</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td>wkona</td>
+      <td>reskd</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>cntxt</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>wkona</td>
+      <td>hdchk</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>wkna8</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>wkna8</td>
+      <td>reskd</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>wkna8</td>
+      <td>qxmsq</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>wkna8</td>
+      <td>hdchk</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>wknwy</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>wknwy</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>wknwy</td>
+      <td>reskd</td>
+    </tr>
+    <tr>
+      <th>92</th>
+      <td>wknwy</td>
+      <td>hdchk</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>wkblk</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>wkblk</td>
+      <td>reskd</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>wkna8</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>mulch</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>dsopp</td>
+      <td>hdchk</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>dsopp</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>mulch</td>
+      <td>reskd</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>mulch</td>
+      <td>qxmsq</td>
+    </tr>
+    <tr>
+      <th>101</th>
+      <td>hdchk</td>
+      <td>btoeg</td>
+    </tr>
+    <tr>
+      <th>102</th>
+      <td>stlmt</td>
+      <td>thrsk</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>hdchk</td>
+      <td>bkna8</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>hdchk</td>
+      <td>bkcti</td>
+    </tr>
+    <tr>
+      <th>105</th>
+      <td>hdchk</td>
+      <td>thrsk</td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td>hdchk</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>107</th>
+      <td>hdchk</td>
+      <td>skrxp</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td>hdchk</td>
+      <td>skewr</td>
+    </tr>
+    <tr>
+      <th>109</th>
+      <td>dsopp</td>
+      <td>reskd</td>
+    </tr>
+    <tr>
+      <th>110</th>
+      <td>hdchk</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>111</th>
+      <td>hdchk</td>
+      <td>rkxwp</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>hdchk</td>
+      <td>rimmx</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>hdchk</td>
+      <td>reskr</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>hdchk</td>
+      <td>reskd</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>hdchk</td>
+      <td>r2ar8</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td>hdchk</td>
+      <td>qxmsq</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>hdchk</td>
+      <td>mulch</td>
+    </tr>
+    <tr>
+      <th>118</th>
+      <td>dwipd</td>
+      <td>skach</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>dwipd</td>
+      <td>hdchk</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>dsopp</td>
+      <td>stlmt</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>hdchk</td>
+      <td>rxmsq</td>
+    </tr>
+    <tr>
+      <th>122</th>
+      <td>stlmt</td>
+      <td>bkna8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Variables con niveles de muy baja frecuencia (menos del 1% de las posiciones):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Frecuencia del nivel menos común de cada variable</span>
+<span class="n">frecuencia_minima</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">datos</span>
+    <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;valor&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span> <span class="s1">&#39;valor&#39;</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Para cada variable, encontrar el nivel con menor frecuencia</span>
+<span class="n">frecuencia_minima</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">frecuencia_minima</span>
+    <span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">frecuencia_minima</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;variable&#39;</span><span class="p">)[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()]</span>
+    <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;valor&#39;</span><span class="p">:</span> <span class="s1">&#39;nivel_min&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="s1">&#39;n_min&#39;</span><span class="p">})</span>
+    <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">pct_min</span><span class="o">=</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;n_min&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">datos</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;pct_min&#39;</span><span class="p">)</span>
+    <span class="p">[[</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span> <span class="s1">&#39;nivel_min&#39;</span><span class="p">,</span> <span class="s1">&#39;n_min&#39;</span><span class="p">,</span> <span class="s1">&#39;pct_min&#39;</span><span class="p">]]</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Filtrar las que tienen nivel mínimo &lt; 10%</span>
+<span class="n">frecuencia_minima_filtrada</span> <span class="o">=</span> <span class="n">frecuencia_minima</span><span class="p">[</span><span class="n">frecuencia_minima</span><span class="p">[</span><span class="s1">&#39;pct_min&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">frecuencia_minima_filtrada</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Variable&#39;</span><span class="p">,</span> <span class="s1">&#39;Nivel&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">% d</span><span class="s1">el total&#39;</span><span class="p">]</span>
+<span class="n">frecuencia_minima_filtrada</span> <span class="o">=</span> <span class="n">frecuencia_minima_filtrada</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">frecuencia_minima_filtrada</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">frecuencia_minima_filtrada</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">frecuencia_minima_filtrada</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;N&#39;</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">frecuencia_minima_filtrada</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8283,2117 +9051,128 @@ El rey negro está bajo presión en un porcentaje significativo de posiciones: e
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Variable 1</th>
-      <th>Variable 2</th>
-      <th>Filas</th>
-      <th>Columnas</th>
-      <th>Total celdas</th>
-      <th>Celdas &lt; 5</th>
-      <th>Celdas &lt; 1</th>
-      <th>% celdas OK</th>
-      <th>Mín. esperada</th>
-      <th>Cumple</th>
+      <th>Variable</th>
+      <th>Nivel</th>
+      <th>n</th>
+      <th>% del total</th>
+    </tr>
+    <tr>
+      <th>N</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>wkblk</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>170.57</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
       <th>1</th>
-      <td>wknwy</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>107.50</td>
-      <td>Sí</td>
+      <td>spcop</td>
+      <td>t</td>
+      <td>1</td>
+      <td>0.031</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>wkna8</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>57.33</td>
-      <td>Sí</td>
+      <td>skach</td>
+      <td>t</td>
+      <td>11</td>
+      <td>0.344</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>wkona</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>153.85</td>
-      <td>Sí</td>
+      <td>hdchk</td>
+      <td>t</td>
+      <td>15</td>
+      <td>0.469</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>wkspr</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>509.80</td>
-      <td>Sí</td>
+      <td>reskd</td>
+      <td>t</td>
+      <td>26</td>
+      <td>0.814</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>wkxbq</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>704.25</td>
-      <td>Sí</td>
+      <td>stlmt</td>
+      <td>t</td>
+      <td>47</td>
+      <td>1.471</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>wkxcr</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>559.01</td>
-      <td>Sí</td>
+      <td>qxmsq</td>
+      <td>t</td>
+      <td>97</td>
+      <td>3.035</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>wkxbp</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>332.54</td>
-      <td>Sí</td>
+      <td>wkna8</td>
+      <td>t</td>
+      <td>120</td>
+      <td>3.755</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>whxbp</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>580.99</td>
-      <td>Sí</td>
+      <td>thrsk</td>
+      <td>t</td>
+      <td>136</td>
+      <td>4.255</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>wxqsq</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>463.93</td>
-      <td>Sí</td>
+      <td>mulch</td>
+      <td>t</td>
+      <td>156</td>
+      <td>4.881</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>cntxt</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>658.87</td>
-      <td>Sí</td>
+      <td>skrxp</td>
+      <td>t</td>
+      <td>175</td>
+      <td>5.476</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>dsopp</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>160.54</td>
-      <td>Sí</td>
+      <td>bkna8</td>
+      <td>t</td>
+      <td>175</td>
+      <td>5.476</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>dwipd</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>473.48</td>
-      <td>Sí</td>
+      <td>rxmsq</td>
+      <td>t</td>
+      <td>183</td>
+      <td>5.726</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>hdchk</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>7.17</td>
-      <td>Sí</td>
+      <td>katri</td>
+      <td>b</td>
+      <td>224</td>
+      <td>7.009</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>katri</td>
-      <td>class</td>
-      <td>3</td>
-      <td>2</td>
-      <td>6</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>107.02</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>mulch</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>74.53</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>qxmsq</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>46.35</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>r2ar8</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>477.78</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>reskd</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>12.42</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>reskr</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>230.29</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>rimmx</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>279.03</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>rkxwp</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>305.78</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>rxmsq</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>87.43</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>simpl</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>583.38</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>skach</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>5.26</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>skewr</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>468.23</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>skrxp</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>83.61</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>spcop</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.48</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>stlmt</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>22.46</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>thrsk</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>64.98</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>bkcti</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>269.95</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>bkna8</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>83.61</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>bknck</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>579.08</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>bkovl</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>568.09</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>bkpos</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>406.59</td>
-      <td>Sí</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>btoeg</td>
-      <td>class</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>100.0</td>
-      <td>376.97</td>
-      <td>Sí</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Resumen: 35 de 36 variables cumplen los supuestos con class
-Total de pares evaluados: 630
-Pares que cumplen: 508
-Pares que NO cumplen: 122
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Variable 1</th>
-      <th>Variable 2</th>
-      <th>Filas</th>
-      <th>Columnas</th>
-      <th>Total celdas</th>
-      <th>Celdas &lt; 5</th>
-      <th>Celdas &lt; 1</th>
-      <th>% celdas OK</th>
-      <th>Mín. esperada</th>
-      <th>Cumple</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>321</th>
-      <td>cntxt</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.43</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>468</th>
-      <td>r2ar8</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.31</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>243</th>
-      <td>wkxbp</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.22</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>566</th>
-      <td>skach</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.00</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>270</th>
-      <td>whxbp</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.38</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>296</th>
-      <td>wxqsq</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.30</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>555</th>
-      <td>simpl</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.38</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>431</th>
-      <td>mulch</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.05</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>390</th>
-      <td>hdchk</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.00</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>543</th>
-      <td>rxmsq</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.06</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>345</th>
-      <td>dsopp</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.11</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>530</th>
-      <td>rkxwp</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.20</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>368</th>
-      <td>dwipd</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.31</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>516</th>
-      <td>rimmx</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.18</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>485</th>
-      <td>reskd</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.01</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>501</th>
-      <td>reskr</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.15</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>186</th>
-      <td>wkxbq</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.46</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>156</th>
-      <td>wkspr</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.33</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>215</th>
-      <td>wkxcr</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.37</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>594</th>
-      <td>spcop</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.01</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>125</th>
-      <td>wkona</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.10</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>60</th>
       <td>wknwy</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.07</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>597</th>
-      <td>spcop</td>
-      <td>bkna8</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.05</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>598</th>
-      <td>spcop</td>
-      <td>bknck</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.38</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>585</th>
-      <td>skrxp</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.05</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>93</th>
-      <td>wkna8</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.04</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>595</th>
-      <td>spcop</td>
-      <td>thrsk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.04</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>576</th>
-      <td>skewr</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.31</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>599</th>
-      <td>spcop</td>
-      <td>bkovl</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.37</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>wkblk</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.11</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>600</th>
-      <td>spcop</td>
-      <td>bkpos</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.27</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>411</th>
-      <td>katri</td>
-      <td>spcop</td>
-      <td>3</td>
-      <td>2</td>
-      <td>6</td>
-      <td>3</td>
-      <td>3</td>
-      <td>50.0</td>
-      <td>0.07</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>601</th>
-      <td>spcop</td>
-      <td>btoeg</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.25</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>450</th>
-      <td>qxmsq</td>
-      <td>spcop</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.03</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>596</th>
-      <td>spcop</td>
-      <td>bkcti</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>2</td>
-      <td>2</td>
-      <td>50.0</td>
-      <td>0.18</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>377</th>
-      <td>hdchk</td>
-      <td>katri</td>
-      <td>2</td>
-      <td>3</td>
-      <td>6</td>
-      <td>2</td>
-      <td>0</td>
-      <td>66.7</td>
-      <td>1.05</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>408</th>
-      <td>katri</td>
-      <td>skach</td>
-      <td>3</td>
-      <td>2</td>
-      <td>6</td>
-      <td>2</td>
-      <td>1</td>
-      <td>66.7</td>
-      <td>0.77</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>402</th>
-      <td>katri</td>
-      <td>reskd</td>
-      <td>3</td>
-      <td>2</td>
-      <td>6</td>
-      <td>2</td>
-      <td>0</td>
-      <td>66.7</td>
-      <td>1.82</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>447</th>
-      <td>qxmsq</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.33</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>478</th>
-      <td>reskd</td>
-      <td>rimmx</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.75</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>482</th>
-      <td>reskd</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.09</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>477</th>
-      <td>reskd</td>
-      <td>reskr</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.92</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>484</th>
-      <td>reskd</td>
-      <td>skrxp</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.42</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>465</th>
-      <td>r2ar8</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.44</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>486</th>
-      <td>reskd</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.38</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>452</th>
-      <td>qxmsq</td>
-      <td>thrsk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.13</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>451</th>
-      <td>qxmsq</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.43</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>480</th>
-      <td>reskd</td>
-      <td>rxmsq</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.49</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>487</th>
-      <td>reskd</td>
-      <td>thrsk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.11</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>wkblk</td>
-      <td>hdchk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.68</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>489</th>
-      <td>reskd</td>
-      <td>bkna8</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.42</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>586</th>
-      <td>skrxp</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.57</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>574</th>
-      <td>skach</td>
-      <td>btoeg</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.72</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>573</th>
-      <td>skach</td>
-      <td>bkpos</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.93</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>572</th>
-      <td>skach</td>
-      <td>bkovl</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.09</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>571</th>
-      <td>skach</td>
-      <td>bknck</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.17</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>570</th>
-      <td>skach</td>
-      <td>bkna8</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.60</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>569</th>
-      <td>skach</td>
-      <td>bkcti</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.94</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>568</th>
-      <td>skach</td>
-      <td>thrsk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.47</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>567</th>
-      <td>skach</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.16</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>565</th>
-      <td>skach</td>
-      <td>skrxp</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.60</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>564</th>
-      <td>skach</td>
-      <td>skewr</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.37</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>552</th>
-      <td>simpl</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.20</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>544</th>
-      <td>rxmsq</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.69</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>540</th>
-      <td>rxmsq</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.63</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>527</th>
-      <td>rkxwp</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.20</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>513</th>
-      <td>rimmx</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.01</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>498</th>
-      <td>reskr</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.66</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>488</th>
-      <td>reskd</td>
-      <td>bkcti</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.60</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>441</th>
-      <td>qxmsq</td>
-      <td>reskd</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.79</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>397</th>
-      <td>hdchk</td>
-      <td>bkpos</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.99</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>428</th>
-      <td>mulch</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.54</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>293</th>
-      <td>wxqsq</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.34</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>282</th>
-      <td>wxqsq</td>
-      <td>hdchk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.56</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>267</th>
-      <td>whxbp</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.19</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>240</th>
-      <td>wkxbp</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.40</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>229</th>
-      <td>wkxbp</td>
-      <td>hdchk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.27</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>212</th>
-      <td>wkxcr</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.03</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>153</th>
-      <td>wkspr</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.67</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>126</th>
-      <td>wkona</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.74</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>122</th>
-      <td>wkona</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.11</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>116</th>
-      <td>wkona</td>
-      <td>reskd</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.62</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>318</th>
-      <td>cntxt</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.75</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>111</th>
-      <td>wkona</td>
-      <td>hdchk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.51</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>90</th>
-      <td>wkna8</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.41</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>84</th>
-      <td>wkna8</td>
-      <td>reskd</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.98</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>82</th>
-      <td>wkna8</td>
-      <td>qxmsq</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.64</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>79</th>
-      <td>wkna8</td>
-      <td>hdchk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.56</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>61</th>
-      <td>wknwy</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.31</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>57</th>
-      <td>wknwy</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.77</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>wknwy</td>
-      <td>reskd</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.83</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>wknwy</td>
-      <td>hdchk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.06</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>wkblk</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.23</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>wkblk</td>
-      <td>reskd</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.90</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>94</th>
-      <td>wkna8</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.76</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>432</th>
-      <td>mulch</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.29</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>331</th>
-      <td>dsopp</td>
-      <td>hdchk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.58</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>342</th>
-      <td>dsopp</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.16</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>422</th>
-      <td>mulch</td>
-      <td>reskd</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>1.27</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>420</th>
-      <td>mulch</td>
-      <td>qxmsq</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.73</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>398</th>
-      <td>hdchk</td>
-      <td>btoeg</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.70</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>602</th>
-      <td>stlmt</td>
-      <td>thrsk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.00</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>394</th>
-      <td>hdchk</td>
-      <td>bkna8</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.82</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>393</th>
-      <td>hdchk</td>
-      <td>bkcti</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.65</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>392</th>
-      <td>hdchk</td>
-      <td>thrsk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.64</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>391</th>
-      <td>hdchk</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.22</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>389</th>
-      <td>hdchk</td>
-      <td>skrxp</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.82</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>388</th>
-      <td>hdchk</td>
-      <td>skewr</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.60</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>336</th>
-      <td>dsopp</td>
-      <td>reskd</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.73</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>387</th>
-      <td>hdchk</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.05</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>384</th>
-      <td>hdchk</td>
-      <td>rkxwp</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.00</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>383</th>
-      <td>hdchk</td>
-      <td>rimmx</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.74</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>382</th>
-      <td>hdchk</td>
-      <td>reskr</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.26</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>381</th>
-      <td>hdchk</td>
-      <td>reskd</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.12</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>380</th>
-      <td>hdchk</td>
-      <td>r2ar8</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.69</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>379</th>
-      <td>hdchk</td>
-      <td>qxmsq</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.46</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>378</th>
-      <td>hdchk</td>
-      <td>mulch</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.73</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>365</th>
-      <td>dwipd</td>
-      <td>skach</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>3.41</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>354</th>
-      <td>dwipd</td>
-      <td>hdchk</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.65</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>346</th>
-      <td>dsopp</td>
-      <td>stlmt</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>4.94</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>385</th>
-      <td>hdchk</td>
-      <td>rxmsq</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>75.0</td>
-      <td>0.86</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>604</th>
-      <td>stlmt</td>
-      <td>bkna8</td>
-      <td>2</td>
-      <td>2</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>75.0</td>
-      <td>2.57</td>
-      <td>No</td>
+      <td>t</td>
+      <td>225</td>
+      <td>7.040</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Todos cumplen con la condición de que al menos el 80 % de las celdas tengan frecuencia esperada ≥ 5, con excepción de los pares que involucran la variable spcop. Esta variable tiene uno de sus niveles con frecuencia cero en el dataset (0 % de las posiciones), lo que genera celdas vacías en cualquier tabla de contingencia que la incluya. Anteriormente notamos que spcop es en casi un 100% de los casos “f”, por lo cual, no es una variable determinante en el resultados de las partidas.</p>
+<p>De las 36 variables predictoras, 35 cumplen con el criterio del 80% de celdas con frecuencia esperada ≥ 5 al cruzarse con class. La única excepción es spcop, cuyo nivel t aparece en solo 1 de las 3.196 posiciones (0.03%). Al ser una variable prácticamente constante, no aporta información al análisis de relación.</p>
+<p>En el caso de los pares entre predictoras, se evaluaron 630 pares, de los cuales 508 cumplen los supuestos y 122 no. Los pares que no cumplen involucran sistemáticamente al menos una de las 14 variables con niveles minoritarios (menos del 10% de las posiciones), destacándose cuatro con frecuencias casi nulas: spcop (0.03%), skach (0.34%), hdchk (0.47%) y reskd (0.81%). Al cruzar dos de estas variables raras, las celdas de la tabla de contingencia quedan con frecuencias esperadas muy por debajo de 5, lo que invalida el uso del chi-cuadrado clásico.</p>
+<p>Por este motivo, el cálculo de la V de Cramér se va a realizar en todos los casos con simulación de Monte Carlo (B=2000), método que es válido en tablas con celdas de baja frecuencia.</p>
+</section>
+<section id="analisis-bivariado-class-vs-independientes">
+<h2>Análisis bivariado class vs independientes<a class="headerlink" href="#analisis-bivariado-class-vs-independientes" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
@@ -14111,9 +12890,9 @@ maplibre-gl/dist/maplibre-gl.js:
 window.Plotly = Plotly;
 return Plotly;
 }));</script>
-        </div><div class="output text_html"><div style="height:700px; width:900px;">            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                    <div id="d3459a7a-1ce6-491d-afd6-8eb6c9c9f5f7" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("d3459a7a-1ce6-491d-afd6-8eb6c9c9f5f7")) {                    Plotly.newPlot(                        "d3459a7a-1ce6-491d-afd6-8eb6c9c9f5f7",                        [{"colorscale":[[0.0,"rgb(247,251,255)"],[0.125,"rgb(222,235,247)"],[0.25,"rgb(198,219,239)"],[0.375,"rgb(158,202,225)"],[0.5,"rgb(107,174,214)"],[0.625,"rgb(66,146,198)"],[0.75,"rgb(33,113,181)"],[0.875,"rgb(8,81,156)"],[1.0,"rgb(8,48,107)"]],"hoverongaps":false,"hovertemplate":"\u003cb\u003e%{y}\u003c\u002fb\u003e \u2194 \u003cb\u003e%{x}\u003c\u002fb\u003e\u003cbr\u003eCram\u00e9r's V: %{z:.3f}\u003cextra\u003e\u003c\u002fextra\u003e","text":{"dtype":"f8","bdata":"AAAAAAAA8D8AAAAAAAAAAMP1KFyPwsU\u002fuB6F61G4rj97FK5H4XqkP7gehetRuJ4\u002fuB6F61G4vj+4HoXrUbi+P7gehetRuK4\u002fmpmZmZmZqT8fhetRuB7VP7gehetRuK4\u002fexSuR+F6hD9SuB6F61HIP1K4HoXrUdg\u002fexSuR+F6lD97FK5H4XqkP+xRuB6F67E\u002fuB6F61G4nj8AAAAAAAAAAKRwPQrXo8A\u002fmpmZmZmZqT97FK5H4XqUPwrXo3A9Crc\u002fAAAAAAAAAABxPQrXo3DNPwrXo3A9Crc\u002fexSuR+F6lD+4HoXrUbiuP7gehetRuJ4\u002fexSuR+F6pD97FK5H4Xq0Pylcj8L1KLw\u002fpHA9CtejwD\u002fhehSuR+HKP5qZmZmZmck\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAB7FK5H4XqkP+xRuB6F68E\u002fexSuR+F6pD\u002fhehSuR+HKP+xRuB6F68E\u002fexSuR+F6tD+amZmZmZmpPwAAAAAAAAAAexSuR+F6pD8zMzMzMzPDP7gehetRuL4\u002fuB6F61G4rj9mZmZmZmbWP5qZmZmZmak\u002fpHA9Ctej0D97FK5H4XqkP6RwPQrXo8A\u002fmpmZmZmZuT+4HoXrUbieP+xRuB6F67E\u002fAAAAAAAAAAB7FK5H4XqEP3sUrkfheoQ\u002fuB6F61G4nj8AAAAAAAAAALgehetRuJ4\u002fexSuR+F6tD\u002fsUbgehevBP7gehetRuL4\u002fexSuR+F6lD+amZmZmZnJP+xRuB6F67E\u002fexSuR+F6hD8AAAAAAAAAAMP1KFyPwsU\u002fAAAAAAAAAAAAAAAAAADwP7gehetRuK4\u002fAAAAAAAAAAB7FK5H4XqkPzMzMzMzM8M\u002fuB6F61G4rj97FK5H4XqEP3sUrkfherQ\u002fexSuR+F6hD+amZmZmZmpP3sUrkfheqQ\u002fw\u002fUoXI\u002fCxT8K16NwPQq3P7gehetRuJ4\u002fuB6F61G4nj97FK5H4XqkP3sUrkfheoQ\u002fexSuR+F6pD+4HoXrUbiuP5qZmZmZmbk\u002fmpmZmZmZqT8AAAAAAADQPwAAAAAAAAAAAAAAAAAAAAB7FK5H4Xq0PwAAAAAAAAAAAAAAAAAAAAB7FK5H4XqkP7gehetRuK4\u002fexSuR+F6hD97FK5H4XqEP5qZmZmZmck\u002fexSuR+F6pD97FK5H4XqEPwrXo3A9Crc\u002fuB6F61G4rj97FK5H4XqkP7gehetRuK4\u002fAAAAAAAA8D+kcD0K16PAP1K4HoXrUcg\u002fuB6F61G4nj97FK5H4Xq0P3sUrkfheoQ\u002fexSuR+F6lD97FK5H4XqUP5qZmZmZmbk\u002fexSuR+F6lD97FK5H4Xq0P3sUrkfheoQ\u002fCtejcD0Ktz+4HoXrUbiuPwrXo3A9Crc\u002fexSuR+F6hD97FK5H4XqEP3sUrkfheoQ\u002fexSuR+F6tD97FK5H4Xq0P7gehetRuK4\u002fexSuR+F6lD+4HoXrUbieP3sUrkfhesQ\u002fAAAAAAAAAAB7FK5H4XqUP3sUrkfheoQ\u002fAAAAAAAAAAB7FK5H4XqEP7gehetRuJ4\u002fuB6F61G4zj+amZmZmZmpP5qZmZmZmak\u002fexSuR+F6hD97FK5H4XqkP+xRuB6F68E\u002fAAAAAAAAAACkcD0K16PAPwAAAAAAAPA\u002fuB6F61G4nj9SuB6F61HYP6RwPQrXo9A\u002f4XoUrkfhyj+4HoXrUbieP5qZmZmZmbk\u002fcT0K16NwzT+amZmZmZm5P3sUrkfheqQ\u002fCtejcD0Ktz+4HoXrUbiuP7gehetRuL4\u002fexSuR+F6lD+4HoXrUbiuP7gehetRuL4\u002fuB6F61G4rj97FK5H4XqkP8P1KFyPwsU\u002fuB6F61G4rj97FK5H4XqkP7gehetRuL4\u002f7FG4HoXrsT8AAAAAAAAAAJqZmZmZmak\u002fexSuR+F6pD\u002fD9Shcj8LFPwrXo3A9Crc\u002fexSuR+F6hD8pXI\u002fC9Si8P5qZmZmZmbk\u002fCtejcD0Ktz97FK5H4XqkP7gehetRuJ4\u002fexSuR+F6pD97FK5H4XqkP1K4HoXrUcg\u002fuB6F61G4nj8AAAAAAADwP3sUrkfherQ\u002fexSuR+F6hD97FK5H4XqUP+xRuB6F67E\u002fexSuR+F6hD+amZmZmZm5P3sUrkfhepQ\u002fuB6F61G4rj97FK5H4Xq0P3sUrkfheoQ\u002fCtejcD0Ktz97FK5H4XqUP3sUrkfhepQ\u002fexSuR+F6tD97FK5H4XqUP5qZmZmZmak\u002fKVyPwvUovD97FK5H4XqUP3sUrkfhepQ\u002fuB6F61G4rj97FK5H4XqUPwAAAAAAAAAAKVyPwvUovD8pXI\u002fC9Si8P3sUrkfheqQ\u002fKVyPwvUozD+4HoXrUbieP+xRuB6F67E\u002fCtejcD0Kxz97FK5H4XqkP+xRuB6F68E\u002fuB6F61G4vj\u002fhehSuR+HKPzMzMzMzM8M\u002fuB6F61G4nj9SuB6F61HYP3sUrkfherQ\u002fAAAAAAAA8D\u002fsUbgehevhPwrXo3A9Ctc\u002fCtejcD0Ktz8K16NwPQq3P5qZmZmZmbk\u002fexSuR+F6pD97FK5H4XqUP3sUrkfheqQ\u002fexSuR+F6pD8K16NwPQq3P5qZmZmZmbk\u002f7FG4HoXrsT8AAAAAAAAAAKRwPQrXo9A\u002fexSuR+F6lD+4HoXrUbieP3sUrkfheqQ\u002fexSuR+F6pD97FK5H4Xq0P5qZmZmZmak\u002fAAAAAAAAAACamZmZmZm5P6RwPQrXo8A\u002f4XoUrkfhyj97FK5H4XqUPwAAAAAAAAAA7FG4HoXrsT+amZmZmZmpP7gehetRuK4\u002fexSuR+F6xD+4HoXrUbi+P+xRuB6F68E\u002fuB6F61G4rj97FK5H4Xq0P6RwPQrXo9A\u002fexSuR+F6hD\u002fsUbgehevhPwAAAAAAAPA\u002fcT0K16Nw5T+kcD0K16PQP3sUrkfheqQ\u002fKVyPwvUovD97FK5H4XqkP3sUrkfhepQ\u002fexSuR+F6hD97FK5H4XqEPwrXo3A9Crc\u002f7FG4HoXrsT97FK5H4XqkP3sUrkfhepQ\u002fmpmZmZmZyT97FK5H4XqkP7gehetRuK4\u002fexSuR+F6tD97FK5H4XqUP7gehetRuJ4\u002fAAAAAAAAAAAAAAAAAAAAAHsUrkfheqQ\u002fCtejcD0Ktz97FK5H4XrEP5qZmZmZmak\u002fuB6F61G4nj+kcD0K16PAP3sUrkfheoQ\u002fexSuR+F6hD9xPQrXo3DNP7gehetRuK4\u002fexSuR+F6tD97FK5H4XqEP3sUrkfheoQ\u002f4XoUrkfhyj97FK5H4XqUPwrXo3A9Ctc\u002fcT0K16Nw5T8AAAAAAADwPwAAAAAAAAAAexSuR+F6pD+4HoXrUbiuP3sUrkfheoQ\u002fexSuR+F6pD+4HoXrUbiePwAAAAAAAAAAexSuR+F6tD97FK5H4Xq0P5qZmZmZmak\u002fuB6F61G4rj8K16NwPQq3P3sUrkfheuQ\u002fuB6F61G4rj97FK5H4Xq0P3sUrkfheqQ\u002fexSuR+F6hD+4HoXrUbiePwAAAAAAAAAAexSuR+F6pD+4HoXrUbiuP5qZmZmZmak\u002fexSuR+F6hD97FK5H4XqEPwAAAAAAAAAAexSuR+F6hD97FK5H4XqEP3sUrkfherQ\u002fmpmZmZmZqT+amZmZmZmpP3sUrkfherQ\u002fexSuR+F6lD+4HoXrUbieP+xRuB6F67E\u002fCtejcD0Ktz+kcD0K16PQPwAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAHsUrkfheoQ\u002fuB6F61G4rj97FK5H4XqkP3sUrkfhepQ\u002fexSuR+F6hD+amZmZmZmpPylcj8L1KLw\u002fuB6F61G4rj8AAAAAAAAAAArXo3A9Crc\u002fSOF6FK5H0T8AAAAAAAAAAJqZmZmZmbk\u002fexSuR+F6lD97FK5H4XqEP7gehetRuK4\u002fAAAAAAAAAAC4HoXrUbiuP7gehetRuL4\u002f7FG4HoXrwT+4HoXrUbieP7gehetRuL4\u002fexSuR+F6tD+amZmZmZm5P3sUrkfhepQ\u002fUrgehetR2D8fhetRuB7VPwAAAAAAAAAAexSuR+F6hD97FK5H4XqUP5qZmZmZmbk\u002fexSuR+F6hD8K16NwPQq3P3sUrkfheqQ\u002fexSuR+F6pD8AAAAAAAAAAAAAAAAAAPA\u002fmpmZmZmZuT8zMzMzMzPDP3sUrkfheoQ\u002fuB6F61G43j8AAAAAAAAAAOxRuB6F67E\u002fAAAAAAAAAAAK16NwPQq3P2ZmZmZmZtY\u002fexSuR+F6tD97FK5H4XqEP7gehetRuJ4\u002fexSuR+F6hD+4HoXrUbiuP4\u002fC9Shcj+I\u002fexSuR+F6lD8AAAAAAAAAAJqZmZmZmbk\u002fmpmZmZmZqT9xPQrXo3DdP+F6FK5H4co\u002fCtejcD0Ktz8AAAAAAAAAAClcj8L1KNw\u002fAAAAAAAA4D\u002fsUbgeheuxP7gehetRuK4\u002fexSuR+F6pD+amZmZmZmpP5qZmZmZmbk\u002fcT0K16NwzT+amZmZmZm5P5qZmZmZmbk\u002fKVyPwvUovD+4HoXrUbiuP3sUrkfheoQ\u002fmpmZmZmZuT8AAAAAAADwP3sUrkfheoQ\u002fexSuR+F6hD8K16NwPQq3P3sUrkfheqQ\u002fuB6F61G4vj97FK5H4XqkP7gehetRuJ4\u002fuB6F61G4nj97FK5H4XqkP7gehetRuJ4\u002fcT0K16NwzT+4HoXrUbiuPwAAAAAAAAAAexSuR+F6pD+4HoXrUbiePwAAAAAAAAAAKVyPwvUovD8AAAAAAAAAAOxRuB6F67E\u002fmpmZmZmZqT8AAAAAAAAAAKRwPQrXo8A\u002fAAAAAAAAAAB7FK5H4XqUP3sUrkfheoQ\u002fexSuR+F6hD8zMzMzMzPDP3sUrkfheqQ\u002fexSuR+F6lD+amZmZmZm5P3sUrkfhepQ\u002fexSuR+F6pD97FK5H4XqkP3sUrkfheoQ\u002fuB6F61G4rj8zMzMzMzPDP3sUrkfheoQ\u002fAAAAAAAA8D+4HoXrUbieP0jhehSuR9E\u002fexSuR+F6tD97FK5H4Xq0P5qZmZmZmdk\u002fuB6F61G4rj9I4XoUrkfRP6RwPQrXo8A\u002fexSuR+F6hD+kcD0K16PAP3sUrkfheoQ\u002fuB6F61G4nj+4HoXrUbiuP3sUrkfheoQ\u002fAAAAAAAAAAB7FK5H4XqEP3sUrkfherQ\u002fMzMzMzMz0z+4HoXrUbieP5qZmZmZmak\u002fpHA9Ctej0D8K16NwPQrHP3sUrkfheoQ\u002fmpmZmZmZuT9SuB6F61HIP7gehetRuL4\u002fw\u002fUoXI\u002fCxT97FK5H4Xq0P3sUrkfheqQ\u002fuB6F61G4rj97FK5H4XqUP3sUrkfhepQ\u002fexSuR+F6pD97FK5H4XqkP3sUrkfheoQ\u002fexSuR+F6hD+4HoXrUbiePwrXo3A9Cu8\u002fCtejcD0Ktz\u002fhehSuR+HKPwAAAAAAAAAAexSuR+F6pD8AAAAAAAAAAAAAAAAAAAAAuB6F61G4nj+4HoXrUbieP3sUrkfheoQ\u002fexSuR+F6pD8AAAAAAAAAAHsUrkfheqQ\u002fexSuR+F6hD8AAAAAAAAAAJqZmZmZmak\u002fAAAAAAAAAAC4HoXrUbiePylcj8L1KLw\u002fmpmZmZmZqT97FK5H4Xq0Pylcj8L1KLw\u002fuB6F61G4nj\u002fsUbgeheuxP1K4HoXrUdg\u002fuB6F61G4rj8K16NwPQq3P3sUrkfheoQ\u002fCtejcD0Ktz97FK5H4Xq0P3sUrkfheqQ\u002fexSuR+F6hD+4HoXrUbieP3sUrkfhepQ\u002fuB6F61G43j8K16NwPQq3P0jhehSuR9E\u002fCtejcD0Ktz8AAAAAAADwP7gehetRuJ4\u002fexSuR+F6pD8K16NwPQrHP5qZmZmZmbk\u002fH4XrUbge1T\u002fD9Shcj8LFP7gehetRuJ4\u002fmpmZmZmZuT+amZmZmZmpP7gehetRuJ4\u002fw\u002fUoXI\u002fC1T+4HoXrUbiuP7gehetRuK4\u002fpHA9CtejwD97FK5H4XqkP8P1KFyPwtU\u002fMzMzMzMzwz8K16NwPQrHP+xRuB6F67E\u002fAAAAAAAA0D+PwvUoXI\u002fSPylcj8L1KMw\u002fexSuR+F6lD9mZmZmZmbWP7gehetRuJ4\u002fCtejcD0Ktz+4HoXrUbiuP3sUrkfheoQ\u002fexSuR+F6pD97FK5H4XqEPwAAAAAAAAAAexSuR+F6hD8AAAAAAAAAAHsUrkfheqQ\u002fexSuR+F6tD\u002fhehSuR+HKP7gehetRuJ4\u002fAAAAAAAA8D97FK5H4XqkP5qZmZmZmak\u002fexSuR+F6lD97FK5H4Xq0P3sUrkfhepQ\u002fexSuR+F6hD+amZmZmZmpP3sUrkfhepQ\u002fexSuR+F6lD97FK5H4XqEP7gehetRuK4\u002fAAAAAAAAAAAAAAAAAAAAAHsUrkfheoQ\u002fKVyPwvUovD97FK5H4Xq0PzMzMzMzM8M\u002fCtejcD0Kxz8pXI\u002fC9Si8PwAAAAAAAAAAexSuR+F6xD97FK5H4XqkP5qZmZmZmak\u002fuB6F61G4nj+4HoXrUbiuP7gehetRuL4\u002fCtejcD0Ktz8K16NwPQq3PwrXo3A9Crc\u002fexSuR+F6tD+amZmZmZmpP+xRuB6F67E\u002fuB6F61G4vj97FK5H4Xq0PwAAAAAAAAAAexSuR+F6pD97FK5H4XqkP65H4XoUru8\u002fCtejcD0Ktz97FK5H4XqEP7gehetRuJ4\u002fuB6F61G4nj97FK5H4XqUP1K4HoXrUeA\u002fuB6F61G4rj8AAAAAAAAAAHsUrkfhepQ\u002fexSuR+F6pD8AAAAAAAAAAHsUrkfheoQ\u002fuB6F61G4nj8AAAAAAAAAAHsUrkfheqQ\u002fuB6F61G4nj+4HoXrUbi+P3sUrkfherQ\u002f7FG4HoXrsT97FK5H4XqEP+xRuB6F67E\u002fpHA9Ctej0D97FK5H4XqkPwrXo3A9Crc\u002fexSuR+F6lD97FK5H4XqUP5qZmZmZmbk\u002f7FG4HoXrsT97FK5H4Xq0Pylcj8L1KLw\u002fAAAAAAAAAAB7FK5H4XqkP5qZmZmZmdk\u002fexSuR+F6pD8K16NwPQrHP5qZmZmZmak\u002fCtejcD0Ktz8AAAAAAADwP6RwPQrXo8A\u002fuB6F61G4vj\u002fhehSuR+HKPwrXo3A9Crc\u002fuB6F61G4vj+kcD0K16PAPwAAAAAAAAAAexSuR+F6lD\u002fsUbgeheuxPwAAAAAAAAAAexSuR+F6lD97FK5H4XrEP3sUrkfhesQ\u002fexSuR+F6hD\u002fsUbgeheuxP+F6FK5H4eI\u002fexSuR+F6pD8K16NwPQq3P3sUrkfhesQ\u002fuB6F61G4nj97FK5H4XqkP3sUrkfheoQ\u002fexSuR+F6hD+4HoXrUbiuP3sUrkfhepQ\u002f7FG4HoXrsT97FK5H4XqkP5qZmZmZmak\u002fuB6F61G4rj8K16NwPQq3P7gehetRuJ4\u002fuB6F61G4rj8AAAAAAAAAAJqZmZmZmbk\u002fexSuR+F6lD97FK5H4XqEP6RwPQrXo8A\u002fXI\u002fC9Shc7z97FK5H4XqkP3sUrkfheqQ\u002fexSuR+F6lD97FK5H4XqEPylcj8L1KLw\u002fAAAAAAAAAAC4HoXrUbiuPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsUrkfhesQ\u002fCtejcD0Kxz8AAAAAAAAAAHsUrkfhepQ\u002fKVyPwvUovD\u002fsUbgeheuxP5qZmZmZmak\u002fuB6F61G4nj8AAAAAAAAAAKRwPQrXo8A\u002fexSuR+F6pD97FK5H4XqEP7gehetRuL4\u002fexSuR+F6tD8AAAAAAAAAAHsUrkfhepQ\u002fuB6F61G4rj8AAAAAAAAAAGZmZmZmZtY\u002fuB6F61G4nj9I4XoUrkfRPwAAAAAAAAAAH4XrUbge1T97FK5H4Xq0P7gehetRuJ4\u002fuB6F61G4vj97FK5H4XqkPwAAAAAAAPA\u002f7FG4HoXrsT8pXI\u002fC9Si8P3sUrkfhepQ\u002fexSuR+F6pD97FK5H4XqkP+xRuB6F69E\u002fexSuR+F6lD8AAAAAAAAAAJqZmZmZmbk\u002fAAAAAAAAAAD2KFyPwvXgPwrXo3A9Csc\u002fexSuR+F6hD\u002fsUbgeheuxP5qZmZmZmdk\u002fuB6F61G4zj97FK5H4XqEP6RwPQrXo8A\u002fmpmZmZmZuT+4HoXrUbiuP3sUrkfheoQ\u002fuB6F61G4rj97FK5H4XqUP6RwPQrXo9A\u002fmpmZmZmZyT8K16NwPQq3PwrXo3A9Crc\u002fexSuR+F6tD97FK5H4XqkP6RwPQrXo8A\u002fuB6F61G4nj\u002fD9Shcj8LFP3sUrkfhepQ\u002fuB6F61G4nj\u002fhehSuR+HKP3sUrkfheqQ\u002f7FG4HoXrsT8AAAAAAADwP5qZmZmZmak\u002fexSuR+F6tD97FK5H4XqkP3sUrkfhepQ\u002fuB6F61G4vj97FK5H4XqEPwAAAAAAAAAAmpmZmZmZqT97FK5H4Xq0P6RwPQrXo8A\u002fmpmZmZmZqT\u002fsUbgehevBP3sUrkfheqQ\u002fexSuR+F6tD8pXI\u002fC9Si8P83MzMzMzNw\u002fmpmZmZmZqT+4HoXrUbieP5qZmZmZmbk\u002fexSuR+F6tD97FK5H4XqkP5qZmZmZmak\u002fexSuR+F6lD97FK5H4XqkP3sUrkfheuQ\u002fSOF6FK5H0T97FK5H4XqEP7gehetRuJ4\u002fexSuR+F6hD+4HoXrUbieP7gehetRuJ4\u002fexSuR+F6hD97FK5H4XqUPwrXo3A9Crc\u002fexSuR+F6lD8pXI\u002fC9Si8P5qZmZmZmak\u002fAAAAAAAA8D97FK5H4XqUP+xRuB6F67E\u002fexSuR+F6lD97FK5H4XqkP3sUrkfheqQ\u002fAAAAAAAAAAB7FK5H4XqEPwAAAAAAAAAAexSuR+F6tD+4HoXrUbieP3sUrkfheqQ\u002fMzMzMzMzwz+4HoXrUbiePwAAAAAAAAAAmpmZmZmZuT97FK5H4XqUP+xRuB6F67E\u002fmpmZmZmZqT97FK5H4Xq0P8P1KFyPwsU\u002fKVyPwvUovD+4HoXrUbieP7gehetRuK4\u002fuB6F61G4rj8AAAAAAAAAALgehetRuJ4\u002fcT0K16NwzT+kcD0K16PAP3sUrkfheoQ\u002fmpmZmZmZuT+amZmZmZmpP1K4HoXrUeA\u002fuB6F61G4vj97FK5H4XqEP3sUrkfhepQ\u002fexSuR+F6tD97FK5H4XqUPwAAAAAAAPA\u002fmpmZmZmZuT8AAAAAAAAAAOxRuB6F67E\u002fuB6F61G4rj8AAAAAAAAAAFK4HoXrUcg\u002fmpmZmZmZqT97FK5H4XqEP+xRuB6F68E\u002fCtejcD0Ktz8zMzMzMzPDP7gehetRuK4\u002fKVyPwvUovD8K16NwPQq3PwrXo3A9Crc\u002fAAAAAAAAAAAAAAAAAADQP7gehetRuK4\u002fuB6F61G4rj97FK5H4XqUP3sUrkfheqQ\u002fexSuR+F6tD97FK5H4Xq0P5qZmZmZmbk\u002fexSuR+F6hD+4HoXrUbiuP3sUrkfheoQ\u002fexSuR+F6pD+amZmZmZmpP3sUrkfhepQ\u002fuB6F61G4rj+kcD0K16PAPylcj8L1KLw\u002fexSuR+F6pD97FK5H4XqkP+xRuB6F67E\u002fmpmZmZmZuT8AAAAAAADwP3sUrkfheoQ\u002fexSuR+F6lD97FK5H4XqkPwAAAAAAAAAAexSuR+F6hD8K16NwPQq3P7gehetRuJ4\u002fexSuR+F6hD+4HoXrUbiePylcj8L1KLw\u002fexSuR+F6lD8AAAAAAAAAAHsUrkfheqQ\u002fAAAAAAAAAAB7FK5H4XqEPwAAAAAAAAAAexSuR+F6lD97FK5H4XqkP3sUrkfhepQ\u002fexSuR+F6pD97FK5H4XqUP3sUrkfheqQ\u002fexSuR+F6lD+4HoXrUbiuPwAAAAAAAAAAuB6F61G4nj8AAAAAAAAAALgehetRuJ4\u002fexSuR+F6lD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7FK5H4XqkP3sUrkfhepQ\u002fexSuR+F6lD8AAAAAAAAAAHsUrkfheoQ\u002fZmZmZmZm7j+4HoXrUbieP7gehetRuL4\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKVyPwvUovD8AAAAAAAAAAHsUrkfheqQ\u002fAAAAAAAAAAAK16NwPQq3P7gehetRuJ4\u002fuB6F61G4nj9xPQrXo3DNP3sUrkfheoQ\u002fAAAAAAAAAAC4HoXrUbieP7gehetRuL4\u002fuB6F61G4rj97FK5H4Xq0P7gehetRuJ4\u002fexSuR+F6hD97FK5H4XqEP4\u002fC9Shcj+I\u002fexSuR+F6pD+4HoXrUbiuP3sUrkfheqQ\u002fw\u002fUoXI\u002fC1T97FK5H4XqEP3sUrkfhepQ\u002fexSuR+F6lD+4HoXrUbiuP+xRuB6F69E\u002fuB6F61G4vj97FK5H4XqkP+xRuB6F67E\u002fexSuR+F6lD+4HoXrUbiePwAAAAAAAPA\u002fexSuR+F6tD8AAAAAAAAAAHsUrkfherQ\u002fexSuR+F6pD\u002fXo3A9CtfTP3sUrkfhesQ\u002f7FG4HoXrwT97FK5H4XqEP5qZmZmZmdk\u002fcT0K16Nw3T97FK5H4XqkPwrXo3A9Crc\u002fuB6F61G4nj97FK5H4Xq0P3sUrkfhesQ\u002f7FG4HoXrsT97FK5H4XqUP5qZmZmZmak\u002fAAAAAAAAAAC4HoXrUbieP7gehetRuK4\u002fexSuR+F6lD+4HoXrUbieP3sUrkfheoQ\u002fexSuR+F6hD+4HoXrUbiuP7gehetRuK4\u002fexSuR+F6pD\u002fsUbgeheuxPwAAAAAAAAAAexSuR+F6lD97FK5H4XqEP3sUrkfheqQ\u002fuB6F61G4rj97FK5H4XqkP7gehetRuL4\u002fexSuR+F6tD8AAAAAAADwPwAAAAAAAAAAexSuR+F6lD+amZmZmZnJP3sUrkfheqQ\u002fmpmZmZmZqT9I4XoUrkfRPwrXo3A9Crc\u002fmpmZmZmZqT\u002fhehSuR+HKP6RwPQrXo8A\u002fexSuR+F6lD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgehetRuK4\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4D8AAAAAAAAAAHsUrkfheqQ\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7FK5H4XqEPwAAAAAAAAAAAAAAAAAAAAC4HoXrUbiuP7gehetRuJ4\u002fAAAAAAAAAAB7FK5H4XqUP5qZmZmZmak\u002fKVyPwvUovD+amZmZmZm5P3sUrkfheqQ\u002fexSuR+F6pD+4HoXrUbiuP5qZmZmZmbk\u002fKVyPwvUovD97FK5H4XqEP5qZmZmZmak\u002fpHA9CtejwD8AAAAAAAAAAHsUrkfheoQ\u002fexSuR+F6lD8AAAAAAAAAAJqZmZmZmbk\u002fmpmZmZmZqT97FK5H4XqEP1K4HoXrUcg\u002fexSuR+F6hD8AAAAAAAAAAHsUrkfherQ\u002fexSuR+F6lD8AAAAAAAAAAK5H4XoUru8\u002fexSuR+F6hD+amZmZmZmpPwAAAAAAAOA\u002fCtejcD0Ktz+amZmZmZmpP5qZmZmZmck\u002f7FG4HoXrsT+kcD0K16PAP7gehetRuJ4\u002fexSuR+F6tD97FK5H4XqkP3sUrkfheoQ\u002fexSuR+F6pD8pXI\u002fC9Si8P6RwPQrXo8A\u002fCtejcD0Ktz+4HoXrUbiuP7gehetRuL4\u002fmpmZmZmZqT8AAAAAAAAAAHsUrkfherQ\u002fAAAAAAAAAAB7FK5H4XqkP3sUrkfheoQ\u002fuB6F61G4nj97FK5H4XrEP3sUrkfhesQ\u002fAAAAAAAAAAB7FK5H4Xq0PwAAAAAAAAAAmpmZmZmZqT8K16NwPQq3PwAAAAAAAAAAexSuR+F6pD+amZmZmZnJP3sUrkfheqQ\u002fexSuR+F6hD8AAAAAAADwP3sUrkfhepQ\u002fAAAAAAAAAACamZmZmZm5P7gehetRuL4\u002fAAAAAAAAAACkcD0K16PAP3sUrkfheqQ\u002fexSuR+F6pD\u002fsUbgehevBP7gehetRuK4\u002fAAAAAAAAAADD9Shcj8LFP3sUrkfheqQ\u002f4XoUrkfhyj97FK5H4XrEP5qZmZmZmak\u002f7FG4HoXrwT9xPQrXo3DdP+xRuB6F67E\u002fMzMzMzMz0z+4HoXrUbieP8P1KFyPwtU\u002fKVyPwvUovD8AAAAAAAAAAHsUrkfhesQ\u002fCtejcD0Kxz\u002f2KFyPwvXgP6RwPQrXo8A\u002fexSuR+F6tD97FK5H4XqEP7gehetRuJ4\u002fKVyPwvUovD\u002fXo3A9CtfTP3sUrkfheqQ\u002fAAAAAAAAAACamZmZmZmpP3sUrkfhepQ\u002fAAAAAAAA8D+4HoXrUbieP3sUrkfhepQ\u002fKVyPwvUovD+uR+F6FK7XP6RwPQrXo9A\u002fpHA9CtejwD97FK5H4Xq0P7gehetRuL4\u002fexSuR+F6hD97FK5H4XqEPwrXo3A9Crc\u002fKVyPwvUozD97FK5H4XqUP5qZmZmZmak\u002fexSuR+F6hD+4HoXrUbieP+F6FK5H4co\u002fmpmZmZmZqT+4HoXrUbiePylcj8L1KLw\u002fMzMzMzMzwz97FK5H4Xq0P3sUrkfheqQ\u002fexSuR+F6hD8AAAAAAAAAAArXo3A9Csc\u002fmpmZmZmZqT+4HoXrUbieP+xRuB6F68E\u002fexSuR+F6hD8AAAAAAAAAAHsUrkfhesQ\u002fmpmZmZmZqT8AAAAAAAAAAAAAAAAAAOA\u002fAAAAAAAAAAC4HoXrUbiePwAAAAAAAPA\u002fKVyPwvUovD+amZmZmZmpP5qZmZmZmdk\u002f7FG4HoXrwT+amZmZmZnJPylcj8L1KLw\u002fexSuR+F6lD97FK5H4XqEP7gehetRuJ4\u002fexSuR+F6hD+4HoXrUbiePwAAAAAAAAAAuB6F61G4nj97FK5H4XqEP7gehetRuL4\u002fCtejcD0Ktz8AAAAAAAAAAJqZmZmZmak\u002fmpmZmZmZqT8K16NwPQrHPzMzMzMzM8M\u002fuB6F61G4nj\u002fsUbgeheuxP3sUrkfhepQ\u002fexSuR+F6hD\u002fsUbgehevBP3sUrkfheqQ\u002fCtejcD0Ktz+4HoXrUbieP3sUrkfheqQ\u002f7FG4HoXrwT9I4XoUrkfRPwAAAAAAAAAACtejcD0Ktz+amZmZmZm5P3sUrkfhepQ\u002fKVyPwvUovD8AAAAAAADwP3sUrkfherQ\u002fexSuR+F6hD8zMzMzMzPDPwrXo3A9Ctc\u002fpHA9CtejwD+amZmZmZnJP5qZmZmZmck\u002fuB6F61G4zj8pXI\u002fC9Si8P+xRuB6F67E\u002f7FG4HoXrsT+kcD0K16PAPwAAAAAAAAAAexSuR+F6tD8AAAAAAAAAAKRwPQrXo8A\u002fpHA9Ctej0D97FK5H4Xq0P+xRuB6F67E\u002fCtejcD0Kxz+4HoXrUbi+P+F6FK5H4eI\u002fKVyPwvUovD\u002fsUbgeheuxP3sUrkfheqQ\u002fMzMzMzMzwz8zMzMzMzPDPylcj8L1KLw\u002fAAAAAAAAAAB7FK5H4XqEPwrXo3A9Crc\u002fAAAAAAAAAACamZmZmZmpP7gehetRuL4\u002fKVyPwvUovD+amZmZmZmpP3sUrkfherQ\u002fAAAAAAAA8D97FK5H4XqEP+xRuB6F67E\u002fexSuR+F6pD\u002fhehSuR+HKP+xRuB6F67E\u002fexSuR+F6pD+amZmZmZmpP5qZmZmZmbk\u002fCtejcD0Kxz+amZmZmZmpP3sUrkfheoQ\u002fexSuR+F6hD+amZmZmZm5Pylcj8L1KNw\u002fAAAAAAAAAAAK16NwPQrHPylcj8L1KLw\u002fAAAAAAAA0D8pXI\u002fC9Si8P3sUrkfherQ\u002fexSuR+F6pD\u002fsUbgeheuxP5qZmZmZmdk\u002fexSuR+F6tD+4HoXrUbieP7gehetRuK4\u002fexSuR+F6lD8K16NwPQq3P5qZmZmZmdk\u002fmpmZmZmZqT97FK5H4XqEP5qZmZmZmck\u002fAAAAAAAAAACuR+F6FK7XP5qZmZmZmdk\u002fexSuR+F6hD97FK5H4XqEPwAAAAAAAPA\u002fw\u002fUoXI\u002fC1T8zMzMzMzPDP5qZmZmZmck\u002fexSuR+F6hD97FK5H4XqEP5qZmZmZmak\u002fCtejcD0Ktz97FK5H4XqkP7gehetRuK4\u002fexSuR+F6hD97FK5H4XqEP3sUrkfhepQ\u002fAAAAAAAA4D97FK5H4XqUP3sUrkfheoQ\u002fuB6F61G4nj+PwvUoXI\u002fSPwAAAAAAAAAA7FG4HoXrsT8K16NwPQq3P5qZmZmZmak\u002fuB6F61G4zj8pXI\u002fC9Si8PwAAAAAAAAAAKVyPwvUovD8AAAAAAAAAALgehetRuJ4\u002fcT0K16Nw3T\u002fhehSuR+HKPwAAAAAAAAAA7FG4HoXrsT+kcD0K16PAP6RwPQrXo9A\u002f7FG4HoXrwT8zMzMzMzPDP+xRuB6F67E\u002fw\u002fUoXI\u002fC1T8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArXo3A9Crc\u002fexSuR+F6hD97FK5H4XqkP+xRuB6F68E\u002fexSuR+F6xD9xPQrXo3DNP3sUrkfherQ\u002fUrgehetR2D\u002fsUbgeheuxP3sUrkfheoQ\u002fmpmZmZmZuT\u002fsUbgeheuxPylcj8L1KMw\u002fexSuR+F6xD97FK5H4XqEP3sUrkfhesQ\u002fuB6F61G4nj97FK5H4XqEP83MzMzMzNw\u002fmpmZmZmZuT8K16NwPQq3P3sUrkfheqQ\u002fuB6F61G4nj97FK5H4XqkP6RwPQrXo8A\u002fAAAAAAAAAACkcD0K16PAP3sUrkfheqQ\u002fpHA9CtejwD+amZmZmZnJPwrXo3A9Ctc\u002fexSuR+F6pD8zMzMzMzPDPwAAAAAAAAAAAAAAAAAA8D8=","shape":"37, 37"},"textfont":{"size":8},"texttemplate":"%{text:.2f}","x":["wkblk","wknwy","wkna8","wkona","wkspr","wkxbq","wkxcr","wkxbp","whxbp","wxqsq","cntxt","dsopp","dwipd","hdchk","katri","mulch","qxmsq","r2ar8","reskd","reskr","rimmx","rkxwp","rxmsq","simpl","skach","skewr","skrxp","spcop","stlmt","thrsk","bkcti","bkna8","bknck","bkovl","bkpos","btoeg","class"],"y":["wkblk","wknwy","wkna8","wkona","wkspr","wkxbq","wkxcr","wkxbp","whxbp","wxqsq","cntxt","dsopp","dwipd","hdchk","katri","mulch","qxmsq","r2ar8","reskd","reskr","rimmx","rkxwp","rxmsq","simpl","skach","skewr","skrxp","spcop","stlmt","thrsk","bkcti","bkna8","bknck","bkovl","bkpos","btoeg","class"],"z":{"dtype":"f8","bdata":"1JoidxXz7z8AAAAAAAAAAMZA\u002fTJ0d8U\u002fMomXa0ufrT\u002fpRAQx8quiP0aAZy+6eaA\u002fJpsjdqH8vT\u002fmoU8jSUW\u002fP\u002f5ZX85RCK4\u002fRitDNXNJqD8nbgFTLPvUP\u002fqY8ct5m7A\u002fBsp7fkpBiz8Knuf1VdvHP8ymlCbnidg\u002fTl0TUUX0lz8JDMlI68eiP0hVSM6kHLE\u002fMGXqYGE5mz8AAAAAAAAAAERyPdBbBcE\u002fkjJyqeIhqD\u002fCxCVCYkGRP28ZrhX0j7Y\u002fVf2wr3zYcj\u002f4ZBkzCQzOP4XHb8EPTbY\u002fhcWGmeJUlj\u002fWW2clkKGuPxO0Y\u002fYiwJo\u002fhOmPhsWDpD8HwqVu7C61P2mSwhovt7s\u002fbw7grvc5wD9\u002fpvVOmE3KPwSgGDYE18k\u002fgeNsOgAGIj8AAAAAAAAAAPBYpLlq7O8\u002fAAAAAAAAAAB2xo8IooimPwRcz2OsIcI\u002fJaWDhqTzpj+uwxKgH5vKPwT0qL9yZcI\u002figCQTr0PtD83D0PKvWyrPzioQ7Q7AXA\u002fnfrtMsCwoj\u002fY4MmGkwvDP58MSyRjhb0\u002fRKY8nNP4rD9ZQghPKLbWP9WMHqdIGqc\u002fSxtvXHpk0D9fbkydVJyiP7P2BH4t38A\u002fHyEvqIg9uj+9XyaX9myaP7b8Dxc8sLA\u002fkP9B3MVPVj+fCdzzDHl3P9woimxX640\u002fHldHKgyJmj8AAAAAAAAAAE462WKUOZ0\u002fzNt6\u002fQGatT\u002fNa9XJeIjBPy7cIgP75r8\u002fg2WeausZlT\u002fME8RVhDLJP\u002fkHdTrNtbA\u002f1asuldWzdj\u002fj8oajGhdkP8ZA\u002fTJ0d8U\u002fAAAAAAAAAACSxCn6iNzvP1M39j5bpq0\u002f6A2SRXADWT+5LYzAlD2mP+RvA0MensI\u002fFekW0Jxgrz9L7\u002fyCfOuFP+XovYdNR7M\u002fUxR0EwpOhj9jK6W6tAupP1JpDS+FkqQ\u002fkRb9pv5hxT8hIQxykGi2PzHHfStRfpw\u002fDFY5w8benj+ayuLh\u002fBaiP8B0VCTu3oE\u002fxA0Y6QQ\u002fpD\u002fPCeNAC0itP+zC\u002fvprxrg\u002f+gEMnugbpz+BZls64+\u002fPPwAAAAAAAAAA0Mj4gPfycj9NCMv0CD60PwAAAAAAAAAAAAAAAAAAAAA36aSdXzujP5DnJXCOS64\u002fPP21kLm6fz+ASQnpdsuEP2dAHN+Pp8k\u002fYtK7rbHtoz\u002fylHsQDUyOPxQZth196rY\u002fMomXa0ufrT92xo8IooimP1M39j5bpq0\u002fCIEstNrx7z8cM33dr+3AP\u002fY0ds4Djsg\u002fp7ItApr9oD+bKE\u002fHITu0P1VT1fvMMXo\u002fvS0h7zPolz\u002flRPdSxJOYP3vaaTRBmbg\u002fC2kVSP+FmD+UhlitimyzP3E2rqGLGoI\u002f4Zq63YMytz9aNnJTz8SsP0a4yc4H9rc\u002frUOu4gfehD\u002f+0\u002fykP2CNPywkwXLBK4Q\u002ft31QPCtEtT\u002fJT\u002fIVkou0P2LlDU3HJbA\u002fGQltaKJLmT\u002fymkg1YsafP10FWrmoZMQ\u002fAAAAAAAAAACjZ05XxXKYP+jpTAypW3k\u002fOMs0tiDxUj\u002f27g1kyix1P0genfwyYJ0\u002fm0RJBU3Azj91TnGJifurP1nCEREY7qk\u002f5CTGdjwYiD\u002fpRAQx8quiPwRcz2OsIcI\u002f6A2SRXADWT8cM33dr+3AP8njJb88+u8\u002fVTJZhvApnT+hjH8A4g3YP1ZUgiRYX9A\u002fSNvQYsw0yz84vz6O0pWbP+4pIgadVrk\u002fhx6xNY77zD9K33fn00+6Px9hvK2xZ6Y\u002fhLEiT\u002fWQtz\u002fmyWXa996uP9znkJZ+kb8\u002fa+Wmy5N1lT8tFo\u002f5de+uP5F3AUUBk74\u002fkbTLAa8HsD+ssiUfeYiiP6JNnm49JsY\u002fyvH\u002fR5vbrj\u002fkZYMJr2aiP4Ulsxtrsb4\u002fGYxidHb5sT8AAAAAAAAAABGpkLfDHac\u002fSqk9vtUIpD9wu7uVYi3FPzUFwyKHFrc\u002fgCKpHzXGhj9wWk7CIkC7P4UOG0fcv7o\u002f9551YBAYtj+WIS6pUIWjP0aAZy+6eaA\u002fJaWDhqTzpj+5LYzAlD2mP\u002fY0ds4Djsg\u002fVjJZhvApnT9H0Yew1\u002frvP1jtU+abT7M\u002fmt4HHU7HdT+PG2+RDZSZP9K4HhtflbE\u002fMJRAKenWjT8f32oszm+6Py+LlKyGP5g\u002fFfzDbnktrj9We9zJPH6zP59I7LvwKIs\u002frj98s5iztj\u002fLwbKvEmGUPyBBHjNp85E\u002fXHTidU52tT9bWVmjVa+YP9viCTMWPKo\u002fuobHR0eYuz\u002f57LctCbSQP2cY0v\u002f2Q5E\u002fuGnrbp7wrD+N9Koezl6UPwAAAAAAAAAARMmlhK9EvD\u002fv\u002fEwGHNa8P70Lp9AmcaM\u002fLzjCHXxTzD+3\u002f78bHjCbP9JuwTvf\u002frE\u002f5wj\u002f3zKJxj+7EClfVJSkPzsV3zVu0ME\u002fJpsjdqH8vT+uwxKgH5vKP+RvA0MensI\u002fp7ItApr9oD+hjH8A4g3YP1jtU+abT7M\u002fKHSyOHr67z\u002fdaL3fbwPiP52T+FPS49Y\u002fEZdIMqQmtz\u002fjzYJk8A23P+8qDhlES7o\u002f0gkE2Lzsoz\u002f8ARQ6jWCTP7Fg0\u002flV0KY\u002fiMfJQb91oz\u002fh1ZkgtT24PyyT+1KDq7k\u002f0x\u002f8SGqxsD8zYH5DqU1cPy5e3v7cz9A\u002fR5OAAWHslj9gPY9wxQmePzPpgoXNIKI\u002frqb8Rc8GpD\u002fqdBN5F6a0P9CMJEy1rKk\u002fAAAAAAAAAABILyv7MUW5P6nRKuWGLsA\u002fe2LR9pRQyz+yEdxwCMiPP190VDIWuFE\u002fZQs4DKOnsj\u002fB33mrxEunPzfN+qONka0\u002fqkkbiQXjxD\u002fmoU8jSUW\u002fPwT0qL9yZcI\u002fFekW0Jxgrz+bKE\u002fHITu0P1ZUgiRYX9A\u002fmt4HHU7HdT\u002fdaL3fbwPiPxHwsP55+O8\u002fbdktfiyF5T8AFJHcRHbQP39cpquD9aI\u002f3SMh1tlDvD9H2cWRko6lP6DBDpCiEJQ\u002fnTq0B9vZjT9orszJOjh1P00b3bRNM7Y\u002f4fhsG1tGsT8MlGDBL06mPyNWfzd1XZI\u002f\u002fSPMKY8HyT8oq2LnaU6iPyUMNFU0\u002faw\u002f\u002fDa1iXkhtD+NaYdo9h+ZP16vrtsR2Z8\u002fW\u002fMEfsmnYD8AAAAAAAAAAD9FMpdffqI\u002fHASBrkwmuD+LEKUy4f7EP+rmpghuOKc\u002fFgXcL5tyoD\u002fu1lebYfrAP2rl6BYydYQ\u002fxaJJeoBdij+KPi8fErfNP\u002f5ZX85RCK4\u002figCQTr0PtD9L7\u002fyCfOuFP1VT1fvMMXo\u002fSNvQYsw0yz+PG2+RDZSZP52T+FPS49Y\u002fbdktfiyF5T8d\u002fbEZkPrvPw2LZnJxn1U\u002fWzVTcpTeoz87eKUw\u002flWsP958yagL0Y0\u002fF4C2wqxPpD80i7Gq31WgPwAAAAAAAAAAWGdYujiWtD+bW5KaAKG0P+mRyjiYJ6s\u002fhPDvr5Bzrz+r5JRZhX+2PwUlzIUraOQ\u002fRFwwhM1srz8F5KUGfsC1P4GBnfxWw6Q\u002fdjhYR0T9gj+tG7aqLFmaPwAAAAAAAAAAudWc0o88pD+Uib1MHoywP296JrKgWqo\u002fpHohL2Kwhz93VX5nV6p+P8BnybmAAyQ\u002fe2JI2gopfD94h3zGFI6HP8Zee1mFo7U\u002fRitDNXNJqD83D0PKvWyrP+XovYdNR7M\u002fvS0h7zPolz84vz6O0pWbP9K4HhtflbE\u002fEZdIMqQmtz8AFJHcRHbQPw6LZnJxn1U\u002fYDhF1vD57z8AAAAAAAAAAD7vMuBGRoA\u002fBcvWN+bxrz\u002fv8R7Vja2kP1s+LphCQZc\u002fRdKjnjO5gj\u002fFWodU\u002fnSqP0nbQJDaCr0\u002f5xpZll2xrD9OJ+GGZYJgP1vByKIBkbY\u002f16\u002fTtm4T0T84+djtEOoyP7i8fKK\u002fQbk\u002f8Wyjf0vplT\u002fHgfzv\u002f+aIPxGzbJ+OlrA\u002fAAAAAAAAAACwpIuIr0ysP183ZDZOC74\u002fZGD8VnhiwT808XdSD5udP3O4nYsrnL4\u002fNZaarKwVtD8tAeUxxzy5P\u002f7JkTD8RpY\u002fQeAAgWtI2D8nbgFTLPvUPzioQ7Q7AXA\u002fUxR0EwpOhj\u002flRPdSxJOYP+4pIgadVrk\u002fMJRAKenWjT\u002fjzYJk8A23P39cpquD9aI\u002fWzVTcpTeoz8AAAAAAAAAAAmV94TG+u8\u002fdqjs6luduj+oiFc7KGzDP7rmfvUEdYM\u002fZIlHosms3j9PbIJZepJsP\u002fVF5uCOhbI\u002fAAAAAAAAAAAFWtHIpBy2PzffD03Qp9Y\u002fHu7DHpyLtT81YfIJN8eHP474u1K1EKA\u002fF\u002fb\u002fP4gwhj93gyMo\u002f8avP5Y9LHpVhOI\u002flyOjjqHFlj8vy8BkFw1kP6p3HggTk7o\u002fR75puReIqz\u002fMiqYwQaXdPyCJpDgpqco\u002flBR2t4t7tj8AAAAAAAAAAGbx9bjDM9w\u002f\u002fePPk+\u002ff3z8siyqSNEexP\u002fqY8ct5m7A\u002fnfrtMsCwoj9jK6W6tAupP3vaaTRBmbg\u002fhx6xNY77zD8f32oszm+6P+8qDhlES7o\u002f3iMh1tlDvD87eKUw\u002flWsPz7vMuBGRoA\u002fdqjs6luduj+xvWaaYPLvP8C0GUNJ6XQ\u002fC72STec2jD8dt9iv42m2P2CGIKqFJqM\u002ffBK9SOrnvj9Vv7FaWNyjP\u002fIly2bd+Jk\u002fECVZ6ELEoT\u002fYh\u002fVBqw+jP5qzjb774p8\u002fv0FvAO9ezT8EjBe51ZawPwAAAAAAAAAAsHDC2DwOpj8CU32quhSbPwAAAAAAAAAAIQGwmnJqvT8AAAAAAAAAAPDatgo\u002fGbM\u002fTX1ETtt8qT\u002fbPbDFkKpfP+m1tTdGncA\u002fgW2LncOXcj9hWETCtY+ZP9hls1c9bY0\u002fBsp7fkpBiz\u002fY4MmGkwvDP1JpDS+FkqQ\u002fC2kVSP+FmD9K33fn00+6Py+LlKyGP5g\u002f0gkE2Lzsoz9H2cWRko6lP958yagL0Y0\u002fBcvWN+bxrz+oiFc7KGzDP8C0GUNJ6XQ\u002fipI\u002fWwL67z9LTTt90d+cP63AqqMMftE\u002f8kbumfCYtT+t6iNS6p20P\u002fC2JbO2W9k\u002fClNK8V4orT8xktnWkg3RP254HuWJQ8A\u002fBqNPeBRWez\u002fCuRlrwE7AP5T56UcoO3Y\u002fcF81Dvo2oT8VPxHSbYSuP\u002fkJDpdpeXU\u002fAAAAAAAAAAD\u002f7Sxqkd2HPzfmIcNUc7M\u002fiDlXYEt80z+5nJ\u002faoeihP\u002f2Nyf3G66k\u002fCJM3Q2V\u002f0D9ZTjRg3pTHP7\u002fyHBaWOYk\u002fLz+0IY1QuT8Knuf1VdvHP58MSyRjhb0\u002fkRb9pv5hxT+UhlitimyzPx9hvK2xZ6Y\u002fFfzDbnktrj\u002f8ARQ6jWCTP6DBDpCiEJQ\u002fF4C2wqxPpD\u002fv8R7Vja2kP7rmfvUEdYM\u002fC72STec2jD9LTTt90d+cP5UEzkul7e4\u002f2sorRoIttz8N+LBWTpDKPwAAAAAAAAAAmXeIgLMypT8AAAAAAAAAABnb95aD62g\u002fECuNaxwvmz\u002fM0O9ESFSdP6SGlEH+9nw\u002f5xlx1gAvoj8AAAAAAAAAAJ6GFWDZ1qQ\u002fzeI9L0t8ej8AAAAAAAAAAFjrfg206ag\u002f9PCloAKyaT963\u002fNBCXGaPyXN5WPGQL0\u002f7NtaVXwQqT+AF8JDjaC1Pz9Vb3Ag27s\u002f3z9Ai15poT\u002fiDMdxmjSxP8ymlCbnidg\u002fRKY8nNP4rD8gIQxykGi2P3E2rqGLGoI\u002fhLEiT\u002fWQtz9Xe9zJPH6zP7Fg0\u002flV0KY\u002fnjq0B9vZjT80i7Gq31WgP1s+LphCQZc\u002fZYlHosms3j8dt9iv42m2P63AqqMMftE\u002f2sorRoIttz8AAAAAAADwP8M+OBfCwKA\u002fZP8n2eL2pD8UJ5Jc\u002fafGP3g0j7zqZrg\u002f3Hekj7n+1D\u002f4xTP0jxbGP6ODFYmDtps\u002fictVzoNzuT9kXZTd6synP6jmdiIv\u002fp4\u002fFd7BdV7r1T\u002fPc9W7\u002fw2wPy3AbEY7f7A\u002fEOyv8ca+wD8A\u002fyNu7vCkPyWuEhtgh9U\u002fM47C9v7Cwj+iRIS0pZ3HP3LKAoIi3rI\u002f1UCB3xm4zz82xh6jC9\u002fSPwN+tERcH8w\u002fTl0TUUX0lz9ZQghPKLbWPzHHfStRfpw\u002f4Zq63YMytz\u002fmyWXa996uP59I7LvwKIs\u002fiMfJQb91oz9orszJOjh1PwAAAAAAAAAARNKjnjO5gj9PbIJZepJsP2CGIKqFJqM\u002f8kbumfCYtT8N+LBWTpDKP8M+OBfCwKA\u002fR7bCbmXk7z\u002flMNK2S1qiP277Eq4nKKk\u002f3cbFfEFglD84XrImWL+0P3nYdcJt044\u002fK3qPfNDYeT+fNNsY4PuqPz6qoziOLpg\u002fHo1aJ8VzmD9MRH8aljCBP1ztml6DRbA\u002fAAAAAAAAAAAAAAAAAAAAAAqm+cDybYs\u002fUqq1OmY1uz\u002fzZricH4qzP9+ObzwCq8M\u002fmZ3oPeXdxj89vqcJG5C8PwAAAAAAAAAAMzVV78AUxD8JDMlI68eiP9WMHqdIGqc\u002fDFY5w8benj9aNnJTz8SsP9znkJZ+kb8\u002frj98s5iztj\u002fh1ZkgtT24P00b3bRNM7Y\u002fWGdYujiWtD\u002fFWodU\u002fnSqP\u002fVF5uCOhbI\u002ffBK9SOrnvj+s6iNS6p20PwAAAAAAAAAAZP8n2eL2pD\u002flMNK2S1qiP9vyI5Rz1O8\u002fj+wW2IMEuD8oa0f+bwt4PzQ5stF2xJo\u002fCTGYJVl1oT\u002fjOBapUfuWP7QSyHeiUOA\u002fBXk24rfmrT8AAAAAAAAAAF\u002fYAEsaPZU\u002fyfRdoM6\u002foz8AAAAAAAAAAPxozuj5v4w\u002f1xmtAoTIoD8AAAAAAAAAAMn0XaDOv6M\u002fwBkJm7\u002feoT9Um4BLG4y9P+yVWCpZebU\u002fnrmD7fe5sD+eHhv9sEaFP0hVSM6kHLE\u002fSxtvXHpk0D+ayuLh\u002fBaiP0a4yc4H9rc\u002fa+Wmy5N1lT\u002fLwbKvEmGUPyyT+1KDq7k\u002f4fhsG1tGsT+bW5KaAKG0P0nbQJDaCr0\u002fAAAAAAAAAABVv7FaWNyjP\u002fC2JbO2W9k\u002fmXeIgLMypT8UJ5Jc\u002fafGP277Eq4nKKk\u002fj+wW2IMEuD8pEi3uCfrvP3G\u002fi96XssA\u002fJjY1yRvHvT\u002fSR\u002f7xGozKP2ZXdFntM7c\u002fmTD7xwzLvz\u002fZfpfay8rAP62+WmYr+UU\u002f08d4T+7HlD9B97aCBcqyPwAAAAAAAAAA2hUA1ugkmD+OjcTB\u002fxbEP2I4hTxDisQ\u002fNBbc\u002fInaiT+ODaYg3ZyyP8rdwyjc3+I\u002fbsvrZxbZpj\u002fnQPfPgkm2P8JBk6UR+cQ\u002fMGXqYGE5mz9fbkydVJyiP8B0VCTu3oE\u002frUOu4gfehD8tFo\u002f5de+uPyBBHjNp85E\u002f0x\u002f8SGqxsD8MlGDBL06mP+mRyjiYJ6s\u002f5xpZll2xrD8FWtHIpBy2P\u002fIly2bd+Jk\u002fClNK8V4orT8AAAAAAAAAAHg0j7zqZrg\u002f3cbFfEFglD8oa0f+bwt4P3G\u002fi96XssA\u002fLhduXyth7z+HqddBjdGmP6demuwtnqM\u002flh0mwnUfmD8aqz8rsVuOP+jbJG2gkbw\u002fAAAAAAAAAACWxroX4+asPwAAAAAAAAAAAAAAAAAAAADtUh87eeNrP0dltBXRv8Q\u002f1ikk\u002fxVDxz8fBBnzvSZTP0c7VU0Gs5g\u002fAHa0VQQzvT\u002f4gRwXo02xP4ktO9DOeqg\u002fC1S9mUICnD8AAAAAAAAAALP2BH4t38A\u002fxA0Y6QQ\u002fpD\u002f+0\u002fykP2CNP5F3AUUBk74\u002fXHTidU52tT8zYH5DqU1cPyJWfzd1XZI\u002fhPDvr5Bzrz9OJ+GGZYJgPzffD03Qp9Y\u002fECVZ6ELEoT8xktnWkg3RPxnb95aD62g\u002f23ekj7n+1D84XrImWL+0PzQ5stF2xJo\u002fJjY1yRvHvT+HqddBjdGmP7E+SCz+9e8\u002f5mJTyn8zsj8PZ1Su82S7P4LvetDq4pI\u002fG93P1rPwoz+zSFs5QLelP9+Rai8Y4NE\u002fQKohaT0qkD8AAAAAAAAAAGBBvmQ88Lg\u002fVT0SUt0oCD+nudyJ9tDgP\u002fdBK5xlrsY\u002fJymIy84yhz8No2piYsGwP21sbStEd9k\u002fZB9TAQDBzj+jr0ttRjB7P0RyPdBbBcE\u002fHyEvqIg9uj\u002fPCeNAC0itPywkwXLBK4Q\u002fkbTLAa8HsD9bWVmjVa+YPy5e3v7cz9A\u002f\u002fSPMKY8HyT+r5JRZhX+2P1vByKIBkbY\u002fHu7DHpyLtT\u002fYh\u002fVBqw+jP254HuWJQ8A\u002fECuNaxwvmz\u002f4xTP0jxbGP3nYdcJt044\u002fCTGYJVl1oT\u002fSR\u002f7xGozKP6demuwtnqM\u002f5mJTyn8zsj8M9CkMa\u002ffvP+HZTGpeb6k\u002fQWhdAgF3tD9OcZL4P3CiP\u002f5Wqpt3YJU\u002fUW\u002fihWjCvj\u002fDqdVfyDF2PwAAAAAAAAAAGf7lZd3aqz+vQeddRDS1P4l3hO\u002fMXsA\u002f0hddoWRhqj8oeWhStYXBP3gOxW1PyaQ\u002f7x1yZUWysz9+gC5rwgm8P9Ni+xPx5Nw\u002fkjJyqeIhqD+9XyaX9myaP+zC\u002fvprxrg\u002ft31QPCtEtT+ssiUfeYiiP9viCTMWPKo\u002fSJOAAWHslj8oq2LnaU6iPwUlzIUraOQ\u002f16\u002fTtm4T0T81YfIJN8eHP5mzjb774p8\u002fBqNPeBRWez\u002fM0O9ESFSdP6ODFYmDtps\u002fK3qPfNDYeT\u002fjOBapUfuWP2ZXdFntM7c\u002flh0mwnUfmD8PZ1Su82S7P+HZTGpeb6k\u002fSlLnW\u002f\u002f37z8epncTd7uRP\u002fcrbjyc87I\u002f821qpgxHlz+RZjoBsA6lPzdU0M+DjaI\u002fAAAAAAAAAAAs5dZo40F4P2daSjXrFXQ\u002fT2xFx9kstT\u002fbbfqFR8KdPyTVUuvAcaY\u002fqkn2oi\u002f3wj+oq7\u002fj4VObPwAAAAAAAAAA\u002fwIBHynCuT\u002fCxCVCYkGRP7b8Dxc8sLA\u002f+gEMnugbpz\u002fJT\u002fIVkou0P6JNnm49JsY\u002fuobHR0eYuz9gPY9wxQmePyUMNFU0\u002faw\u002fQ1wwhM1srz84+djtEOoyP474u1K1EKA\u002fv0FvAO9ezT\u002fDuRlrwE7AP6SGlEH+9nw\u002fictVzoNzuT+fNNsY4PuqP7QSyHeiUOA\u002fmTD7xwzLvz8aqz8rsVuOP4LvetDq4pI\u002fQWhdAgF3tD8epncTd7uRP4GgKg9C6O8\u002fP0iOu+SLuj+VkhGN1nVoPxX+jbhVZ7I\u002fy+MsSq\u002farD8AAAAAAAAAACM\u002fpHArEsg\u002faDRLsLXkqD9HlmtnLMV6P\u002fmELVRZjMI\u002fUOvcHD1gtz9uJfn05xvDPxjyfp4w2K4\u002fjB2W+u25uz\u002fhCMPjqCG2P28ZrhX0j7Y\u002fkP9B3MVPVj+BZls64+\u002fPP2LlDU3HJbA\u002fyvH\u002fR5vbrj\u002f57LctCbSQPzPpgoXNIKI\u002f\u002fDa1iXkhtD8F5KUGfsC1P7i8fKK\u002fQbk\u002fF\u002fb\u002fP4gwhj8EjBe51ZawP5T56UcoO3Y\u002f5xlx1gAvoj9kXZTd6synPz6qoziOLpg\u002fBXk24rfmrT\u002fZfpfay8rAP+jbJG2gkbw\u002fG93P1rPwoz9OcZL4P3CiP\u002fcrbjyc87I\u002fP0iOu+SLuj\u002fAgXRKkvrvP7nlj7QrOI0\u002fwzfEAR3Ajz9\u002fYxKtocWjPxkn2+qll3E\u002fTkbWAOLmfz+i\u002fByttk+3P1SjLEYYgZ4\u002fsIxGT0kehT+0up\u002fEt6ugP1fltplHX7s\u002fCchX\u002fjZQlD8PLea+dptnP\u002f2MfYkZBac\u002fVf2wr3zYcj+fCdzzDHl3PwAAAAAAAAAAGQltaKJLmT\u002fkZYMJr2aiP2cY0v\u002f2Q5E\u002frqb8Rc8GpD+NaYdo9h+ZP4GBnfxWw6Q\u002f8Wyjf0vplT93gyMo\u002f8avPwAAAAAAAAAAcF81Dvo2oT8AAAAAAAAAAKjmdiIv\u002fp4\u002fHo1aJ8VzmD8AAAAAAAAAAK6+WmYr+UU\u002fAAAAAAAAAACzSFs5QLelP\u002f5Wqpt3YJU\u002f821qpgxHlz+VkhGN1nVoP7nlj7QrOI0\u002fCVOUr1mK7j\u002fXmJJ\u002fIQuhP7A2oxKVcb0\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAx5uqU2AWuz\u002fnn2Lt265jPwASVC\u002fuw6I\u002fnowOw0p1cj9tVPIzR223P4aFd9NCHJw\u002f+Zp9\u002fEnEoT\u002f4ZBkzCQzOP9woimxX640\u002f0Mj4gPfycj\u002fymkg1YsafP4Ulsxtrsb4\u002fuGnrbp7wrD\u002fqdBN5F6a0P16vrtsR2Z8\u002fdjhYR0T9gj\u002fHgfzv\u002f+aIP5Y9LHpVhOI\u002fr3DC2DwOpj8WPxHSbYSuP56GFWDZ1qQ\u002fFd7BdV7r1T9MRH8aljCBP1\u002fYAEsaPZU\u002f08d4T+7HlD+WxroX4+asP9+Rai8Y4NE\u002fUW\u002fihWjCvj+RZjoBsA6lPxX+jbhVZ7I\u002fxDfEAR3Ajz\u002fXmJJ\u002fIQuhP7DEItf4+e8\u002f7w91\u002f+ZBtT8AAAAAAAAAACgdGRStE7Q\u002fZxHBoQaWoj\u002fo12YKgarTP9o2CCDYS8Q\u002fhiPGuvpWwT9A\u002fuocWACBPx14R3oDl9k\u002fDYFSQTYq3T97SEyKbJeiP4XHb8EPTbY\u002fHldHKgyJmj9NCMv0CD60P10FWrmoZMQ\u002fGYxidHb5sT+N9Koezl6UP9CMJEy1rKk\u002fW\u002fMEfsmnYD+tG7aqLFmaPxGzbJ+OlrA\u002flyOjjqHFlj8CU32quhSbP\u002fkJDpdpeXU\u002fzeI9L0t8ej\u002fPc9W7\u002fw2wP1ztml6DRbA\u002fyfRdoM6\u002foz9B97aCBcqyPwAAAAAAAAAAQKohaT0qkD\u002fDqdVfyDF2PzdU0M+DjaI\u002fy+MsSq\u002farD9\u002fYxKtocWjP7A2oxKVcb0\u002f7w91\u002f+ZBtT\u002f9YJ4KPefvPwAAAAAAAAAAIRdufYJCmD8KCHfoADbKP3\u002f39sdgf6M\u002fnHFcYYgcrD\u002fGa1kku3DRP8U7t68IJLY\u002fEiEi4zsNqD+TCiaGK0DKP1+MEyBShsA\u002fhcWGmeJUlj8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvy8BkFw1kPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC3AbEY7f7A\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgn2+qll3E\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgCdJnW\u002f93z8AAAAAAAAAALcSM8s6h6Q\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI8MLOxSiDPwAAAAAAAAAAYRsbdlLIST\u002fWW2clkKGuP0462WKUOZ0\u002fAAAAAAAAAACjZ05XxXKYPxGpkLfDHac\u002fRMmlhK9EvD9ILyv7MUW5Pz9FMpdffqI\u002fudWc0o88pD+wpIuIr0ysP6p3HggTk7o\u002fIQGwmnJqvT\u002f\u002f7Sxqkd2HP1jrfg206ag\u002fEOyv8ca+wD8AAAAAAAAAAPxozuj5v4w\u002f2hUA1ugkmD\u002ftUh87eeNrP2BBvmQ88Lg\u002fGf7lZd3aqz8s5dZo40F4PyM\u002fpHArEsg\u002fTkbWAOLmfz8AAAAAAAAAACgdGRStE7Q\u002fIRdufYJCmD8AAAAAAAAAADX7puKMp+8\u002f59Z5vKtfej9+wN3eAT6rP4p\u002frjxvD+A\u002foToPDUXCtz8mG87rdX6rP5RAAfYElck\u002fzopHjnIisT9CRsj4\u002fAPAPxO0Y\u002fYiwJo\u002fzNt6\u002fQGatT836aSdXzujP+jpTAypW3k\u002fSqk9vtUIpD\u002fv\u002fEwGHNa8P6nRKuWGLsA\u002fHASBrkwmuD+Uib1MHoywP183ZDZOC74\u002fR75puReIqz8AAAAAAAAAADfmIcNUc7M\u002f9PCloAKyaT8A\u002fyNu7vCkPwqm+cDybYs\u002f1xmtAoTIoD+OjcTB\u002fxbEP0dltBXRv8Q\u002fVT0SUt0oCD+vQeddRDS1P2daSjXrFXQ\u002faDRLsLXkqD+i\u002fByttk+3PwAAAAAAAAAAZxHBoQaWoj8KCHfoADbKP7cSM8s6h6Q\u002f59Z5vKtfej81i+A1i+DvPzEkYogUjJI\u002fAAAAAAAAAABCw2AFLUu5P4dkxr+LTL4\u002fVQrhqReBUD9M2t3OEojAP5K6ZUPa06M\u002fhOmPhsWDpD\u002fNa9XJeIjBP5DnJXCOS64\u002fOMs0tiDxUj9wu7uVYi3FP70Lp9AmcaM\u002fe2LR9pRQyz+LEKUy4f7EP296JrKgWqo\u002fZGD8VnhiwT\u002fMiqYwQaXdP\u002fDatgo\u002fGbM\u002fiDlXYEt80z963\u002fNBCXGaPyWuEhtgh9U\u002fUqq1OmY1uz8AAAAAAAAAAGI4hTxDisQ\u002f1ikk\u002fxVDxz+nudyJ9tDgP4l3hO\u002fMXsA\u002fT2xFx9kstT9HlmtnLMV6P1SjLEYYgZ4\u002fx5uqU2AWuz\u002fo12YKgarTP3\u002f39sdgf6M\u002fAAAAAAAAAAB+wN3eAT6rPzEkYogUjJI\u002fwCwUkTH37z+apsTL1qahP5WTH3iZpZg\u002fNGIea2ZevD8ANRtH\u002f\u002f7XPyd+n\u002fFc69A\u002f+DdENlIRwD8HwqVu7C61Py7cIgP75r8\u002fPP21kLm6fz\u002f27g1kyix1PzUFwyKHFrc\u002fLzjCHXxTzD+yEdxwCMiPP+rmpghuOKc\u002fpHohL2Kwhz808XdSD5udPyCJpDgpqco\u002fTX1ETtt8qT+5nJ\u002faoeihPyXN5WPGQL0\u002fM47C9v7Cwj\u002fzZricH4qzP8n0XaDOv6M\u002fNBbc\u002fInaiT8fBBnzvSZTP\u002fdBK5xlrsY\u002f0hddoWRhqj\u002fbbfqFR8KdP\u002fmELVRZjMI\u002fr4xGT0kehT\u002fnn2Lt265jP9o2CCDYS8Q\u002fnHFcYYgcrD8AAAAAAAAAAIp\u002frjxvD+A\u002fAAAAAAAAAACapsTL1qahP\u002f1gngo95+8\u002fM3WLpbYzvD8Me16\u002fxxqrP6gqYmdseNk\u002ftvkpeB5vwT9imr7gqPvIP2mSwhovt7s\u002fg2WeausZlT+ASQnpdsuEP0cenfwyYJ0\u002fgCKpHzXGhj+3\u002f78bHjCbP190VDIWuFE\u002fFgXcL5tyoD93VX5nV6p+P3O4nYsrnL4\u002flBR2t4t7tj\u002fbPbDFkKpfP\u002f2Nyf3G66k\u002f7NtaVXwQqT+iRIS0pZ3HP9+ObzwCq8M\u002fwBkJm7\u002feoT+ODaYg3ZyyP0c7VU0Gs5g\u002fJymIy84yhz8oeWhStYXBPyTVUuvAcaY\u002fUOvcHD1gtz+0up\u002fEt6ugPwASVC\u002fuw6I\u002fhiPGuvpWwT\u002fGa1kku3DRPwAAAAAAAAAAoToPDUXCtz9Cw2AFLUu5P5WTH3iZpZg\u002fM3WLpbYzvD+avHhSjvrvP0srVq83VbM\u002fo+KC4DWRfD\u002fMZeq1AdHCP2uOuCztVdc\u002fbw7grvc5wD\u002fME8RVhDLJP2dAHN+Pp8k\u002fm0RJBU3Azj9wWk7CIkC7P9JuwTvf\u002frE\u002fZQs4DKOnsj\u002fu1lebYfrAP8BnybmAAyQ\u002fNZaarKwVtD8AAAAAAAAAAOm1tTdGncA\u002fCJM3Q2V\u002f0D9\u002fF8JDjaC1P3LKAoIi3rI\u002fmZ3oPeXdxj9Um4BLG4y9P8rdwyjc3+I\u002fAHa0VQQzvT8No2piYsGwP3kOxW1PyaQ\u002fqkn2oi\u002f3wj9uJfn05xvDP1fltplHX7s\u002fnowOw0p1cj9A\u002fuocWACBP8U7t68IJLY\u002fAAAAAAAAAAAmG87rdX6rP4dkxr+LTL4\u002fM2Iea2ZevD8Me16\u002fxxqrP0srVq83VbM\u002fwr6ppIP67z+YUQOxNrWNP8OVXBEg0rI\u002fTi0bI4FLpD+ApvVOmE3KP\u002fkHdTrNtbA\u002fYtK7rbHtoz91TnGJifurP4UOG0fcv7o\u002f5wj\u002f3zKJxj\u002fB33mrxEunP2rl6BYydYQ\u002fe2JI2gopfD8tAeUxxzy5P2bx9bjDM9w\u002fgm2LncOXcj9ZTjRg3pTHPz9Vb3Ag27s\u002f1kCB3xm4zz89vqcJG5C8P+yVWCpZebU\u002fbsvrZxbZpj\u002f4gRwXo02xP21sbStEd9k\u002f7x1yZUWysz+pq7\u002fj4VObPxjyfp4w2K4\u002fCchX\u002fjZQlD9tVPIzR223Px14R3oDl9k\u002fEiEi4zsNqD8J8MLOxSiDP5RAAfYElck\u002fVQrhqReBUD8ANRtH\u002f\u002f7XP6gqYmdseNk\u002fo+KC4DWRfD+YUQOxNrWNP\u002fSQRa1w+e8\u002fdy8unWYF1j+dFi8rtKrCPwSgGDYE18k\u002f1asuldWzdj\u002fylHsQDUyOP1nCEREY7qk\u002f9551YBAYtj+7EClfVJSkPzfN+qONka0\u002fxaJJeoBdij94h3zGFI6HP\u002f7JkTD8RpY\u002f\u002fePPk+\u002ff3z9hWETCtY+ZP7\u002fyHBaWOYk\u002f3z9Ai15poT82xh6jC9\u002fSPwAAAAAAAAAAnrmD7fe5sD\u002fnQPfPgkm2P4ktO9DOeqg\u002fZB9TAQDBzj9+gC5rwgm8PwAAAAAAAAAAjB2W+u25uz8PLea+dptnP4aFd9NCHJw\u002fDYFSQTYq3T+TCiaGK0DKPwAAAAAAAAAAzopHjnIisT9M2t3OEojAPyd+n\u002fFc69A\u002ftvkpeB5vwT\u002fMZeq1AdHCP8OVXBEg0rI\u002fdy8unWYF1j+IYspeG\u002fnvPwAAAAAAAAAAgeNsOgAGIj\u002fj8oajGhdkPxQZth196rY\u002f5CTGdjwYiD+WIS6pUIWjPzsV3zVu0ME\u002fqkkbiQXjxD+KPi8fErfNP8Zee1mFo7U\u002fP+AAgWtI2D8siyqSNEexP9hls1c9bY0\u002fLz+0IY1QuT\u002fiDMdxmjSxPwN+tERcH8w\u002fMzVV78AUxD+eHhv9sEaFP8JBk6UR+cQ\u002fC1S9mUICnD+jr0ttRjB7P9Ji+xPx5Nw\u002f\u002fwIBHynCuT\u002fhCMPjqCG2P\u002f2MfYkZBac\u002f+Zp9\u002fEnEoT97SEyKbJeiP1+MEyBShsA\u002fYRsbdlLIST9CRsj4\u002fAPAP5K6ZUPa06M\u002f+DdENlIRwD9imr7gqPvIP2uOuCztVdc\u002fTi0bI4FLpD+dFi8rtKrCPwAAAAAAAAAA5eUxC9367z8=","shape":"37, 37"},"zmax":1,"zmin":0,"type":"heatmap"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05}}},"xaxis":{"tickfont":{"size":8},"tickangle":90},"yaxis":{"tickfont":{"size":8}},"margin":{"l":50,"r":50,"t":80,"b":120},"title":{"text":"Matriz Cram\u00e9r's V - KRKPA7"},"height":700,"width":900},                        {"responsive": true}                    ).then(function(){
+        </div><div class="output text_html"><div style="height:700px; width:900px;">            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                    <div id="b6b4f65e-4325-414c-a33e-46038cd5bc75" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("b6b4f65e-4325-414c-a33e-46038cd5bc75")) {                    Plotly.newPlot(                        "b6b4f65e-4325-414c-a33e-46038cd5bc75",                        [{"colorscale":[[0.0,"rgb(247,251,255)"],[0.125,"rgb(222,235,247)"],[0.25,"rgb(198,219,239)"],[0.375,"rgb(158,202,225)"],[0.5,"rgb(107,174,214)"],[0.625,"rgb(66,146,198)"],[0.75,"rgb(33,113,181)"],[0.875,"rgb(8,81,156)"],[1.0,"rgb(8,48,107)"]],"hoverongaps":false,"hovertemplate":"\u003cb\u003e%{y}\u003c\u002fb\u003e \u2194 \u003cb\u003e%{x}\u003c\u002fb\u003e\u003cbr\u003eCram\u00e9r's V: %{z:.3f}\u003cextra\u003e\u003c\u002fextra\u003e","text":{"dtype":"f8","bdata":"AAAAAAAA8D8AAAAAAAAAAMP1KFyPwsU\u002fuB6F61G4rj97FK5H4XqkP7gehetRuJ4\u002fuB6F61G4vj+4HoXrUbi+P7gehetRuK4\u002fmpmZmZmZqT8fhetRuB7VP7gehetRuK4\u002fexSuR+F6hD9SuB6F61HIP1K4HoXrUdg\u002fexSuR+F6lD97FK5H4XqkP+xRuB6F67E\u002fuB6F61G4nj8AAAAAAAAAAKRwPQrXo8A\u002fmpmZmZmZqT97FK5H4XqUPwrXo3A9Crc\u002fAAAAAAAAAABxPQrXo3DNPwrXo3A9Crc\u002fexSuR+F6lD+4HoXrUbiuP7gehetRuJ4\u002fexSuR+F6pD97FK5H4Xq0Pylcj8L1KLw\u002fpHA9CtejwD\u002fhehSuR+HKP5qZmZmZmck\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA\u002fAAAAAAAAAAB7FK5H4XqkP+xRuB6F68E\u002fexSuR+F6pD\u002fhehSuR+HKP+xRuB6F68E\u002fexSuR+F6tD+amZmZmZmpPwAAAAAAAAAAexSuR+F6pD8zMzMzMzPDP7gehetRuL4\u002fuB6F61G4rj9mZmZmZmbWP5qZmZmZmak\u002fpHA9Ctej0D97FK5H4XqkP6RwPQrXo8A\u002fmpmZmZmZuT+4HoXrUbieP+xRuB6F67E\u002fAAAAAAAAAAB7FK5H4XqEP3sUrkfheoQ\u002fuB6F61G4nj8AAAAAAAAAALgehetRuJ4\u002fexSuR+F6tD\u002fsUbgehevBP7gehetRuL4\u002fexSuR+F6lD+amZmZmZnJP+xRuB6F67E\u002fexSuR+F6hD8AAAAAAAAAAMP1KFyPwsU\u002fAAAAAAAAAAAAAAAAAADwP7gehetRuK4\u002fAAAAAAAAAAB7FK5H4XqkPzMzMzMzM8M\u002fuB6F61G4rj97FK5H4XqEP3sUrkfherQ\u002fexSuR+F6hD+amZmZmZmpP3sUrkfheqQ\u002fw\u002fUoXI\u002fCxT8K16NwPQq3P7gehetRuJ4\u002fuB6F61G4nj97FK5H4XqkP3sUrkfheoQ\u002fexSuR+F6pD+4HoXrUbiuP5qZmZmZmbk\u002fmpmZmZmZqT8AAAAAAADQPwAAAAAAAAAAAAAAAAAAAAB7FK5H4Xq0PwAAAAAAAAAAAAAAAAAAAAB7FK5H4XqkP7gehetRuK4\u002fexSuR+F6hD97FK5H4XqEP5qZmZmZmck\u002fexSuR+F6pD97FK5H4XqEPwrXo3A9Crc\u002fuB6F61G4rj97FK5H4XqkP7gehetRuK4\u002fAAAAAAAA8D+kcD0K16PAP1K4HoXrUcg\u002fuB6F61G4nj97FK5H4Xq0P3sUrkfheoQ\u002fexSuR+F6lD97FK5H4XqUP5qZmZmZmbk\u002fexSuR+F6lD97FK5H4Xq0P3sUrkfheoQ\u002fCtejcD0Ktz+4HoXrUbiuPwrXo3A9Crc\u002fexSuR+F6hD97FK5H4XqEP3sUrkfheoQ\u002fexSuR+F6tD97FK5H4Xq0P7gehetRuK4\u002fexSuR+F6lD+4HoXrUbieP3sUrkfhesQ\u002fAAAAAAAAAAB7FK5H4XqUP3sUrkfheoQ\u002fAAAAAAAAAAB7FK5H4XqEP7gehetRuJ4\u002fuB6F61G4zj+amZmZmZmpP5qZmZmZmak\u002fexSuR+F6hD97FK5H4XqkP+xRuB6F68E\u002fAAAAAAAAAACkcD0K16PAPwAAAAAAAPA\u002fuB6F61G4nj9SuB6F61HYP6RwPQrXo9A\u002f4XoUrkfhyj+4HoXrUbieP5qZmZmZmbk\u002fcT0K16NwzT+amZmZmZm5P3sUrkfheqQ\u002fCtejcD0Ktz+4HoXrUbiuP7gehetRuL4\u002fexSuR+F6lD+4HoXrUbiuP7gehetRuL4\u002fuB6F61G4rj97FK5H4XqkP8P1KFyPwsU\u002fuB6F61G4rj97FK5H4XqkP7gehetRuL4\u002f7FG4HoXrsT8AAAAAAAAAAJqZmZmZmak\u002fexSuR+F6pD\u002fD9Shcj8LFPwrXo3A9Crc\u002fexSuR+F6hD8pXI\u002fC9Si8P5qZmZmZmbk\u002fCtejcD0Ktz97FK5H4XqkP7gehetRuJ4\u002fexSuR+F6pD97FK5H4XqkP1K4HoXrUcg\u002fuB6F61G4nj8AAAAAAADwP3sUrkfherQ\u002fexSuR+F6hD97FK5H4XqUP+xRuB6F67E\u002fexSuR+F6hD+amZmZmZm5P3sUrkfhepQ\u002fuB6F61G4rj97FK5H4Xq0P3sUrkfheoQ\u002fCtejcD0Ktz97FK5H4XqUP3sUrkfhepQ\u002fexSuR+F6tD97FK5H4XqUP5qZmZmZmak\u002fKVyPwvUovD97FK5H4XqUP3sUrkfhepQ\u002fuB6F61G4rj97FK5H4XqUPwAAAAAAAAAAKVyPwvUovD8pXI\u002fC9Si8P3sUrkfheqQ\u002fKVyPwvUozD+4HoXrUbieP+xRuB6F67E\u002fCtejcD0Kxz97FK5H4XqkP+xRuB6F68E\u002fuB6F61G4vj\u002fhehSuR+HKPzMzMzMzM8M\u002fuB6F61G4nj9SuB6F61HYP3sUrkfherQ\u002fAAAAAAAA8D\u002fsUbgehevhPwrXo3A9Ctc\u002fCtejcD0Ktz8K16NwPQq3P5qZmZmZmbk\u002fexSuR+F6pD97FK5H4XqUP3sUrkfheqQ\u002fexSuR+F6pD8K16NwPQq3P5qZmZmZmbk\u002f7FG4HoXrsT8AAAAAAAAAAKRwPQrXo9A\u002fexSuR+F6lD+4HoXrUbieP3sUrkfheqQ\u002fexSuR+F6pD97FK5H4Xq0P5qZmZmZmak\u002fAAAAAAAAAACamZmZmZm5P6RwPQrXo8A\u002f4XoUrkfhyj97FK5H4XqUPwAAAAAAAAAA7FG4HoXrsT+amZmZmZmpP7gehetRuK4\u002fexSuR+F6xD+4HoXrUbi+P+xRuB6F68E\u002fuB6F61G4rj97FK5H4Xq0P6RwPQrXo9A\u002fexSuR+F6hD\u002fsUbgehevhPwAAAAAAAPA\u002fcT0K16Nw5T+kcD0K16PQP3sUrkfheqQ\u002fKVyPwvUovD97FK5H4XqkP3sUrkfhepQ\u002fexSuR+F6hD97FK5H4XqEPwrXo3A9Crc\u002f7FG4HoXrsT97FK5H4XqkP3sUrkfhepQ\u002fmpmZmZmZyT97FK5H4XqkP7gehetRuK4\u002fexSuR+F6tD97FK5H4XqUP7gehetRuJ4\u002fAAAAAAAAAAAAAAAAAAAAAHsUrkfheqQ\u002fCtejcD0Ktz97FK5H4XrEP5qZmZmZmak\u002fuB6F61G4nj+kcD0K16PAP3sUrkfheoQ\u002fexSuR+F6hD9xPQrXo3DNP7gehetRuK4\u002fexSuR+F6tD97FK5H4XqEP3sUrkfheoQ\u002f4XoUrkfhyj97FK5H4XqUPwrXo3A9Ctc\u002fcT0K16Nw5T8AAAAAAADwPwAAAAAAAAAAexSuR+F6pD+4HoXrUbiuP3sUrkfheoQ\u002fexSuR+F6pD+4HoXrUbiePwAAAAAAAAAAexSuR+F6tD97FK5H4Xq0P5qZmZmZmak\u002fuB6F61G4rj8K16NwPQq3P3sUrkfheuQ\u002fuB6F61G4rj97FK5H4Xq0P3sUrkfheqQ\u002fexSuR+F6hD+4HoXrUbiePwAAAAAAAAAAexSuR+F6pD+4HoXrUbiuP5qZmZmZmak\u002fexSuR+F6hD97FK5H4XqEPwAAAAAAAAAAexSuR+F6hD97FK5H4XqEP3sUrkfherQ\u002fmpmZmZmZqT+amZmZmZmpP3sUrkfherQ\u002fexSuR+F6lD+4HoXrUbieP+xRuB6F67E\u002fCtejcD0Ktz+kcD0K16PQPwAAAAAAAAAAAAAAAAAA8D8AAAAAAAAAAHsUrkfheoQ\u002fuB6F61G4rj97FK5H4XqkP3sUrkfhepQ\u002fexSuR+F6hD+amZmZmZmpPylcj8L1KLw\u002fuB6F61G4rj8AAAAAAAAAAArXo3A9Crc\u002fSOF6FK5H0T8AAAAAAAAAAJqZmZmZmbk\u002fexSuR+F6lD97FK5H4XqEP7gehetRuK4\u002fAAAAAAAAAAC4HoXrUbiuP7gehetRuL4\u002f7FG4HoXrwT+4HoXrUbieP7gehetRuL4\u002fexSuR+F6tD+amZmZmZm5P3sUrkfhepQ\u002fUrgehetR2D8fhetRuB7VPwAAAAAAAAAAexSuR+F6hD97FK5H4XqUP5qZmZmZmbk\u002fexSuR+F6hD8K16NwPQq3P3sUrkfheqQ\u002fexSuR+F6pD8AAAAAAAAAAAAAAAAAAPA\u002fmpmZmZmZuT8zMzMzMzPDP3sUrkfheoQ\u002fuB6F61G43j8AAAAAAAAAAOxRuB6F67E\u002fAAAAAAAAAAAK16NwPQq3P2ZmZmZmZtY\u002fexSuR+F6tD97FK5H4XqEP7gehetRuJ4\u002fexSuR+F6hD+4HoXrUbiuP4\u002fC9Shcj+I\u002fexSuR+F6lD8AAAAAAAAAAJqZmZmZmbk\u002fmpmZmZmZqT9xPQrXo3DdP+F6FK5H4co\u002fCtejcD0Ktz8AAAAAAAAAAClcj8L1KNw\u002fAAAAAAAA4D\u002fsUbgeheuxP7gehetRuK4\u002fexSuR+F6pD+amZmZmZmpP5qZmZmZmbk\u002fcT0K16NwzT+amZmZmZm5P5qZmZmZmbk\u002fKVyPwvUovD+4HoXrUbiuP3sUrkfheoQ\u002fmpmZmZmZuT8AAAAAAADwP3sUrkfheoQ\u002fexSuR+F6hD8K16NwPQq3P3sUrkfheqQ\u002fuB6F61G4vj97FK5H4XqkP7gehetRuJ4\u002fuB6F61G4nj97FK5H4XqkP7gehetRuJ4\u002fcT0K16NwzT+4HoXrUbiuPwAAAAAAAAAAexSuR+F6pD+4HoXrUbiePwAAAAAAAAAAKVyPwvUovD8AAAAAAAAAAOxRuB6F67E\u002fmpmZmZmZqT8AAAAAAAAAAKRwPQrXo8A\u002fAAAAAAAAAAB7FK5H4XqUP3sUrkfheoQ\u002fexSuR+F6hD8zMzMzMzPDP3sUrkfheqQ\u002fexSuR+F6lD+amZmZmZm5P3sUrkfhepQ\u002fexSuR+F6pD97FK5H4XqkP3sUrkfheoQ\u002fuB6F61G4rj8zMzMzMzPDP3sUrkfheoQ\u002fAAAAAAAA8D+4HoXrUbieP0jhehSuR9E\u002fexSuR+F6tD97FK5H4Xq0P5qZmZmZmdk\u002fuB6F61G4rj9I4XoUrkfRP6RwPQrXo8A\u002fexSuR+F6hD+kcD0K16PAP3sUrkfheoQ\u002fuB6F61G4nj+4HoXrUbiuP3sUrkfheoQ\u002fAAAAAAAAAAB7FK5H4XqEP3sUrkfherQ\u002fMzMzMzMz0z+4HoXrUbieP5qZmZmZmak\u002fpHA9Ctej0D8K16NwPQrHP3sUrkfheoQ\u002fmpmZmZmZuT9SuB6F61HIP7gehetRuL4\u002fw\u002fUoXI\u002fCxT97FK5H4Xq0P3sUrkfheqQ\u002fuB6F61G4rj97FK5H4XqUP3sUrkfhepQ\u002fexSuR+F6pD97FK5H4XqkP3sUrkfheoQ\u002fexSuR+F6hD+4HoXrUbiePwrXo3A9Cu8\u002fCtejcD0Ktz\u002fhehSuR+HKPwAAAAAAAAAAexSuR+F6pD8AAAAAAAAAAAAAAAAAAAAAuB6F61G4nj+4HoXrUbieP3sUrkfheoQ\u002fexSuR+F6pD8AAAAAAAAAAHsUrkfheqQ\u002fexSuR+F6hD8AAAAAAAAAAJqZmZmZmak\u002fAAAAAAAAAAC4HoXrUbiePylcj8L1KLw\u002fmpmZmZmZqT97FK5H4Xq0Pylcj8L1KLw\u002fuB6F61G4nj\u002fsUbgeheuxP1K4HoXrUdg\u002fuB6F61G4rj8K16NwPQq3P3sUrkfheoQ\u002fCtejcD0Ktz97FK5H4Xq0P3sUrkfheqQ\u002fexSuR+F6hD+4HoXrUbieP3sUrkfhepQ\u002fuB6F61G43j8K16NwPQq3P0jhehSuR9E\u002fCtejcD0Ktz8AAAAAAADwP7gehetRuJ4\u002fexSuR+F6pD8K16NwPQrHP5qZmZmZmbk\u002fH4XrUbge1T\u002fD9Shcj8LFP7gehetRuJ4\u002fmpmZmZmZuT+amZmZmZmpP7gehetRuJ4\u002fw\u002fUoXI\u002fC1T+4HoXrUbiuP7gehetRuK4\u002fpHA9CtejwD97FK5H4XqkP8P1KFyPwtU\u002fMzMzMzMzwz8K16NwPQrHP+xRuB6F67E\u002fAAAAAAAA0D+PwvUoXI\u002fSPylcj8L1KMw\u002fexSuR+F6lD9mZmZmZmbWP7gehetRuJ4\u002fCtejcD0Ktz+4HoXrUbiuP3sUrkfheoQ\u002fexSuR+F6pD97FK5H4XqEPwAAAAAAAAAAexSuR+F6hD8AAAAAAAAAAHsUrkfheqQ\u002fexSuR+F6tD\u002fhehSuR+HKP7gehetRuJ4\u002fAAAAAAAA8D97FK5H4XqkP5qZmZmZmak\u002fexSuR+F6lD97FK5H4Xq0P3sUrkfhepQ\u002fexSuR+F6hD+amZmZmZmpP3sUrkfhepQ\u002fexSuR+F6lD97FK5H4XqEP7gehetRuK4\u002fAAAAAAAAAAAAAAAAAAAAAHsUrkfheoQ\u002fKVyPwvUovD97FK5H4Xq0PzMzMzMzM8M\u002fCtejcD0Kxz8pXI\u002fC9Si8PwAAAAAAAAAAexSuR+F6xD97FK5H4XqkP5qZmZmZmak\u002fuB6F61G4nj+4HoXrUbiuP7gehetRuL4\u002fCtejcD0Ktz8K16NwPQq3PwrXo3A9Crc\u002fexSuR+F6tD+amZmZmZmpP+xRuB6F67E\u002fuB6F61G4vj97FK5H4Xq0PwAAAAAAAAAAexSuR+F6pD97FK5H4XqkP65H4XoUru8\u002fCtejcD0Ktz97FK5H4XqEP7gehetRuJ4\u002fuB6F61G4nj97FK5H4XqUP1K4HoXrUeA\u002fuB6F61G4rj8AAAAAAAAAAHsUrkfhepQ\u002fexSuR+F6pD8AAAAAAAAAAHsUrkfheoQ\u002fuB6F61G4nj8AAAAAAAAAAHsUrkfheqQ\u002fuB6F61G4nj+4HoXrUbi+P3sUrkfherQ\u002f7FG4HoXrsT97FK5H4XqEP+xRuB6F67E\u002fpHA9Ctej0D97FK5H4XqkPwrXo3A9Crc\u002fexSuR+F6lD97FK5H4XqUP5qZmZmZmbk\u002f7FG4HoXrsT97FK5H4Xq0Pylcj8L1KLw\u002fAAAAAAAAAAB7FK5H4XqkP5qZmZmZmdk\u002fexSuR+F6pD8K16NwPQrHP5qZmZmZmak\u002fCtejcD0Ktz8AAAAAAADwP6RwPQrXo8A\u002fuB6F61G4vj\u002fhehSuR+HKPwrXo3A9Crc\u002fuB6F61G4vj+kcD0K16PAPwAAAAAAAAAAexSuR+F6lD\u002fsUbgeheuxPwAAAAAAAAAAexSuR+F6lD97FK5H4XrEP3sUrkfhesQ\u002fexSuR+F6hD\u002fsUbgeheuxP+F6FK5H4eI\u002fexSuR+F6pD8K16NwPQq3P3sUrkfhesQ\u002fuB6F61G4nj97FK5H4XqkP3sUrkfheoQ\u002fexSuR+F6hD+4HoXrUbiuP3sUrkfhepQ\u002f7FG4HoXrsT97FK5H4XqkP5qZmZmZmak\u002fuB6F61G4rj8K16NwPQq3P7gehetRuJ4\u002fuB6F61G4rj8AAAAAAAAAAJqZmZmZmbk\u002fexSuR+F6lD97FK5H4XqEP6RwPQrXo8A\u002fXI\u002fC9Shc7z97FK5H4XqkP3sUrkfheqQ\u002fexSuR+F6lD97FK5H4XqEPylcj8L1KLw\u002fAAAAAAAAAAC4HoXrUbiuPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHsUrkfhesQ\u002fCtejcD0Kxz8AAAAAAAAAAHsUrkfhepQ\u002fKVyPwvUovD\u002fsUbgeheuxP5qZmZmZmak\u002fuB6F61G4nj8AAAAAAAAAAKRwPQrXo8A\u002fexSuR+F6pD97FK5H4XqEP7gehetRuL4\u002fexSuR+F6tD8AAAAAAAAAAHsUrkfhepQ\u002fuB6F61G4rj8AAAAAAAAAAGZmZmZmZtY\u002fuB6F61G4nj9I4XoUrkfRPwAAAAAAAAAAH4XrUbge1T97FK5H4Xq0P7gehetRuJ4\u002fuB6F61G4vj97FK5H4XqkPwAAAAAAAPA\u002f7FG4HoXrsT8pXI\u002fC9Si8P3sUrkfhepQ\u002fexSuR+F6pD97FK5H4XqkP+xRuB6F69E\u002fexSuR+F6lD8AAAAAAAAAAJqZmZmZmbk\u002fAAAAAAAAAAD2KFyPwvXgPwrXo3A9Csc\u002fexSuR+F6hD\u002fsUbgeheuxP5qZmZmZmdk\u002fuB6F61G4zj97FK5H4XqEP6RwPQrXo8A\u002fmpmZmZmZuT+4HoXrUbiuP3sUrkfheoQ\u002fuB6F61G4rj97FK5H4XqUP6RwPQrXo9A\u002fmpmZmZmZyT8K16NwPQq3PwrXo3A9Crc\u002fexSuR+F6tD97FK5H4XqkP6RwPQrXo8A\u002fuB6F61G4nj\u002fD9Shcj8LFP3sUrkfhepQ\u002fuB6F61G4nj\u002fhehSuR+HKP3sUrkfheqQ\u002f7FG4HoXrsT8AAAAAAADwP5qZmZmZmak\u002fexSuR+F6tD97FK5H4XqkP3sUrkfhepQ\u002fuB6F61G4vj97FK5H4XqEPwAAAAAAAAAAmpmZmZmZqT97FK5H4Xq0P6RwPQrXo8A\u002fmpmZmZmZqT\u002fsUbgehevBP3sUrkfheqQ\u002fexSuR+F6tD8pXI\u002fC9Si8P83MzMzMzNw\u002fmpmZmZmZqT+4HoXrUbieP5qZmZmZmbk\u002fexSuR+F6tD97FK5H4XqkP5qZmZmZmak\u002fexSuR+F6lD97FK5H4XqkP3sUrkfheuQ\u002fSOF6FK5H0T97FK5H4XqEP7gehetRuJ4\u002fexSuR+F6hD+4HoXrUbieP7gehetRuJ4\u002fexSuR+F6hD97FK5H4XqUPwrXo3A9Crc\u002fexSuR+F6lD8pXI\u002fC9Si8P5qZmZmZmak\u002fAAAAAAAA8D97FK5H4XqUP+xRuB6F67E\u002fexSuR+F6lD97FK5H4XqkP3sUrkfheqQ\u002fAAAAAAAAAAB7FK5H4XqEPwAAAAAAAAAAexSuR+F6tD+4HoXrUbieP3sUrkfheqQ\u002fMzMzMzMzwz+4HoXrUbiePwAAAAAAAAAAmpmZmZmZuT97FK5H4XqUP+xRuB6F67E\u002fmpmZmZmZqT97FK5H4Xq0P8P1KFyPwsU\u002fKVyPwvUovD+4HoXrUbieP7gehetRuK4\u002fuB6F61G4rj8AAAAAAAAAALgehetRuJ4\u002fcT0K16NwzT+kcD0K16PAP3sUrkfheoQ\u002fmpmZmZmZuT+amZmZmZmpP1K4HoXrUeA\u002fuB6F61G4vj97FK5H4XqEP3sUrkfhepQ\u002fexSuR+F6tD97FK5H4XqUPwAAAAAAAPA\u002fmpmZmZmZuT8AAAAAAAAAAOxRuB6F67E\u002fuB6F61G4rj8AAAAAAAAAAFK4HoXrUcg\u002fmpmZmZmZqT97FK5H4XqEP+xRuB6F68E\u002fCtejcD0Ktz8zMzMzMzPDP7gehetRuK4\u002fKVyPwvUovD8K16NwPQq3PwrXo3A9Crc\u002fAAAAAAAAAAAAAAAAAADQP7gehetRuK4\u002fuB6F61G4rj97FK5H4XqUP3sUrkfheqQ\u002fexSuR+F6tD97FK5H4Xq0P5qZmZmZmbk\u002fexSuR+F6hD+4HoXrUbiuP3sUrkfheoQ\u002fexSuR+F6pD+amZmZmZmpP3sUrkfhepQ\u002fuB6F61G4rj+kcD0K16PAPylcj8L1KLw\u002fexSuR+F6pD97FK5H4XqkP+xRuB6F67E\u002fmpmZmZmZuT8AAAAAAADwP3sUrkfheoQ\u002fexSuR+F6lD97FK5H4XqkPwAAAAAAAAAAexSuR+F6hD8K16NwPQq3P7gehetRuJ4\u002fexSuR+F6hD+4HoXrUbiePylcj8L1KLw\u002fexSuR+F6lD8AAAAAAAAAAHsUrkfheqQ\u002fAAAAAAAAAAB7FK5H4XqEPwAAAAAAAAAAexSuR+F6lD97FK5H4XqkP3sUrkfhepQ\u002fexSuR+F6pD97FK5H4XqUP3sUrkfheqQ\u002fexSuR+F6lD+4HoXrUbiuPwAAAAAAAAAAuB6F61G4nj8AAAAAAAAAALgehetRuJ4\u002fexSuR+F6lD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7FK5H4XqkP3sUrkfhepQ\u002fexSuR+F6lD8AAAAAAAAAAHsUrkfheoQ\u002fZmZmZmZm7j+4HoXrUbieP7gehetRuL4\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKVyPwvUovD8AAAAAAAAAAHsUrkfheqQ\u002fAAAAAAAAAAAK16NwPQq3P7gehetRuJ4\u002fuB6F61G4nj9xPQrXo3DNP3sUrkfheoQ\u002fAAAAAAAAAAC4HoXrUbieP7gehetRuL4\u002fuB6F61G4rj97FK5H4Xq0P7gehetRuJ4\u002fexSuR+F6hD97FK5H4XqEP4\u002fC9Shcj+I\u002fexSuR+F6pD+4HoXrUbiuP3sUrkfheqQ\u002fw\u002fUoXI\u002fC1T97FK5H4XqEP3sUrkfhepQ\u002fexSuR+F6lD+4HoXrUbiuP+xRuB6F69E\u002fuB6F61G4vj97FK5H4XqkP+xRuB6F67E\u002fexSuR+F6lD+4HoXrUbiePwAAAAAAAPA\u002fexSuR+F6tD8AAAAAAAAAAHsUrkfherQ\u002fexSuR+F6pD\u002fXo3A9CtfTP3sUrkfhesQ\u002f7FG4HoXrwT97FK5H4XqEP5qZmZmZmdk\u002fcT0K16Nw3T97FK5H4XqkPwrXo3A9Crc\u002fuB6F61G4nj97FK5H4Xq0P3sUrkfhesQ\u002f7FG4HoXrsT97FK5H4XqUP5qZmZmZmak\u002fAAAAAAAAAAC4HoXrUbieP7gehetRuK4\u002fexSuR+F6lD+4HoXrUbieP3sUrkfheoQ\u002fexSuR+F6hD+4HoXrUbiuP7gehetRuK4\u002fexSuR+F6pD\u002fsUbgeheuxPwAAAAAAAAAAexSuR+F6lD97FK5H4XqEP3sUrkfheqQ\u002fuB6F61G4rj97FK5H4XqkP7gehetRuL4\u002fexSuR+F6tD8AAAAAAADwPwAAAAAAAAAAexSuR+F6lD+amZmZmZnJP3sUrkfheqQ\u002fmpmZmZmZqT9I4XoUrkfRPwrXo3A9Crc\u002fmpmZmZmZqT\u002fhehSuR+HKP6RwPQrXo8A\u002fexSuR+F6lD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgehetRuK4\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4D8AAAAAAAAAAHsUrkfheqQ\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7FK5H4XqEPwAAAAAAAAAAAAAAAAAAAAC4HoXrUbiuP7gehetRuJ4\u002fAAAAAAAAAAB7FK5H4XqUP5qZmZmZmak\u002fKVyPwvUovD+amZmZmZm5P3sUrkfheqQ\u002fexSuR+F6pD+4HoXrUbiuP5qZmZmZmbk\u002fKVyPwvUovD97FK5H4XqEP5qZmZmZmak\u002fpHA9CtejwD8AAAAAAAAAAHsUrkfheoQ\u002fexSuR+F6lD8AAAAAAAAAAJqZmZmZmbk\u002fmpmZmZmZqT97FK5H4XqEP1K4HoXrUcg\u002fexSuR+F6hD8AAAAAAAAAAHsUrkfherQ\u002fexSuR+F6lD8AAAAAAAAAAK5H4XoUru8\u002fexSuR+F6hD+amZmZmZmpPwAAAAAAAOA\u002fCtejcD0Ktz+amZmZmZmpP5qZmZmZmck\u002f7FG4HoXrsT+kcD0K16PAP7gehetRuJ4\u002fexSuR+F6tD97FK5H4XqkP3sUrkfheoQ\u002fexSuR+F6pD8pXI\u002fC9Si8P6RwPQrXo8A\u002fCtejcD0Ktz+4HoXrUbiuP7gehetRuL4\u002fmpmZmZmZqT8AAAAAAAAAAHsUrkfherQ\u002fAAAAAAAAAAB7FK5H4XqkP3sUrkfheoQ\u002fuB6F61G4nj97FK5H4XrEP3sUrkfhesQ\u002fAAAAAAAAAAB7FK5H4Xq0PwAAAAAAAAAAmpmZmZmZqT8K16NwPQq3PwAAAAAAAAAAexSuR+F6pD+amZmZmZnJP3sUrkfheqQ\u002fexSuR+F6hD8AAAAAAADwP3sUrkfhepQ\u002fAAAAAAAAAACamZmZmZm5P7gehetRuL4\u002fAAAAAAAAAACkcD0K16PAP3sUrkfheqQ\u002fexSuR+F6pD\u002fsUbgehevBP7gehetRuK4\u002fAAAAAAAAAADD9Shcj8LFP3sUrkfheqQ\u002f4XoUrkfhyj97FK5H4XrEP5qZmZmZmak\u002f7FG4HoXrwT9xPQrXo3DdP+xRuB6F67E\u002fMzMzMzMz0z+4HoXrUbieP8P1KFyPwtU\u002fKVyPwvUovD8AAAAAAAAAAHsUrkfhesQ\u002fCtejcD0Kxz\u002f2KFyPwvXgP6RwPQrXo8A\u002fexSuR+F6tD97FK5H4XqEP7gehetRuJ4\u002fKVyPwvUovD\u002fXo3A9CtfTP3sUrkfheqQ\u002fAAAAAAAAAACamZmZmZmpP3sUrkfhepQ\u002fAAAAAAAA8D+4HoXrUbieP3sUrkfhepQ\u002fKVyPwvUovD+uR+F6FK7XP6RwPQrXo9A\u002fpHA9CtejwD97FK5H4Xq0P7gehetRuL4\u002fexSuR+F6hD97FK5H4XqEPwrXo3A9Crc\u002fKVyPwvUozD97FK5H4XqUP5qZmZmZmak\u002fexSuR+F6hD+4HoXrUbieP+F6FK5H4co\u002fmpmZmZmZqT+4HoXrUbiePylcj8L1KLw\u002fMzMzMzMzwz97FK5H4Xq0P3sUrkfheqQ\u002fexSuR+F6hD8AAAAAAAAAAArXo3A9Csc\u002fmpmZmZmZqT+4HoXrUbieP+xRuB6F68E\u002fexSuR+F6hD8AAAAAAAAAAHsUrkfhesQ\u002fmpmZmZmZqT8AAAAAAAAAAAAAAAAAAOA\u002fAAAAAAAAAAC4HoXrUbiePwAAAAAAAPA\u002fKVyPwvUovD+amZmZmZmpP5qZmZmZmdk\u002f7FG4HoXrwT+amZmZmZnJPylcj8L1KLw\u002fexSuR+F6lD97FK5H4XqEP7gehetRuJ4\u002fexSuR+F6hD+4HoXrUbiePwAAAAAAAAAAuB6F61G4nj97FK5H4XqEP7gehetRuL4\u002fCtejcD0Ktz8AAAAAAAAAAJqZmZmZmak\u002fmpmZmZmZqT8K16NwPQrHPzMzMzMzM8M\u002fuB6F61G4nj\u002fsUbgeheuxP3sUrkfhepQ\u002fexSuR+F6hD\u002fsUbgehevBP3sUrkfheqQ\u002fCtejcD0Ktz+4HoXrUbieP3sUrkfheqQ\u002f7FG4HoXrwT9I4XoUrkfRPwAAAAAAAAAACtejcD0Ktz+amZmZmZm5P3sUrkfhepQ\u002fKVyPwvUovD8AAAAAAADwP3sUrkfherQ\u002fexSuR+F6hD8zMzMzMzPDPwrXo3A9Ctc\u002fpHA9CtejwD+amZmZmZnJP5qZmZmZmck\u002fuB6F61G4zj8pXI\u002fC9Si8P+xRuB6F67E\u002f7FG4HoXrsT+kcD0K16PAPwAAAAAAAAAAexSuR+F6tD8AAAAAAAAAAKRwPQrXo8A\u002fpHA9Ctej0D97FK5H4Xq0P+xRuB6F67E\u002fCtejcD0Kxz+4HoXrUbi+P+F6FK5H4eI\u002fKVyPwvUovD\u002fsUbgeheuxP3sUrkfheqQ\u002fMzMzMzMzwz8zMzMzMzPDPylcj8L1KLw\u002fAAAAAAAAAAB7FK5H4XqEPwrXo3A9Crc\u002fAAAAAAAAAACamZmZmZmpP7gehetRuL4\u002fKVyPwvUovD+amZmZmZmpP3sUrkfherQ\u002fAAAAAAAA8D97FK5H4XqEP+xRuB6F67E\u002fexSuR+F6pD\u002fhehSuR+HKP+xRuB6F67E\u002fexSuR+F6pD+amZmZmZmpP5qZmZmZmbk\u002fCtejcD0Kxz+amZmZmZmpP3sUrkfheoQ\u002fexSuR+F6hD+amZmZmZm5Pylcj8L1KNw\u002fAAAAAAAAAAAK16NwPQrHPylcj8L1KLw\u002fAAAAAAAA0D8pXI\u002fC9Si8P3sUrkfherQ\u002fexSuR+F6pD\u002fsUbgeheuxP5qZmZmZmdk\u002fexSuR+F6tD+4HoXrUbieP7gehetRuK4\u002fexSuR+F6lD8K16NwPQq3P5qZmZmZmdk\u002fmpmZmZmZqT97FK5H4XqEP5qZmZmZmck\u002fAAAAAAAAAACuR+F6FK7XP5qZmZmZmdk\u002fexSuR+F6hD97FK5H4XqEPwAAAAAAAPA\u002fw\u002fUoXI\u002fC1T8zMzMzMzPDP5qZmZmZmck\u002fexSuR+F6hD97FK5H4XqEP5qZmZmZmak\u002fCtejcD0Ktz97FK5H4XqkP7gehetRuK4\u002fexSuR+F6hD97FK5H4XqEP3sUrkfhepQ\u002fAAAAAAAA4D97FK5H4XqUP3sUrkfheoQ\u002fuB6F61G4nj+PwvUoXI\u002fSPwAAAAAAAAAA7FG4HoXrsT8K16NwPQq3P5qZmZmZmak\u002fuB6F61G4zj8pXI\u002fC9Si8PwAAAAAAAAAAKVyPwvUovD8AAAAAAAAAALgehetRuJ4\u002fcT0K16Nw3T\u002fhehSuR+HKPwAAAAAAAAAA7FG4HoXrsT+kcD0K16PAP6RwPQrXo9A\u002f7FG4HoXrwT8zMzMzMzPDP+xRuB6F67E\u002fw\u002fUoXI\u002fC1T8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArXo3A9Crc\u002fexSuR+F6hD97FK5H4XqkP+xRuB6F68E\u002fexSuR+F6xD9xPQrXo3DNP3sUrkfherQ\u002fUrgehetR2D\u002fsUbgeheuxP3sUrkfheoQ\u002fmpmZmZmZuT\u002fsUbgeheuxPylcj8L1KMw\u002fexSuR+F6xD97FK5H4XqEP3sUrkfhesQ\u002fuB6F61G4nj97FK5H4XqEP83MzMzMzNw\u002fmpmZmZmZuT8K16NwPQq3P3sUrkfheqQ\u002fuB6F61G4nj97FK5H4XqkP6RwPQrXo8A\u002fAAAAAAAAAACkcD0K16PAP3sUrkfheqQ\u002fpHA9CtejwD+amZmZmZnJPwrXo3A9Ctc\u002fexSuR+F6pD8zMzMzMzPDPwAAAAAAAAAAAAAAAAAA8D8=","shape":"37, 37"},"textfont":{"size":8},"texttemplate":"%{text:.2f}","x":["wkblk","wknwy","wkna8","wkona","wkspr","wkxbq","wkxcr","wkxbp","whxbp","wxqsq","cntxt","dsopp","dwipd","hdchk","katri","mulch","qxmsq","r2ar8","reskd","reskr","rimmx","rkxwp","rxmsq","simpl","skach","skewr","skrxp","spcop","stlmt","thrsk","bkcti","bkna8","bknck","bkovl","bkpos","btoeg","class"],"y":["wkblk","wknwy","wkna8","wkona","wkspr","wkxbq","wkxcr","wkxbp","whxbp","wxqsq","cntxt","dsopp","dwipd","hdchk","katri","mulch","qxmsq","r2ar8","reskd","reskr","rimmx","rkxwp","rxmsq","simpl","skach","skewr","skrxp","spcop","stlmt","thrsk","bkcti","bkna8","bknck","bkovl","bkpos","btoeg","class"],"z":{"dtype":"f8","bdata":"1JoidxXz7z8AAAAAAAAAAMZA\u002fTJ0d8U\u002fMomXa0ufrT\u002fpRAQx8quiP0aAZy+6eaA\u002fJpsjdqH8vT\u002fmoU8jSUW\u002fP\u002f5ZX85RCK4\u002fRitDNXNJqD8nbgFTLPvUP\u002fqY8ct5m7A\u002fBsp7fkpBiz8Knuf1VdvHP8ymlCbnidg\u002fTl0TUUX0lz8JDMlI68eiP0hVSM6kHLE\u002fMGXqYGE5mz8AAAAAAAAAAERyPdBbBcE\u002fkjJyqeIhqD\u002fCxCVCYkGRP28ZrhX0j7Y\u002fVf2wr3zYcj\u002f4ZBkzCQzOP4XHb8EPTbY\u002fhcWGmeJUlj\u002fWW2clkKGuPxO0Y\u002fYiwJo\u002fhOmPhsWDpD8HwqVu7C61P2mSwhovt7s\u002fbw7grvc5wD9\u002fpvVOmE3KPwSgGDYE18k\u002fgeNsOgAGIj8AAAAAAAAAAPBYpLlq7O8\u002fAAAAAAAAAAB2xo8IooimPwRcz2OsIcI\u002fJaWDhqTzpj+uwxKgH5vKPwT0qL9yZcI\u002figCQTr0PtD83D0PKvWyrPzioQ7Q7AXA\u002fnfrtMsCwoj\u002fY4MmGkwvDP58MSyRjhb0\u002fRKY8nNP4rD9ZQghPKLbWP9WMHqdIGqc\u002fSxtvXHpk0D9fbkydVJyiP7P2BH4t38A\u002fHyEvqIg9uj+9XyaX9myaP7b8Dxc8sLA\u002fkP9B3MVPVj+fCdzzDHl3P9woimxX640\u002fHldHKgyJmj8AAAAAAAAAAE462WKUOZ0\u002fzNt6\u002fQGatT\u002fNa9XJeIjBPy7cIgP75r8\u002fg2WeausZlT\u002fME8RVhDLJP\u002fkHdTrNtbA\u002f1asuldWzdj\u002fj8oajGhdkP8ZA\u002fTJ0d8U\u002fAAAAAAAAAACSxCn6iNzvP1M39j5bpq0\u002f6A2SRXADWT+5LYzAlD2mP+RvA0MensI\u002fFekW0Jxgrz9L7\u002fyCfOuFP+XovYdNR7M\u002fUxR0EwpOhj9jK6W6tAupP1JpDS+FkqQ\u002fkRb9pv5hxT8hIQxykGi2PzHHfStRfpw\u002fDFY5w8benj+ayuLh\u002fBaiP8B0VCTu3oE\u002fxA0Y6QQ\u002fpD\u002fPCeNAC0itP+zC\u002fvprxrg\u002f+gEMnugbpz+BZls64+\u002fPPwAAAAAAAAAA0Mj4gPfycj9NCMv0CD60PwAAAAAAAAAAAAAAAAAAAAA36aSdXzujP5DnJXCOS64\u002fPP21kLm6fz+ASQnpdsuEP2dAHN+Pp8k\u002fYtK7rbHtoz\u002fylHsQDUyOPxQZth196rY\u002fMomXa0ufrT92xo8IooimP1M39j5bpq0\u002fCIEstNrx7z8cM33dr+3AP\u002fY0ds4Djsg\u002fp7ItApr9oD+bKE\u002fHITu0P1VT1fvMMXo\u002fvS0h7zPolz\u002flRPdSxJOYP3vaaTRBmbg\u002fC2kVSP+FmD+UhlitimyzP3E2rqGLGoI\u002f4Zq63YMytz9aNnJTz8SsP0a4yc4H9rc\u002frUOu4gfehD\u002f+0\u002fykP2CNPywkwXLBK4Q\u002ft31QPCtEtT\u002fJT\u002fIVkou0P2LlDU3HJbA\u002fGQltaKJLmT\u002fymkg1YsafP10FWrmoZMQ\u002fAAAAAAAAAACjZ05XxXKYP+jpTAypW3k\u002fOMs0tiDxUj\u002f27g1kyix1P0genfwyYJ0\u002fm0RJBU3Azj91TnGJifurP1nCEREY7qk\u002f5CTGdjwYiD\u002fpRAQx8quiPwRcz2OsIcI\u002f6A2SRXADWT8cM33dr+3AP8njJb88+u8\u002fVTJZhvApnT+hjH8A4g3YP1ZUgiRYX9A\u002fSNvQYsw0yz84vz6O0pWbP+4pIgadVrk\u002fhx6xNY77zD9K33fn00+6Px9hvK2xZ6Y\u002fhLEiT\u002fWQtz\u002fmyWXa996uP9znkJZ+kb8\u002fa+Wmy5N1lT8tFo\u002f5de+uP5F3AUUBk74\u002fkbTLAa8HsD+ssiUfeYiiP6JNnm49JsY\u002fyvH\u002fR5vbrj\u002fkZYMJr2aiP4Ulsxtrsb4\u002fGYxidHb5sT8AAAAAAAAAABGpkLfDHac\u002fSqk9vtUIpD9wu7uVYi3FPzUFwyKHFrc\u002fgCKpHzXGhj9wWk7CIkC7P4UOG0fcv7o\u002f9551YBAYtj+WIS6pUIWjP0aAZy+6eaA\u002fJaWDhqTzpj+5LYzAlD2mP\u002fY0ds4Djsg\u002fVjJZhvApnT9H0Yew1\u002frvP1jtU+abT7M\u002fmt4HHU7HdT+PG2+RDZSZP9K4HhtflbE\u002fMJRAKenWjT8f32oszm+6Py+LlKyGP5g\u002fFfzDbnktrj9We9zJPH6zP59I7LvwKIs\u002frj98s5iztj\u002fLwbKvEmGUPyBBHjNp85E\u002fXHTidU52tT9bWVmjVa+YP9viCTMWPKo\u002fuobHR0eYuz\u002f57LctCbSQP2cY0v\u002f2Q5E\u002fuGnrbp7wrD+N9Koezl6UPwAAAAAAAAAARMmlhK9EvD\u002fv\u002fEwGHNa8P70Lp9AmcaM\u002fLzjCHXxTzD+3\u002f78bHjCbP9JuwTvf\u002frE\u002f5wj\u002f3zKJxj+7EClfVJSkPzsV3zVu0ME\u002fJpsjdqH8vT+uwxKgH5vKP+RvA0MensI\u002fp7ItApr9oD+hjH8A4g3YP1jtU+abT7M\u002fKHSyOHr67z\u002fdaL3fbwPiP52T+FPS49Y\u002fEZdIMqQmtz\u002fjzYJk8A23P+8qDhlES7o\u002f0gkE2Lzsoz\u002f8ARQ6jWCTP7Fg0\u002flV0KY\u002fiMfJQb91oz\u002fh1ZkgtT24PyyT+1KDq7k\u002f0x\u002f8SGqxsD8zYH5DqU1cPy5e3v7cz9A\u002fR5OAAWHslj9gPY9wxQmePzPpgoXNIKI\u002frqb8Rc8GpD\u002fqdBN5F6a0P9CMJEy1rKk\u002fAAAAAAAAAABILyv7MUW5P6nRKuWGLsA\u002fe2LR9pRQyz+yEdxwCMiPP190VDIWuFE\u002fZQs4DKOnsj\u002fB33mrxEunPzfN+qONka0\u002fqkkbiQXjxD\u002fmoU8jSUW\u002fPwT0qL9yZcI\u002fFekW0Jxgrz+bKE\u002fHITu0P1ZUgiRYX9A\u002fmt4HHU7HdT\u002fdaL3fbwPiPxHwsP55+O8\u002fbdktfiyF5T8AFJHcRHbQP39cpquD9aI\u002f3SMh1tlDvD9H2cWRko6lP6DBDpCiEJQ\u002fnTq0B9vZjT9orszJOjh1P00b3bRNM7Y\u002f4fhsG1tGsT8MlGDBL06mPyNWfzd1XZI\u002f\u002fSPMKY8HyT8oq2LnaU6iPyUMNFU0\u002faw\u002f\u002fDa1iXkhtD+NaYdo9h+ZP16vrtsR2Z8\u002fW\u002fMEfsmnYD8AAAAAAAAAAD9FMpdffqI\u002fHASBrkwmuD+LEKUy4f7EP+rmpghuOKc\u002fFgXcL5tyoD\u002fu1lebYfrAP2rl6BYydYQ\u002fxaJJeoBdij+KPi8fErfNP\u002f5ZX85RCK4\u002figCQTr0PtD9L7\u002fyCfOuFP1VT1fvMMXo\u002fSNvQYsw0yz+PG2+RDZSZP52T+FPS49Y\u002fbdktfiyF5T8d\u002fbEZkPrvPw2LZnJxn1U\u002fWzVTcpTeoz87eKUw\u002flWsP958yagL0Y0\u002fF4C2wqxPpD80i7Gq31WgPwAAAAAAAAAAWGdYujiWtD+bW5KaAKG0P+mRyjiYJ6s\u002fhPDvr5Bzrz+r5JRZhX+2PwUlzIUraOQ\u002fRFwwhM1srz8F5KUGfsC1P4GBnfxWw6Q\u002fdjhYR0T9gj+tG7aqLFmaPwAAAAAAAAAAudWc0o88pD+Uib1MHoywP296JrKgWqo\u002fpHohL2Kwhz93VX5nV6p+P8BnybmAAyQ\u002fe2JI2gopfD94h3zGFI6HP8Zee1mFo7U\u002fRitDNXNJqD83D0PKvWyrP+XovYdNR7M\u002fvS0h7zPolz84vz6O0pWbP9K4HhtflbE\u002fEZdIMqQmtz8AFJHcRHbQPw6LZnJxn1U\u002fYDhF1vD57z8AAAAAAAAAAD7vMuBGRoA\u002fBcvWN+bxrz\u002fv8R7Vja2kP1s+LphCQZc\u002fRdKjnjO5gj\u002fFWodU\u002fnSqP0nbQJDaCr0\u002f5xpZll2xrD9OJ+GGZYJgP1vByKIBkbY\u002f16\u002fTtm4T0T84+djtEOoyP7i8fKK\u002fQbk\u002f8Wyjf0vplT\u002fHgfzv\u002f+aIPxGzbJ+OlrA\u002fAAAAAAAAAACwpIuIr0ysP183ZDZOC74\u002fZGD8VnhiwT808XdSD5udP3O4nYsrnL4\u002fNZaarKwVtD8tAeUxxzy5P\u002f7JkTD8RpY\u002fQeAAgWtI2D8nbgFTLPvUPzioQ7Q7AXA\u002fUxR0EwpOhj\u002flRPdSxJOYP+4pIgadVrk\u002fMJRAKenWjT\u002fjzYJk8A23P39cpquD9aI\u002fWzVTcpTeoz8AAAAAAAAAAAmV94TG+u8\u002fdqjs6luduj+oiFc7KGzDP7rmfvUEdYM\u002fZIlHosms3j9PbIJZepJsP\u002fVF5uCOhbI\u002fAAAAAAAAAAAFWtHIpBy2PzffD03Qp9Y\u002fHu7DHpyLtT81YfIJN8eHP474u1K1EKA\u002fF\u002fb\u002fP4gwhj93gyMo\u002f8avP5Y9LHpVhOI\u002flyOjjqHFlj8vy8BkFw1kP6p3HggTk7o\u002fR75puReIqz\u002fMiqYwQaXdPyCJpDgpqco\u002flBR2t4t7tj8AAAAAAAAAAGbx9bjDM9w\u002f\u002fePPk+\u002ff3z8siyqSNEexP\u002fqY8ct5m7A\u002fnfrtMsCwoj9jK6W6tAupP3vaaTRBmbg\u002fhx6xNY77zD8f32oszm+6P+8qDhlES7o\u002f3iMh1tlDvD87eKUw\u002flWsPz7vMuBGRoA\u002fdqjs6luduj+xvWaaYPLvP8C0GUNJ6XQ\u002fC72STec2jD8dt9iv42m2P2CGIKqFJqM\u002ffBK9SOrnvj9Vv7FaWNyjP\u002fIly2bd+Jk\u002fECVZ6ELEoT\u002fYh\u002fVBqw+jP5qzjb774p8\u002fv0FvAO9ezT8EjBe51ZawPwAAAAAAAAAAsHDC2DwOpj8CU32quhSbPwAAAAAAAAAAIQGwmnJqvT8AAAAAAAAAAPDatgo\u002fGbM\u002fTX1ETtt8qT\u002fbPbDFkKpfP+m1tTdGncA\u002fgW2LncOXcj9hWETCtY+ZP9hls1c9bY0\u002fBsp7fkpBiz\u002fY4MmGkwvDP1JpDS+FkqQ\u002fC2kVSP+FmD9K33fn00+6Py+LlKyGP5g\u002f0gkE2Lzsoz9H2cWRko6lP958yagL0Y0\u002fBcvWN+bxrz+oiFc7KGzDP8C0GUNJ6XQ\u002fipI\u002fWwL67z9LTTt90d+cP63AqqMMftE\u002f8kbumfCYtT+t6iNS6p20P\u002fC2JbO2W9k\u002fClNK8V4orT8xktnWkg3RP254HuWJQ8A\u002fBqNPeBRWez\u002fCuRlrwE7AP5T56UcoO3Y\u002fcF81Dvo2oT8VPxHSbYSuP\u002fkJDpdpeXU\u002fAAAAAAAAAAD\u002f7Sxqkd2HPzfmIcNUc7M\u002fiDlXYEt80z+5nJ\u002faoeihP\u002f2Nyf3G66k\u002fCJM3Q2V\u002f0D9ZTjRg3pTHP7\u002fyHBaWOYk\u002fLz+0IY1QuT8Knuf1VdvHP58MSyRjhb0\u002fkRb9pv5hxT+UhlitimyzPx9hvK2xZ6Y\u002fFfzDbnktrj\u002f8ARQ6jWCTP6DBDpCiEJQ\u002fF4C2wqxPpD\u002fv8R7Vja2kP7rmfvUEdYM\u002fC72STec2jD9LTTt90d+cP5UEzkul7e4\u002f2sorRoIttz8N+LBWTpDKPwAAAAAAAAAAmXeIgLMypT8AAAAAAAAAABnb95aD62g\u002fECuNaxwvmz\u002fM0O9ESFSdP6SGlEH+9nw\u002f5xlx1gAvoj8AAAAAAAAAAJ6GFWDZ1qQ\u002fzeI9L0t8ej8AAAAAAAAAAFjrfg206ag\u002f9PCloAKyaT963\u002fNBCXGaPyXN5WPGQL0\u002f7NtaVXwQqT+AF8JDjaC1Pz9Vb3Ag27s\u002f3z9Ai15poT\u002fiDMdxmjSxP8ymlCbnidg\u002fRKY8nNP4rD8gIQxykGi2P3E2rqGLGoI\u002fhLEiT\u002fWQtz9Xe9zJPH6zP7Fg0\u002flV0KY\u002fnjq0B9vZjT80i7Gq31WgP1s+LphCQZc\u002fZYlHosms3j8dt9iv42m2P63AqqMMftE\u002f2sorRoIttz8AAAAAAADwP8M+OBfCwKA\u002fZP8n2eL2pD8UJ5Jc\u002fafGP3g0j7zqZrg\u002f3Hekj7n+1D\u002f4xTP0jxbGP6ODFYmDtps\u002fictVzoNzuT9kXZTd6synP6jmdiIv\u002fp4\u002fFd7BdV7r1T\u002fPc9W7\u002fw2wPy3AbEY7f7A\u002fEOyv8ca+wD8A\u002fyNu7vCkPyWuEhtgh9U\u002fM47C9v7Cwj+iRIS0pZ3HP3LKAoIi3rI\u002f1UCB3xm4zz82xh6jC9\u002fSPwN+tERcH8w\u002fTl0TUUX0lz9ZQghPKLbWPzHHfStRfpw\u002f4Zq63YMytz\u002fmyWXa996uP59I7LvwKIs\u002fiMfJQb91oz9orszJOjh1PwAAAAAAAAAARNKjnjO5gj9PbIJZepJsP2CGIKqFJqM\u002f8kbumfCYtT8N+LBWTpDKP8M+OBfCwKA\u002fR7bCbmXk7z\u002flMNK2S1qiP277Eq4nKKk\u002f3cbFfEFglD84XrImWL+0P3nYdcJt044\u002fK3qPfNDYeT+fNNsY4PuqPz6qoziOLpg\u002fHo1aJ8VzmD9MRH8aljCBP1ztml6DRbA\u002fAAAAAAAAAAAAAAAAAAAAAAqm+cDybYs\u002fUqq1OmY1uz\u002fzZricH4qzP9+ObzwCq8M\u002fmZ3oPeXdxj89vqcJG5C8PwAAAAAAAAAAMzVV78AUxD8JDMlI68eiP9WMHqdIGqc\u002fDFY5w8benj9aNnJTz8SsP9znkJZ+kb8\u002frj98s5iztj\u002fh1ZkgtT24P00b3bRNM7Y\u002fWGdYujiWtD\u002fFWodU\u002fnSqP\u002fVF5uCOhbI\u002ffBK9SOrnvj+s6iNS6p20PwAAAAAAAAAAZP8n2eL2pD\u002flMNK2S1qiP9vyI5Rz1O8\u002fj+wW2IMEuD8oa0f+bwt4PzQ5stF2xJo\u002fCTGYJVl1oT\u002fjOBapUfuWP7QSyHeiUOA\u002fBXk24rfmrT8AAAAAAAAAAF\u002fYAEsaPZU\u002fyfRdoM6\u002foz8AAAAAAAAAAPxozuj5v4w\u002f1xmtAoTIoD8AAAAAAAAAAMn0XaDOv6M\u002fwBkJm7\u002feoT9Um4BLG4y9P+yVWCpZebU\u002fnrmD7fe5sD+eHhv9sEaFP0hVSM6kHLE\u002fSxtvXHpk0D+ayuLh\u002fBaiP0a4yc4H9rc\u002fa+Wmy5N1lT\u002fLwbKvEmGUPyyT+1KDq7k\u002f4fhsG1tGsT+bW5KaAKG0P0nbQJDaCr0\u002fAAAAAAAAAABVv7FaWNyjP\u002fC2JbO2W9k\u002fmXeIgLMypT8UJ5Jc\u002fafGP277Eq4nKKk\u002fj+wW2IMEuD8pEi3uCfrvP3G\u002fi96XssA\u002fJjY1yRvHvT\u002fSR\u002f7xGozKP2ZXdFntM7c\u002fmTD7xwzLvz\u002fZfpfay8rAP62+WmYr+UU\u002f08d4T+7HlD9B97aCBcqyPwAAAAAAAAAA2hUA1ugkmD+OjcTB\u002fxbEP2I4hTxDisQ\u002fNBbc\u002fInaiT+ODaYg3ZyyP8rdwyjc3+I\u002fbsvrZxbZpj\u002fnQPfPgkm2P8JBk6UR+cQ\u002fMGXqYGE5mz9fbkydVJyiP8B0VCTu3oE\u002frUOu4gfehD8tFo\u002f5de+uPyBBHjNp85E\u002f0x\u002f8SGqxsD8MlGDBL06mP+mRyjiYJ6s\u002f5xpZll2xrD8FWtHIpBy2P\u002fIly2bd+Jk\u002fClNK8V4orT8AAAAAAAAAAHg0j7zqZrg\u002f3cbFfEFglD8oa0f+bwt4P3G\u002fi96XssA\u002fLhduXyth7z+HqddBjdGmP6demuwtnqM\u002flh0mwnUfmD8aqz8rsVuOP+jbJG2gkbw\u002fAAAAAAAAAACWxroX4+asPwAAAAAAAAAAAAAAAAAAAADtUh87eeNrP0dltBXRv8Q\u002f1ikk\u002fxVDxz8fBBnzvSZTP0c7VU0Gs5g\u002fAHa0VQQzvT\u002f4gRwXo02xP4ktO9DOeqg\u002fC1S9mUICnD8AAAAAAAAAALP2BH4t38A\u002fxA0Y6QQ\u002fpD\u002f+0\u002fykP2CNP5F3AUUBk74\u002fXHTidU52tT8zYH5DqU1cPyJWfzd1XZI\u002fhPDvr5Bzrz9OJ+GGZYJgPzffD03Qp9Y\u002fECVZ6ELEoT8xktnWkg3RPxnb95aD62g\u002f23ekj7n+1D84XrImWL+0PzQ5stF2xJo\u002fJjY1yRvHvT+HqddBjdGmP7E+SCz+9e8\u002f5mJTyn8zsj8PZ1Su82S7P4LvetDq4pI\u002fG93P1rPwoz+zSFs5QLelP9+Rai8Y4NE\u002fQKohaT0qkD8AAAAAAAAAAGBBvmQ88Lg\u002fVT0SUt0oCD+nudyJ9tDgP\u002fdBK5xlrsY\u002fJymIy84yhz8No2piYsGwP21sbStEd9k\u002fZB9TAQDBzj+jr0ttRjB7P0RyPdBbBcE\u002fHyEvqIg9uj\u002fPCeNAC0itPywkwXLBK4Q\u002fkbTLAa8HsD9bWVmjVa+YPy5e3v7cz9A\u002f\u002fSPMKY8HyT+r5JRZhX+2P1vByKIBkbY\u002fHu7DHpyLtT\u002fYh\u002fVBqw+jP254HuWJQ8A\u002fECuNaxwvmz\u002f4xTP0jxbGP3nYdcJt044\u002fCTGYJVl1oT\u002fSR\u002f7xGozKP6demuwtnqM\u002f5mJTyn8zsj8M9CkMa\u002ffvP+HZTGpeb6k\u002fQWhdAgF3tD9OcZL4P3CiP\u002f5Wqpt3YJU\u002fUW\u002fihWjCvj\u002fDqdVfyDF2PwAAAAAAAAAAGf7lZd3aqz+vQeddRDS1P4l3hO\u002fMXsA\u002f0hddoWRhqj8oeWhStYXBP3gOxW1PyaQ\u002f7x1yZUWysz9+gC5rwgm8P9Ni+xPx5Nw\u002fkjJyqeIhqD+9XyaX9myaP+zC\u002fvprxrg\u002ft31QPCtEtT+ssiUfeYiiP9viCTMWPKo\u002fSJOAAWHslj8oq2LnaU6iPwUlzIUraOQ\u002f16\u002fTtm4T0T81YfIJN8eHP5mzjb774p8\u002fBqNPeBRWez\u002fM0O9ESFSdP6ODFYmDtps\u002fK3qPfNDYeT\u002fjOBapUfuWP2ZXdFntM7c\u002flh0mwnUfmD8PZ1Su82S7P+HZTGpeb6k\u002fSlLnW\u002f\u002f37z8epncTd7uRP\u002fcrbjyc87I\u002f821qpgxHlz+RZjoBsA6lPzdU0M+DjaI\u002fAAAAAAAAAAAs5dZo40F4P2daSjXrFXQ\u002fT2xFx9kstT\u002fbbfqFR8KdPyTVUuvAcaY\u002fqkn2oi\u002f3wj+oq7\u002fj4VObPwAAAAAAAAAA\u002fwIBHynCuT\u002fCxCVCYkGRP7b8Dxc8sLA\u002f+gEMnugbpz\u002fJT\u002fIVkou0P6JNnm49JsY\u002fuobHR0eYuz9gPY9wxQmePyUMNFU0\u002faw\u002fQ1wwhM1srz84+djtEOoyP474u1K1EKA\u002fv0FvAO9ezT\u002fDuRlrwE7AP6SGlEH+9nw\u002fictVzoNzuT+fNNsY4PuqP7QSyHeiUOA\u002fmTD7xwzLvz8aqz8rsVuOP4LvetDq4pI\u002fQWhdAgF3tD8epncTd7uRP4GgKg9C6O8\u002fP0iOu+SLuj+VkhGN1nVoPxX+jbhVZ7I\u002fy+MsSq\u002farD8AAAAAAAAAACM\u002fpHArEsg\u002faDRLsLXkqD9HlmtnLMV6P\u002fmELVRZjMI\u002fUOvcHD1gtz9uJfn05xvDPxjyfp4w2K4\u002fjB2W+u25uz\u002fhCMPjqCG2P28ZrhX0j7Y\u002fkP9B3MVPVj+BZls64+\u002fPP2LlDU3HJbA\u002fyvH\u002fR5vbrj\u002f57LctCbSQPzPpgoXNIKI\u002f\u002fDa1iXkhtD8F5KUGfsC1P7i8fKK\u002fQbk\u002fF\u002fb\u002fP4gwhj8EjBe51ZawP5T56UcoO3Y\u002f5xlx1gAvoj9kXZTd6synPz6qoziOLpg\u002fBXk24rfmrT\u002fZfpfay8rAP+jbJG2gkbw\u002fG93P1rPwoz9OcZL4P3CiP\u002fcrbjyc87I\u002fP0iOu+SLuj\u002fAgXRKkvrvP7nlj7QrOI0\u002fwzfEAR3Ajz9\u002fYxKtocWjPxkn2+qll3E\u002fTkbWAOLmfz+i\u002fByttk+3P1SjLEYYgZ4\u002fsIxGT0kehT+0up\u002fEt6ugP1fltplHX7s\u002fCchX\u002fjZQlD8PLea+dptnP\u002f2MfYkZBac\u002fVf2wr3zYcj+fCdzzDHl3PwAAAAAAAAAAGQltaKJLmT\u002fkZYMJr2aiP2cY0v\u002f2Q5E\u002frqb8Rc8GpD+NaYdo9h+ZP4GBnfxWw6Q\u002f8Wyjf0vplT93gyMo\u002f8avPwAAAAAAAAAAcF81Dvo2oT8AAAAAAAAAAKjmdiIv\u002fp4\u002fHo1aJ8VzmD8AAAAAAAAAAK6+WmYr+UU\u002fAAAAAAAAAACzSFs5QLelP\u002f5Wqpt3YJU\u002f821qpgxHlz+VkhGN1nVoP7nlj7QrOI0\u002fCVOUr1mK7j\u002fXmJJ\u002fIQuhP7A2oxKVcb0\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAx5uqU2AWuz\u002fnn2Lt265jPwASVC\u002fuw6I\u002fnowOw0p1cj9tVPIzR223P4aFd9NCHJw\u002f+Zp9\u002fEnEoT\u002f4ZBkzCQzOP9woimxX640\u002f0Mj4gPfycj\u002fymkg1YsafP4Ulsxtrsb4\u002fuGnrbp7wrD\u002fqdBN5F6a0P16vrtsR2Z8\u002fdjhYR0T9gj\u002fHgfzv\u002f+aIP5Y9LHpVhOI\u002fr3DC2DwOpj8WPxHSbYSuP56GFWDZ1qQ\u002fFd7BdV7r1T9MRH8aljCBP1\u002fYAEsaPZU\u002f08d4T+7HlD+WxroX4+asP9+Rai8Y4NE\u002fUW\u002fihWjCvj+RZjoBsA6lPxX+jbhVZ7I\u002fxDfEAR3Ajz\u002fXmJJ\u002fIQuhP7DEItf4+e8\u002f7w91\u002f+ZBtT8AAAAAAAAAACgdGRStE7Q\u002fZxHBoQaWoj\u002fo12YKgarTP9o2CCDYS8Q\u002fhiPGuvpWwT9A\u002fuocWACBPx14R3oDl9k\u002fDYFSQTYq3T97SEyKbJeiP4XHb8EPTbY\u002fHldHKgyJmj9NCMv0CD60P10FWrmoZMQ\u002fGYxidHb5sT+N9Koezl6UP9CMJEy1rKk\u002fW\u002fMEfsmnYD+tG7aqLFmaPxGzbJ+OlrA\u002flyOjjqHFlj8CU32quhSbP\u002fkJDpdpeXU\u002fzeI9L0t8ej\u002fPc9W7\u002fw2wP1ztml6DRbA\u002fyfRdoM6\u002foz9B97aCBcqyPwAAAAAAAAAAQKohaT0qkD\u002fDqdVfyDF2PzdU0M+DjaI\u002fy+MsSq\u002farD9\u002fYxKtocWjP7A2oxKVcb0\u002f7w91\u002f+ZBtT\u002f9YJ4KPefvPwAAAAAAAAAAIRdufYJCmD8KCHfoADbKP3\u002f39sdgf6M\u002fnHFcYYgcrD\u002fGa1kku3DRP8U7t68IJLY\u002fEiEi4zsNqD+TCiaGK0DKP1+MEyBShsA\u002fhcWGmeJUlj8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvy8BkFw1kPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC3AbEY7f7A\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgn2+qll3E\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgCdJnW\u002f93z8AAAAAAAAAALcSM8s6h6Q\u002fAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI8MLOxSiDPwAAAAAAAAAAYRsbdlLIST\u002fWW2clkKGuP0462WKUOZ0\u002fAAAAAAAAAACjZ05XxXKYPxGpkLfDHac\u002fRMmlhK9EvD9ILyv7MUW5Pz9FMpdffqI\u002fudWc0o88pD+wpIuIr0ysP6p3HggTk7o\u002fIQGwmnJqvT\u002f\u002f7Sxqkd2HP1jrfg206ag\u002fEOyv8ca+wD8AAAAAAAAAAPxozuj5v4w\u002f2hUA1ugkmD\u002ftUh87eeNrP2BBvmQ88Lg\u002fGf7lZd3aqz8s5dZo40F4PyM\u002fpHArEsg\u002fTkbWAOLmfz8AAAAAAAAAACgdGRStE7Q\u002fIRdufYJCmD8AAAAAAAAAADX7puKMp+8\u002f59Z5vKtfej9+wN3eAT6rP4p\u002frjxvD+A\u002foToPDUXCtz8mG87rdX6rP5RAAfYElck\u002fzopHjnIisT9CRsj4\u002fAPAPxO0Y\u002fYiwJo\u002fzNt6\u002fQGatT836aSdXzujP+jpTAypW3k\u002fSqk9vtUIpD\u002fv\u002fEwGHNa8P6nRKuWGLsA\u002fHASBrkwmuD+Uib1MHoywP183ZDZOC74\u002fR75puReIqz8AAAAAAAAAADfmIcNUc7M\u002f9PCloAKyaT8A\u002fyNu7vCkPwqm+cDybYs\u002f1xmtAoTIoD+OjcTB\u002fxbEP0dltBXRv8Q\u002fVT0SUt0oCD+vQeddRDS1P2daSjXrFXQ\u002faDRLsLXkqD+i\u002fByttk+3PwAAAAAAAAAAZxHBoQaWoj8KCHfoADbKP7cSM8s6h6Q\u002f59Z5vKtfej81i+A1i+DvPzEkYogUjJI\u002fAAAAAAAAAABCw2AFLUu5P4dkxr+LTL4\u002fVQrhqReBUD9M2t3OEojAP5K6ZUPa06M\u002fhOmPhsWDpD\u002fNa9XJeIjBP5DnJXCOS64\u002fOMs0tiDxUj9wu7uVYi3FP70Lp9AmcaM\u002fe2LR9pRQyz+LEKUy4f7EP296JrKgWqo\u002fZGD8VnhiwT\u002fMiqYwQaXdP\u002fDatgo\u002fGbM\u002fiDlXYEt80z963\u002fNBCXGaPyWuEhtgh9U\u002fUqq1OmY1uz8AAAAAAAAAAGI4hTxDisQ\u002f1ikk\u002fxVDxz+nudyJ9tDgP4l3hO\u002fMXsA\u002fT2xFx9kstT9HlmtnLMV6P1SjLEYYgZ4\u002fx5uqU2AWuz\u002fo12YKgarTP3\u002f39sdgf6M\u002fAAAAAAAAAAB+wN3eAT6rPzEkYogUjJI\u002fwCwUkTH37z+apsTL1qahP5WTH3iZpZg\u002fNGIea2ZevD8ANRtH\u002f\u002f7XPyd+n\u002fFc69A\u002f+DdENlIRwD8HwqVu7C61Py7cIgP75r8\u002fPP21kLm6fz\u002f27g1kyix1PzUFwyKHFrc\u002fLzjCHXxTzD+yEdxwCMiPP+rmpghuOKc\u002fpHohL2Kwhz808XdSD5udPyCJpDgpqco\u002fTX1ETtt8qT+5nJ\u002faoeihPyXN5WPGQL0\u002fM47C9v7Cwj\u002fzZricH4qzP8n0XaDOv6M\u002fNBbc\u002fInaiT8fBBnzvSZTP\u002fdBK5xlrsY\u002f0hddoWRhqj\u002fbbfqFR8KdP\u002fmELVRZjMI\u002fr4xGT0kehT\u002fnn2Lt265jP9o2CCDYS8Q\u002fnHFcYYgcrD8AAAAAAAAAAIp\u002frjxvD+A\u002fAAAAAAAAAACapsTL1qahP\u002f1gngo95+8\u002fM3WLpbYzvD8Me16\u002fxxqrP6gqYmdseNk\u002ftvkpeB5vwT9imr7gqPvIP2mSwhovt7s\u002fg2WeausZlT+ASQnpdsuEP0cenfwyYJ0\u002fgCKpHzXGhj+3\u002f78bHjCbP190VDIWuFE\u002fFgXcL5tyoD93VX5nV6p+P3O4nYsrnL4\u002flBR2t4t7tj\u002fbPbDFkKpfP\u002f2Nyf3G66k\u002f7NtaVXwQqT+iRIS0pZ3HP9+ObzwCq8M\u002fwBkJm7\u002feoT+ODaYg3ZyyP0c7VU0Gs5g\u002fJymIy84yhz8oeWhStYXBPyTVUuvAcaY\u002fUOvcHD1gtz+0up\u002fEt6ugPwASVC\u002fuw6I\u002fhiPGuvpWwT\u002fGa1kku3DRPwAAAAAAAAAAoToPDUXCtz9Cw2AFLUu5P5WTH3iZpZg\u002fM3WLpbYzvD+avHhSjvrvP0srVq83VbM\u002fo+KC4DWRfD\u002fMZeq1AdHCP2uOuCztVdc\u002fbw7grvc5wD\u002fME8RVhDLJP2dAHN+Pp8k\u002fm0RJBU3Azj9wWk7CIkC7P9JuwTvf\u002frE\u002fZQs4DKOnsj\u002fu1lebYfrAP8BnybmAAyQ\u002fNZaarKwVtD8AAAAAAAAAAOm1tTdGncA\u002fCJM3Q2V\u002f0D9\u002fF8JDjaC1P3LKAoIi3rI\u002fmZ3oPeXdxj9Um4BLG4y9P8rdwyjc3+I\u002fAHa0VQQzvT8No2piYsGwP3kOxW1PyaQ\u002fqkn2oi\u002f3wj9uJfn05xvDP1fltplHX7s\u002fnowOw0p1cj9A\u002fuocWACBP8U7t68IJLY\u002fAAAAAAAAAAAmG87rdX6rP4dkxr+LTL4\u002fM2Iea2ZevD8Me16\u002fxxqrP0srVq83VbM\u002fwr6ppIP67z+YUQOxNrWNP8OVXBEg0rI\u002fTi0bI4FLpD+ApvVOmE3KP\u002fkHdTrNtbA\u002fYtK7rbHtoz91TnGJifurP4UOG0fcv7o\u002f5wj\u002f3zKJxj\u002fB33mrxEunP2rl6BYydYQ\u002fe2JI2gopfD8tAeUxxzy5P2bx9bjDM9w\u002fgm2LncOXcj9ZTjRg3pTHPz9Vb3Ag27s\u002f1kCB3xm4zz89vqcJG5C8P+yVWCpZebU\u002fbsvrZxbZpj\u002f4gRwXo02xP21sbStEd9k\u002f7x1yZUWysz+pq7\u002fj4VObPxjyfp4w2K4\u002fCchX\u002fjZQlD9tVPIzR223Px14R3oDl9k\u002fEiEi4zsNqD8J8MLOxSiDP5RAAfYElck\u002fVQrhqReBUD8ANRtH\u002f\u002f7XP6gqYmdseNk\u002fo+KC4DWRfD+YUQOxNrWNP\u002fSQRa1w+e8\u002fdy8unWYF1j+dFi8rtKrCPwSgGDYE18k\u002f1asuldWzdj\u002fylHsQDUyOP1nCEREY7qk\u002f9551YBAYtj+7EClfVJSkPzfN+qONka0\u002fxaJJeoBdij94h3zGFI6HP\u002f7JkTD8RpY\u002f\u002fePPk+\u002ff3z9hWETCtY+ZP7\u002fyHBaWOYk\u002f3z9Ai15poT82xh6jC9\u002fSPwAAAAAAAAAAnrmD7fe5sD\u002fnQPfPgkm2P4ktO9DOeqg\u002fZB9TAQDBzj9+gC5rwgm8PwAAAAAAAAAAjB2W+u25uz8PLea+dptnP4aFd9NCHJw\u002fDYFSQTYq3T+TCiaGK0DKPwAAAAAAAAAAzopHjnIisT9M2t3OEojAPyd+n\u002fFc69A\u002ftvkpeB5vwT\u002fMZeq1AdHCP8OVXBEg0rI\u002fdy8unWYF1j+IYspeG\u002fnvPwAAAAAAAAAAgeNsOgAGIj\u002fj8oajGhdkPxQZth196rY\u002f5CTGdjwYiD+WIS6pUIWjPzsV3zVu0ME\u002fqkkbiQXjxD+KPi8fErfNP8Zee1mFo7U\u002fP+AAgWtI2D8siyqSNEexP9hls1c9bY0\u002fLz+0IY1QuT\u002fiDMdxmjSxPwN+tERcH8w\u002fMzVV78AUxD+eHhv9sEaFP8JBk6UR+cQ\u002fC1S9mUICnD+jr0ttRjB7P9Ji+xPx5Nw\u002f\u002fwIBHynCuT\u002fhCMPjqCG2P\u002f2MfYkZBac\u002f+Zp9\u002fEnEoT97SEyKbJeiP1+MEyBShsA\u002fYRsbdlLIST9CRsj4\u002fAPAP5K6ZUPa06M\u002f+DdENlIRwD9imr7gqPvIP2uOuCztVdc\u002fTi0bI4FLpD+dFi8rtKrCPwAAAAAAAAAA5eUxC9367z8=","shape":"37, 37"},"zmax":1,"zmin":0,"type":"heatmap"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05}}},"xaxis":{"tickfont":{"size":8},"tickangle":90},"yaxis":{"tickfont":{"size":8}},"margin":{"l":50,"r":50,"t":80,"b":120},"title":{"text":"Matriz Cram\u00e9r's V - KRKPA7"},"height":700,"width":900},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('d3459a7a-1ce6-491d-afd6-8eb6c9c9f5f7');
+var gd = document.getElementById('b6b4f65e-4325-414c-a33e-46038cd5bc75');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -14135,9 +12914,9 @@ if (outputEl) {{
     x.observe(outputEl, {childList: true});
 }}
 
-                        })                };            </script>        </div></div><div class="output text_html"><div style="height:400px; width:700px;">            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                    <div id="9be1396d-adc0-4384-8455-9761ffd83f24" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("9be1396d-adc0-4384-8455-9761ffd83f24")) {                    Plotly.newPlot(                        "9be1396d-adc0-4384-8455-9761ffd83f24",                        [{"hovertemplate":"\u003cb\u003e%{y}\u003c\u002fb\u003e\u003cbr\u003eCram\u00e9r's V: %{x:.3f}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":{"dtype":"f8","bdata":"0mL7E\u002fHk3D8\u002f4ACBa0jYP2uOuCztVdc\u002fij4vHxK3zT8DfrREXB\u002fMPw=="},"coloraxis":"coloraxis","pattern":{"shape":""}},"name":"","orientation":"h","showlegend":false,"text":["0.451","0.379","0.365","0.232","0.220"],"textposition":"outside","x":{"dtype":"f8","bdata":"0mL7E\u002fHk3D8\u002f4ACBa0jYP2uOuCztVdc\u002fij4vHxK3zT8DfrREXB\u002fMPw=="},"xaxis":"x","y":["rimmx","wxqsq","bknck","wkxbp","katri"],"yaxis":"y","type":"bar","textfont":{"color":"black","size":13}}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Cram\u00e9r's V"},"range":[0,0.5],"tickformat":".3f","gridcolor":"#E5E5E5","zerolinecolor":"#E5E5E5"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":""},"autorange":"reversed","gridcolor":"#E5E5E5"},"coloraxis":{"colorbar":{"title":{"text":"Cram\u00e9r's V"},"tickfont":{"size":11}},"colorscale":[[0.0,"#A8D8EA"],[1.0,"#0D3B66"]],"autocolorscale":false},"legend":{"tracegroupgap":0},"title":{"text":"Top 5 variables m\u00e1s relacionadas con class"},"barmode":"relative","margin":{"l":10,"r":40,"t":60,"b":40},"height":400,"width":700,"showlegend":false,"plot_bgcolor":"white","paper_bgcolor":"white"},                        {"responsive": true}                    ).then(function(){
+                        })                };            </script>        </div></div><div class="output text_html"><div style="height:400px; width:700px;">            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script><script>if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                    <div id="46386f62-5eaf-4438-b2e0-a85cdcee68a1" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("46386f62-5eaf-4438-b2e0-a85cdcee68a1")) {                    Plotly.newPlot(                        "46386f62-5eaf-4438-b2e0-a85cdcee68a1",                        [{"hovertemplate":"\u003cb\u003e%{y}\u003c\u002fb\u003e\u003cbr\u003eCram\u00e9r's V: %{x:.3f}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":{"dtype":"f8","bdata":"0mL7E\u002fHk3D8\u002f4ACBa0jYP2uOuCztVdc\u002fij4vHxK3zT8DfrREXB\u002fMPw=="},"coloraxis":"coloraxis","pattern":{"shape":""}},"name":"","orientation":"h","showlegend":false,"text":["0.451","0.379","0.365","0.232","0.220"],"textposition":"outside","x":{"dtype":"f8","bdata":"0mL7E\u002fHk3D8\u002f4ACBa0jYP2uOuCztVdc\u002fij4vHxK3zT8DfrREXB\u002fMPw=="},"xaxis":"x","y":["rimmx","wxqsq","bknck","wkxbp","katri"],"yaxis":"y","type":"bar","textfont":{"color":"black","size":13}}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Cram\u00e9r's V"},"range":[0,0.5],"tickformat":".3f","gridcolor":"#E5E5E5","zerolinecolor":"#E5E5E5"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":""},"autorange":"reversed","gridcolor":"#E5E5E5"},"coloraxis":{"colorbar":{"title":{"text":"Cram\u00e9r's V"},"tickfont":{"size":11}},"colorscale":[[0.0,"#A8D8EA"],[1.0,"#0D3B66"]],"autocolorscale":false},"legend":{"tracegroupgap":0},"title":{"text":"Top 5 variables m\u00e1s relacionadas con class"},"barmode":"relative","margin":{"l":10,"r":40,"t":60,"b":40},"height":400,"width":700,"showlegend":false,"plot_bgcolor":"white","paper_bgcolor":"white"},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('9be1396d-adc0-4384-8455-9761ffd83f24');
+var gd = document.getElementById('46386f62-5eaf-4438-b2e0-a85cdcee68a1');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -14168,6 +12947,263 @@ Los valores más altos (azul oscuro) indican una relación más fuerte con el re
 <code class="docutils literal notranslate"><span class="pre">bknck</span></code> (0.365): Rey negro en jaque. Si el rey negro está en jaque, las blancas están haciendo una amenaza directa que puede llevar a la victoria.
 <code class="docutils literal notranslate"><span class="pre">wkxbp</span></code> (0.233): Rey blanco captura el peón negro. Si el rey blanco puede capturar el peón, las blancas ganan de inmediato.
 <code class="docutils literal notranslate"><span class="pre">katri</span></code> (0.22): Control del punto de intersección. Si el rey blanco controla el punto de intersección, puede evitar que su propia torre sea clavada.</p>
+<p>Ahora calculemos los residuos estandarizados de Pearson para las 5 variables con mayor V de Cramér. Mientras que la V de Cramér indica la fuerza de la asociación, los residuos indican en qué celdas específicas de la tabla se concentra esa asociación y en qué dirección (positiva o negativa).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2_contingency</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+
+
+<span class="k">def</span> <span class="nf">residuos_pearson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">tabla</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">esperadas</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">tabla</span><span class="p">)</span>
+    <span class="n">residuos</span> <span class="o">=</span> <span class="p">(</span><span class="n">tabla</span> <span class="o">-</span> <span class="n">esperadas</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">esperadas</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">residuos</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">top_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rimmx&#39;</span><span class="p">,</span> <span class="s1">&#39;wxqsq&#39;</span><span class="p">,</span> <span class="s1">&#39;bknck&#39;</span><span class="p">,</span> <span class="s1">&#39;wkxbp&#39;</span><span class="p">,</span> <span class="s1">&#39;katri&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">top_vars</span><span class="p">:</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;h4 style=&#39;text-align:left; color:#4A6FA5; margin-top:30px;&#39;&gt;&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Residuos estandarizados: </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2"> vs class&lt;/h4&gt;&quot;</span>
+    <span class="p">))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">residuos_pearson</span><span class="p">(</span><span class="n">datos</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="n">datos</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">])</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><h4 style='text-align:left; color:#4A6FA5; margin-top:30px;'>Residuos estandarizados: rimmx vs class</h4></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>class</th>
+      <th>nowin</th>
+      <th>won</th>
+    </tr>
+    <tr>
+      <th>rimmx</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>f</th>
+      <td>7.9</td>
+      <td>-7.55</td>
+    </tr>
+    <tr>
+      <th>t</th>
+      <td>-16.7</td>
+      <td>15.98</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html"><h4 style='text-align:left; color:#4A6FA5; margin-top:30px;'>Residuos estandarizados: wxqsq vs class</h4></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>class</th>
+      <th>nowin</th>
+      <th>won</th>
+    </tr>
+    <tr>
+      <th>wxqsq</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>f</th>
+      <td>-8.56</td>
+      <td>8.19</td>
+    </tr>
+    <tr>
+      <th>t</th>
+      <td>12.96</td>
+      <td>-12.39</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html"><h4 style='text-align:left; color:#4A6FA5; margin-top:30px;'>Residuos estandarizados: bknck vs class</h4></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>class</th>
+      <th>nowin</th>
+      <th>won</th>
+    </tr>
+    <tr>
+      <th>bknck</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>f</th>
+      <td>-9.19</td>
+      <td>8.79</td>
+    </tr>
+    <tr>
+      <th>t</th>
+      <td>11.76</td>
+      <td>-11.25</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html"><h4 style='text-align:left; color:#4A6FA5; margin-top:30px;'>Residuos estandarizados: wkxbp vs class</h4></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>class</th>
+      <th>nowin</th>
+      <th>won</th>
+    </tr>
+    <tr>
+      <th>wkxbp</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>f</th>
+      <td>-4.44</td>
+      <td>4.25</td>
+    </tr>
+    <tr>
+      <th>t</th>
+      <td>8.42</td>
+      <td>-8.05</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output text_html"><h4 style='text-align:left; color:#4A6FA5; margin-top:30px;'>Residuos estandarizados: katri vs class</h4></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>class</th>
+      <th>nowin</th>
+      <th>won</th>
+    </tr>
+    <tr>
+      <th>katri</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>b</th>
+      <td>3.67</td>
+      <td>-3.51</td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td>2.22</td>
+      <td>-2.12</td>
+    </tr>
+    <tr>
+      <th>w</th>
+      <td>-7.88</td>
+      <td>7.54</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>En rimmx, los residuos son positivos en la celda f × nowin (+7.9) y negativos en f × won (-7.55). Esto significa que cuando la torre blanca no puede ser capturada de forma segura, hay más posiciones de no victoria de las esperadas.</p>
+<p>En wxqsq, los residuos son positivos en t × nowin (+12.96) y negativos en t × won (-12.39). Cuando las blancas controlan la casilla de coronación, tiende a no ganar. Esto es contraintuitivo, pero tiene sentido, controlar a8 suele indicar una posición defensiva, no ganadora.</p>
+<p>En bknck, los residuos son positivos en t × nowin (+11.76). Cuando el rey negro está en jaque, hay más no victorias de las esperadas. El jaque no siempre es señal de ventaja blanca.</p>
+<p>En wkxbp, los residuos son positivos en t × nowin (+8.42). Cuando el rey blanco puede capturar el peón, hay más no victorias. Capturar el peón no garantiza ganar.</p>
+<p>En katri, los residuos son positivos en w × won (+7.54) y negativos en w × nowin (-7.88). Cuando el rey blanco controla el punto de intersección, hay más victorias de las esperadas.</p>
 <p>Ahora miremos las cuentas de <code class="docutils literal notranslate"><span class="pre">won</span></code> y <code class="docutils literal notranslate"><span class="pre">nowin</span></code> para cada variable en una tabla de contingencia:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -23007,6 +22043,7 @@ de forma segura (rimmx = f), se da el 100% de los casos de nowin.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asignar-nombres-de-columnas-en-el-dataset">Asignar nombres de columnas en el dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-target-class">Análisis de la variable target “class”</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-las-variables-independientes">Análisis de las variables independientes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-supuestos">Verificación de supuestos</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-bivariado-class-vs-independientes">Análisis bivariado class vs independientes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaciones-entre-variables-predictoras">Relaciones entre variables predictoras</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones</a></li>
