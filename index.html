@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>King+Rook vs King+Pawn on A7 (KRKPA7) &#8212; KRKPA7 - Análisis de Ajedrez</title>
+    <title>KRKPA7 &#8212; KRKPA7 - Análisis de Ajedrez</title>
   
   
   
@@ -61,12 +61,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Análisis exploratorio de datos (EDA)" href="eda.html" />
+    <link rel="next" title="King+Rook vs King+Pawn on A7 (KRKPA7)" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -150,6 +148,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">King+Rook vs King+Pawn on A7 (KRKPA7)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="eda.html">Análisis exploratorio de datos (EDA)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="referencias.html">Referencias</a></li>
 </ul>
@@ -206,7 +205,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/index.ipynb" target="_blank"
+      <li><a href="_sources/index.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -216,7 +215,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -275,9 +274,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -288,42 +285,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>King+Rook vs King+Pawn on A7 (KRKPA7)</h1>
+    <h1>KRKPA7</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contexto">Contexto</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos">Objetivos</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo-general">Objetivo general</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-especificos">Objetivos específicos</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#marco-teorico">Marco teórico</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#finales-de-ajedrez">Finales de ajedrez</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#medidas-de-asociacion-entre-variables-categoricas">Medidas de asociación entre variables categóricas</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">Metodología</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos">Análisis exploratorio de datos</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-interactiva">Visualización interactiva</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#modelado-predictivo">Modelado predictivo</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#el-dataset">El dataset</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#observacion-sobre-los-niveles">Observación sobre los niveles</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -333,517 +299,14 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="king-rook-vs-king-pawn-on-a7-krkpa7">
-<h1>King+Rook vs King+Pawn on A7 (KRKPA7)<a class="headerlink" href="#king-rook-vs-king-pawn-on-a7-krkpa7" title="Permalink to this heading">#</a></h1>
-<p><strong>Autores:</strong> Valamy Donado y Abraham Navarro<br />
-<strong>Fecha:</strong> 2026-08-23</p>
-<hr class="docutils" />
-<section id="introduccion">
-<h2>Introducción<a class="headerlink" href="#introduccion" title="Permalink to this heading">#</a></h2>
-<section id="contexto">
-<h3>Contexto<a class="headerlink" href="#contexto" title="Permalink to this heading">#</a></h3>
-<p>El ajedrez, además de ser un deporte, constituye un dominio clásico para el estudio de la toma de decisiones y el razonamiento automático (Russell y Norvig, 2020). Desde los años cincuenta, se han utilizado los finales de ajedrez como pruebas para algoritmos de aprendizaje automático, ya que poseen un número reducido de piezas, reglas perfectamente definidas y resultados verificables objetivamente: victoria, derrota o tablas (Shapiro, 1983).</p>
-<p>Tradicionalmente se reconocen tres fases en una partida de ajedrez: la apertura, donde predomina el desarrollo de las piezas y el control del centro; el medio juego, donde se producen maniobras de ataque y defensa contra el rey rival o sus debilidades estructurales; y el final, donde tras varios intercambios la promoción de peones se convierte en el tema dominante (Dvoretsky, 2003). Uno de los aspectos más fascinantes del ajedrez es el estudio de los finales, donde el número de piezas se reduce y el juego se vuelve más teórico y preciso (Nunn, 2010). Uno de ellos es el final Rey + Torre vs Rey + Peón, o KRKPA7 (<strong>K</strong>ing + <strong>R</strong>ook vs <strong>K</strong>ing + <strong>P</strong>awn on <strong>a7</strong>).</p>
-</section>
-<section id="objetivos">
-<h3>Objetivos<a class="headerlink" href="#objetivos" title="Permalink to this heading">#</a></h3>
-<section id="objetivo-general">
-<h4>Objetivo general<a class="headerlink" href="#objetivo-general" title="Permalink to this heading">#</a></h4>
-<p>Analizar el comportamiento del final de ajedrez Rey + Torre vs Rey + Peón a partir del dataset KRKPA7, mediante técnicas de análisis exploratorio de datos, visualización interactiva y modelado predictivo, para identificar los patrones que determinan si las blancas ganan o no la partida.</p>
-</section>
-<section id="objetivos-especificos">
-<h4>Objetivos específicos<a class="headerlink" href="#objetivos-especificos" title="Permalink to this heading">#</a></h4>
-<p>Realizar un análisis que caracterice de forma univariada y bivariada las 36 variables categóricas del dataset, identificando su distribución, asociación con la variable objetivo y relaciones entre predictoras, mediante tablas de frecuencia, matrices de asociación (V de Cramér) y visualizaciones interactivas (Cramér, 1946).</p>
-<p>Construir un modelo predictivo que, a partir de las variables del tablero, que clasifique correctamente si una posición termina en victoria de las blancas (won) o no (nowin), evaluando su desempeño mediante métricas como exactitud, matriz de confusión, F1-score, AUC-ROC, y validación cruzada.</p>
-</section>
-</section>
-<section id="marco-teorico">
-<h3>Marco teórico<a class="headerlink" href="#marco-teorico" title="Permalink to this heading">#</a></h3>
-<section id="finales-de-ajedrez">
-<h4>Finales de ajedrez<a class="headerlink" href="#finales-de-ajedrez" title="Permalink to this heading">#</a></h4>
-<p>Los finales de ajedrez han sido estudiados desde dos perspectivas complementarias: la teoría ajedrecística, que establece reglas prácticas sobre cómo ganar o entablar, y la teoría de la computación, que los utiliza como problemas de búsqueda y clasificación (Russell y Norvig, 2020), estos, ya con pocas piezas, permiten definir con precisión qué significa “ganar” y “no ganar” en cada posición, y por lo tanto admiten reglas verificables que pueden ser aprendidas, inducidas o programadas. La teoría clásica, recogida por ejemplo en el manual de finales de Dvoretsky, establece que las blancas ganan si logran detener al peón con la torre y acercar su rey para dar mate. Las negras, en cambio, obtienen tablas o ganan si coronan el peón, ahogan al rey blanco o capturan la torre.</p>
-</section>
-<section id="medidas-de-asociacion-entre-variables-categoricas">
-<h4>Medidas de asociación entre variables categóricas<a class="headerlink" href="#medidas-de-asociacion-entre-variables-categoricas" title="Permalink to this heading">#</a></h4>
-<p>Dado que todas las variables del dataset KRKPA7 son de naturaleza categórica, no es posible utilizar coeficientes de correlación como el de Pearson o Spearman, que están diseñados para variables cuantitativas. En su lugar, se emplean medidas de asociación específicas para datos cualitativos, siendo la más utilizada en la literatura la V de Cramér, propuesta por Harald Cramér en 1946 (Cramér, 1946). Es una medida estadística que cuantifica la fuerza de la asociación entre dos variables categóricas. Sus valores oscilan entre 0 y 1. Un valor de 0 indica que no existe relación entre las variables, es decir, que son independientes. Un valor de 1 indica una relación perfecta, en la que una variable determina completamente a la otra. Valores intermedios sugieren distintos grados de asociación, donde valores cercanos a 0.1 se consideran asociaciones débiles, cercanos a 0.3 moderadas, cercanos a 0.5 fuertes y superiores a 0.7 muy fuertes (Cohen, 1988).</p>
-<div class="math notranslate nohighlight">
-\[V = \sqrt{\frac{\chi^2}{n \cdot \min(r-1, c-1)}}\]</div>
-<p>El cálculo se basa en el estadístico chi-cuadrado, que mide la diferencia entre lo observado y lo esperado si las variables fueran independientes. La n representa el número total de observaciones. La r corresponde al número de filas de la tabla de contingencia y la c al número de columnas de la misma tabla.</p>
-<p>Para que la V de Cramér sea válida se requiere que ambas variables sean categóricas, que las observaciones sean independientes y que las frecuencias esperadas de la tabla de contingencia sean adecuadas (al menos el 80 % de las celdas con frecuencia esperada ≥ 5). Cuando alguna celda queda por debajo de ese umbral, el p-valor del chi-cuadrado clásico pierde validez. En esos casos, si se requiere un contraste de hipótesis, se recomienda usar chi-cuadrado con simulación de Monte Carlo o la prueba exacta de Fisher para tablas 2×2 (Agresti, 2002). Sin embargo, la V de Cramér como medida descriptiva se calcula directamente a partir del estadístico chi-cuadrado observado, sin requerir corrección.</p>
-<p>Una ventaja importante de la V de Cramér es que permite comparar la fuerza de asociación entre pares de variables incluso cuando las tablas de contingencia tienen dimensiones distintas, algo que no ocurre con otras medidas como el coeficiente phi, que solo es aplicable a tablas de 2x2 (Agresti, 2002). Esto resulta particularmente útil en el dataset KRKPA7, donde algunas variables son binarias y otras ternarias.
-En este proyecto, la V de Cramér se utiliza con dos propósitos principales. En primer lugar, para cuantificar la relación entre cada variable predictora y la variable objetivo class, lo cual permite identificar qué atributos del tablero están más asociados con el resultado final de la partida. En segundo lugar, para construir una matriz de asociación entre todas las variables predictoras, con el fin de detectar redundancias, grupos de variables que miden conceptos similares y posibles problemas de multicolinealidad categórica que podrían afectar el desempeño de los modelos predictivos.</p>
-<p>Residuos estandarizados:</p>
-<p>Una vez detectada una asociación significativa con la V de Cramér, es útil identificar qué celdas específicas contribuyen a esa asociación. Para esto se emplean los residuos estandarizados de Pearson, que comparan la frecuencia observada con la esperada bajo independencia:
-$<span class="math notranslate nohighlight">\(
-r_{ij} = \frac{O_{ij} - E_{ij}}{\sqrt{E_{ij}}}
-\)</span>$
-Un residuo mayor a 2 en valor absoluto indica que esa celda aporta significativamente a la asociación. Un residuo mayor a 3 señala una desviación fuerte. Los residuos positivos indican que la combinación observada ocurre más de lo esperado, y los negativos que ocurre menos (Agresti, 2002). Existe también la versión ajustada de Haberman, que corrige por el tamaño de la tabla y es preferible cuando hay más de 2 filas o columnas.</p>
-</section>
-</section>
-<section id="metodologia">
-<h3>Metodología<a class="headerlink" href="#metodologia" title="Permalink to this heading">#</a></h3>
-<section id="analisis-exploratorio-de-datos">
-<h4>Análisis exploratorio de datos<a class="headerlink" href="#analisis-exploratorio-de-datos" title="Permalink to this heading">#</a></h4>
-<p>En el análisis univariado se examina la distribución de niveles y comportamiento individual de cada una de las 36 variables predictoras y de la variable objetivo class mediante tablas de frecuencia, gráficos de barras, y gráficos de pastel.
-En el análisis bivariado se evalúa la relación entre cada variable predictora y class mediante tablas de contingencia, matriz V de Cramér y gráficos de barras agrupados por nivel y clase.
-En el análisis multivariado se construye una matriz V de Cramér entre todas las predictoras para detectar posibles variables redundantes, grupos de variables que miden conceptos similares y posibles problemas de multicolinealidad categórica.</p>
-<p>Las herramientas utilizadas en esta fase son R y Python, y el reporte se elabora en Bookdown y Jupyter Book respectivamente.</p>
-</section>
-<section id="visualizacion-interactiva">
-<h4>Visualización interactiva<a class="headerlink" href="#visualizacion-interactiva" title="Permalink to this heading">#</a></h4>
-<p>Con base en los patrones identificados en el EDA, se construye un dashboard interactivo que permite filtrar por clase, es decir, por won o nowin, explorar cada variable de forma individual y agrupada, y visualizar las matrices con tooltip. Se implementa en Shiny y en Dash.</p>
-</section>
-<section id="modelado-predictivo">
-<h4>Modelado predictivo<a class="headerlink" href="#modelado-predictivo" title="Permalink to this heading">#</a></h4>
-<p>Se procederá a construir un modelo de predicción, que, a partir de las variables del tablero, clasifique correctamente si una posición termina en victoria de las blancas (won) o no (nowin), evaluando su desempeño mediante métricas como exactitud, matriz de confusión, F1-score, AUC-ROC, y validación cruzada. Además, se implementará un chatbot en ambos dashboards.</p>
-</section>
-</section>
-<hr class="docutils" />
-<section id="el-dataset">
-<h3>El dataset<a class="headerlink" href="#el-dataset" title="Permalink to this heading">#</a></h3>
-<p>El dataset KRKPA7 contiene las posiciones del final de ajedrez de 3.196 partidas, correspondientes al final Rey + Torre (blancas) vs Rey + Peón (negras) en la posición a7, es decir, con el peón negro a punto de coronar, y el tablero se mira desde la perspectiva del negro (Shapiro, 1983). Fueron generadas y descritas originalmente por Alen D. Shapiro en su tesis doctoral de 1983 “Structured Induction in Expert Systems”. Cada posición está representada por 36 variables categóricas que describen características específicas del tablero. La variable objetivo (<code class="docutils literal notranslate"><span class="pre">class</span></code>) indica si las blancas pueden ganar (<code class="docutils literal notranslate"><span class="pre">won</span></code>) o no (<code class="docutils literal notranslate"><span class="pre">nowin</span></code>). En la siguiente tabla se definen cada una de las variables y sus niveles.</p>
-<p>Tabla de variables del dataset:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="c1"># Diccionario con toda la información de las variables</span>
-<span class="n">variables_data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;Variable&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;wkblk&quot;</span><span class="p">,</span> <span class="s2">&quot;wknwy&quot;</span><span class="p">,</span> <span class="s2">&quot;wkna8&quot;</span><span class="p">,</span> <span class="s2">&quot;wkona&quot;</span><span class="p">,</span> <span class="s2">&quot;wkspr&quot;</span><span class="p">,</span> <span class="s2">&quot;wkxbq&quot;</span><span class="p">,</span> <span class="s2">&quot;wkxcr&quot;</span><span class="p">,</span> <span class="s2">&quot;wkxbp&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;whxbp&quot;</span><span class="p">,</span> <span class="s2">&quot;wxqsq&quot;</span><span class="p">,</span> <span class="s2">&quot;cntxt&quot;</span><span class="p">,</span> <span class="s2">&quot;dsopp&quot;</span><span class="p">,</span> <span class="s2">&quot;dwipd&quot;</span><span class="p">,</span> <span class="s2">&quot;hdchk&quot;</span><span class="p">,</span> <span class="s2">&quot;katri&quot;</span><span class="p">,</span> <span class="s2">&quot;mulch&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;qxmsq&quot;</span><span class="p">,</span> <span class="s2">&quot;r2ar8&quot;</span><span class="p">,</span> <span class="s2">&quot;reskd&quot;</span><span class="p">,</span> <span class="s2">&quot;reskr&quot;</span><span class="p">,</span> <span class="s2">&quot;rimmx&quot;</span><span class="p">,</span> <span class="s2">&quot;rkxwp&quot;</span><span class="p">,</span> <span class="s2">&quot;rxmsq&quot;</span><span class="p">,</span> <span class="s2">&quot;simpl&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;skach&quot;</span><span class="p">,</span> <span class="s2">&quot;skewr&quot;</span><span class="p">,</span> <span class="s2">&quot;skrxp&quot;</span><span class="p">,</span> <span class="s2">&quot;spcop&quot;</span><span class="p">,</span> <span class="s2">&quot;stlmt&quot;</span><span class="p">,</span> <span class="s2">&quot;thrsk&quot;</span><span class="p">,</span> <span class="s2">&quot;bkcti&quot;</span><span class="p">,</span> <span class="s2">&quot;bkna8&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;bknck&quot;</span><span class="p">,</span> <span class="s2">&quot;bkovl&quot;</span><span class="p">,</span> <span class="s2">&quot;bkpos&quot;</span><span class="p">,</span> <span class="s2">&quot;btoeg&quot;</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;Nombre_Real&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;White King in the way&quot;</span><span class="p">,</span> <span class="s2">&quot;White King No Way&quot;</span><span class="p">,</span> <span class="s2">&quot;White King on a8&quot;</span><span class="p">,</span> <span class="s2">&quot;White King on a&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;White King Support Rook&quot;</span><span class="p">,</span> <span class="s2">&quot;Black King attacked by promoted Pawn&quot;</span><span class="p">,</span> <span class="s2">&quot;White King attack Critical square&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;White King captures Black Pawn&quot;</span><span class="p">,</span> <span class="s2">&quot;White attack Black Pawn&quot;</span><span class="p">,</span> <span class="s2">&quot;White control Queen Square&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Context (edge)&quot;</span><span class="p">,</span> <span class="s2">&quot;Diagonal Opposite&quot;</span><span class="p">,</span> <span class="s2">&quot;Distance to intersect point&quot;</span><span class="p">,</span> <span class="s2">&quot;Hidden Check&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;King Attack Three&quot;</span><span class="p">,</span> <span class="s2">&quot;Multiple Checks&quot;</span><span class="p">,</span> <span class="s2">&quot;Queen Square&quot;</span><span class="p">,</span> <span class="s2">&quot;Rook to A or Rank 8&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Reskewer Delayed&quot;</span><span class="p">,</span> <span class="s2">&quot;Reskewer&quot;</span><span class="p">,</span> <span class="s2">&quot;Rook in Middle&quot;</span><span class="p">,</span> <span class="s2">&quot;Rook captures Pawn&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Rook attacks mating square&quot;</span><span class="p">,</span> <span class="s2">&quot;Simple pattern&quot;</span><span class="p">,</span> <span class="s2">&quot;Skewer after Checks&quot;</span><span class="p">,</span> <span class="s2">&quot;Skewer&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Skewer or attack Pawn&quot;</span><span class="p">,</span> <span class="s2">&quot;Special Opposition&quot;</span><span class="p">,</span> <span class="s2">&quot;Stalemate&quot;</span><span class="p">,</span> <span class="s2">&quot;Threat Skewer&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Black King Control The Intersect&quot;</span><span class="p">,</span> <span class="s2">&quot;Black King on a8&quot;</span><span class="p">,</span> <span class="s2">&quot;Black King Check&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Black King Overloaded&quot;</span><span class="p">,</span> <span class="s2">&quot;Black King Position (potential skewer)&quot;</span><span class="p">,</span> <span class="s2">&quot;Black to Egress&quot;</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;Significado&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;El rey blanco está en el camino de la torre blanca en una situación de doble ataque&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey blanco obstruye el movimiento de la torre blanca hacia la casilla de coronación (a8)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey blanco está en la posición a8&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey blanco está en la columna &#39;a&#39;&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Puede el rey blanco apoyar a la torre blanca en una horquilla (fork)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey blanco es atacado por el peón negro promocionado&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Puede el rey blanco atacar la casilla crítica (b7)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey blanco captura el peón negro&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;La torre blanca ataca al peón negro en dirección x&lt;0, y=0?&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Una o más piezas blancas controlan la casilla de coronación (a8)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey negro está en un borde del tablero y no en a8&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Están los reyes en oposición normal (separados por una casilla vacía en línea recta)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Distancia del rey blanco al punto de intersección de la torre blanca&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Hay un jaque oculto sobre las negras&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Algún rey controla el punto de intersección&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Pueden las blancas renovar el jaque con ventaja&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;La casilla de mate es atacada por el peón negro promocionado&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;La torre blanca tiene acceso seguro a la columna A o a la fila 8&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Puede el rey negro ser re-clavado (reskewered) a través de una clavada diferida&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Puede la torre blanca sola renovar la amenaza de doble ataque?&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Puede la torre blanca ser capturada de forma inmediata y segura&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;La torre blanca amenaza al peón negro (solo en dirección x&lt;0, y=0)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;La torre blanca ataca una casilla de mate de forma segura&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Se aplica un patrón muy simple (ahogado, clavada diferida o jaque perpetuo)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey negro puede ser clavado tras uno o más jaques de la torre blanca&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Posibilidad de clavada (skewer)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;La torre blanca logra una clavada o el rey blanco ataca el peón negro&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Hay un patrón de oposición especial presente&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey blanco está en ahogado, o el avance del peón negro fuerza el ahogado&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Hay una amenaza de clavada (skewer) acechando&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey negro puede controlar el punto de intersección&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey negro está en a8&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey negro está en jaque&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey negro está sobrecargado y no puede cubrir los puntos de intersección de la torre blanca&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey negro está en posición de posible clavada (skewer)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;El rey negro está a una casilla del borde relevante&quot;</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;Niveles&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;g, l&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;n, b, w&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, f&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t, f&quot;</span><span class="p">,</span> <span class="s2">&quot;t, n&quot;</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;Significado_Niveles&#39;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=está en un borde (no a8), f=no está en un borde (o está en a8)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;g=distancia ≤ 2 (bueno para blancas), l=distancia &gt; 2 (malo para blancas)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;n=ninguno, b=negro, w=blanco&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span> <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=se aplica, f=no se aplica&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=puede ser clavado tras jaques, f=no puede&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=clavada, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=hay, f=no hay&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=hay riesgo de ahogado, f=no hay riesgo de ahogado&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=hay amenaza de clavada, f=no hay&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=si, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=en a8, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=jaque, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=sobrecargado, f=no sobrecargado&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=posición de skewer, f=no&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;t=si, n=no&quot;</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-
-<span class="n">tabla_variables</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">variables_data</span><span class="p">)</span>
-
-<span class="c1"># Empezar el índice en 1</span>
-<span class="n">tabla_variables</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">tabla_variables</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
-
-<span class="n">tabla_variables</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Variable</th>
-      <th>Nombre_Real</th>
-      <th>Significado</th>
-      <th>Niveles</th>
-      <th>Significado_Niveles</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>wkblk</td>
-      <td>White King in the way</td>
-      <td>El rey blanco está en el camino de la torre bl...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>wknwy</td>
-      <td>White King No Way</td>
-      <td>El rey blanco obstruye el movimiento de la tor...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>wkna8</td>
-      <td>White King on a8</td>
-      <td>El rey blanco está en la posición a8</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>wkona</td>
-      <td>White King on a</td>
-      <td>El rey blanco está en la columna 'a'</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>wkspr</td>
-      <td>White King Support Rook</td>
-      <td>Puede el rey blanco apoyar a la torre blanca e...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>wkxbq</td>
-      <td>Black King attacked by promoted Pawn</td>
-      <td>El rey blanco es atacado por el peón negro pro...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>wkxcr</td>
-      <td>White King attack Critical square</td>
-      <td>Puede el rey blanco atacar la casilla crítica ...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>wkxbp</td>
-      <td>White King captures Black Pawn</td>
-      <td>El rey blanco captura el peón negro</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>whxbp</td>
-      <td>White attack Black Pawn</td>
-      <td>La torre blanca ataca al peón negro en direcci...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>wxqsq</td>
-      <td>White control Queen Square</td>
-      <td>Una o más piezas blancas controlan la casilla ...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>cntxt</td>
-      <td>Context (edge)</td>
-      <td>El rey negro está en un borde del tablero y no...</td>
-      <td>t, f</td>
-      <td>t=está en un borde (no a8), f=no está en un bo...</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>dsopp</td>
-      <td>Diagonal Opposite</td>
-      <td>Están los reyes en oposición normal (separados...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>dwipd</td>
-      <td>Distance to intersect point</td>
-      <td>Distancia del rey blanco al punto de intersecc...</td>
-      <td>g, l</td>
-      <td>g=distancia ≤ 2 (bueno para blancas), l=distan...</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>hdchk</td>
-      <td>Hidden Check</td>
-      <td>Hay un jaque oculto sobre las negras</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>katri</td>
-      <td>King Attack Three</td>
-      <td>Algún rey controla el punto de intersección</td>
-      <td>n, b, w</td>
-      <td>n=ninguno, b=negro, w=blanco</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>mulch</td>
-      <td>Multiple Checks</td>
-      <td>Pueden las blancas renovar el jaque con ventaja</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>qxmsq</td>
-      <td>Queen Square</td>
-      <td>La casilla de mate es atacada por el peón negr...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>r2ar8</td>
-      <td>Rook to A or Rank 8</td>
-      <td>La torre blanca tiene acceso seguro a la colum...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>reskd</td>
-      <td>Reskewer Delayed</td>
-      <td>Puede el rey negro ser re-clavado (reskewered)...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>reskr</td>
-      <td>Reskewer</td>
-      <td>Puede la torre blanca sola renovar la amenaza ...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>rimmx</td>
-      <td>Rook in Middle</td>
-      <td>Puede la torre blanca ser capturada de forma i...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>rkxwp</td>
-      <td>Rook captures Pawn</td>
-      <td>La torre blanca amenaza al peón negro (solo en...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>rxmsq</td>
-      <td>Rook attacks mating square</td>
-      <td>La torre blanca ataca una casilla de mate de f...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>simpl</td>
-      <td>Simple pattern</td>
-      <td>Se aplica un patrón muy simple (ahogado, clava...</td>
-      <td>t, f</td>
-      <td>t=se aplica, f=no se aplica</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>skach</td>
-      <td>Skewer after Checks</td>
-      <td>El rey negro puede ser clavado tras uno o más ...</td>
-      <td>t, f</td>
-      <td>t=puede ser clavado tras jaques, f=no puede</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>skewr</td>
-      <td>Skewer</td>
-      <td>Posibilidad de clavada (skewer)</td>
-      <td>t, f</td>
-      <td>t=clavada, f=no</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>skrxp</td>
-      <td>Skewer or attack Pawn</td>
-      <td>La torre blanca logra una clavada o el rey bla...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>spcop</td>
-      <td>Special Opposition</td>
-      <td>Hay un patrón de oposición especial presente</td>
-      <td>t, f</td>
-      <td>t=hay, f=no hay</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>stlmt</td>
-      <td>Stalemate</td>
-      <td>El rey blanco está en ahogado, o el avance del...</td>
-      <td>t, f</td>
-      <td>t=hay riesgo de ahogado, f=no hay riesgo de ah...</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>thrsk</td>
-      <td>Threat Skewer</td>
-      <td>Hay una amenaza de clavada (skewer) acechando</td>
-      <td>t, f</td>
-      <td>t=hay amenaza de clavada, f=no hay</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>bkcti</td>
-      <td>Black King Control The Intersect</td>
-      <td>El rey negro puede controlar el punto de inter...</td>
-      <td>t, f</td>
-      <td>t=si, f=no</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>bkna8</td>
-      <td>Black King on a8</td>
-      <td>El rey negro está en a8</td>
-      <td>t, f</td>
-      <td>t=en a8, f=no</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>bknck</td>
-      <td>Black King Check</td>
-      <td>El rey negro está en jaque</td>
-      <td>t, f</td>
-      <td>t=jaque, f=no</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>bkovl</td>
-      <td>Black King Overloaded</td>
-      <td>El rey negro está sobrecargado y no puede cubr...</td>
-      <td>t, f</td>
-      <td>t=sobrecargado, f=no sobrecargado</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>bkpos</td>
-      <td>Black King Position (potential skewer)</td>
-      <td>El rey negro está en posición de posible clava...</td>
-      <td>t, f</td>
-      <td>t=posición de skewer, f=no</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>btoeg</td>
-      <td>Black to Egress</td>
-      <td>El rey negro está a una casilla del borde rele...</td>
-      <td>t, n</td>
-      <td>t=si, n=no</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<section id="observacion-sobre-los-niveles">
-<h4>Observación sobre los niveles<a class="headerlink" href="#observacion-sobre-los-niveles" title="Permalink to this heading">#</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">g</span></code> y <code class="docutils literal notranslate"><span class="pre">w</span></code> representan el mismo concepto general (acción o característica de las blancas), pero su uso depende de la variable específica:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code> (White): Se usa cuando la variable indica directamente una acción o posición de las blancas.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">g</span></code> (Good): Se usa en la variable <code class="docutils literal notranslate"><span class="pre">dwipd</span></code> para indicar una posición favorable (menor o igual a dos casillas) para las blancas.</p></li>
-</ul>
-</section>
-</section>
-</section>
-<hr class="docutils" />
+  <section class="tex2jax_ignore mathjax_ignore" id="krkpa7">
+<h1>KRKPA7<a class="headerlink" href="#krkpa7" title="Permalink to this heading">#</a></h1>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">King+Rook vs King+Pawn on A7 (KRKPA7)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eda.html">Análisis exploratorio de datos (EDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="referencias.html">Referencias</a></li>
+</ul>
 </div>
 </section>
 
@@ -879,11 +342,11 @@ En el análisis multivariado se construye una matriz V de Cramér entre todas la
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="right-next"
-       href="eda.html"
+       href="intro.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Análisis exploratorio de datos (EDA)</p>
+        <p class="prev-next-title">King+Rook vs King+Pawn on A7 (KRKPA7)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -896,43 +359,6 @@ En el análisis multivariado se construye una matriz V de Cramér entre todas la
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contexto">Contexto</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos">Objetivos</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo-general">Objetivo general</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-especificos">Objetivos específicos</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#marco-teorico">Marco teórico</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#finales-de-ajedrez">Finales de ajedrez</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#medidas-de-asociacion-entre-variables-categoricas">Medidas de asociación entre variables categóricas</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">Metodología</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos">Análisis exploratorio de datos</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-interactiva">Visualización interactiva</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#modelado-predictivo">Modelado predictivo</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#el-dataset">El dataset</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#observacion-sobre-los-niveles">Observación sobre los niveles</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
