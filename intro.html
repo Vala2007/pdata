@@ -308,10 +308,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">Metodología</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#el-dataset">El dataset</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observacion-sobre-los-niveles">Observación sobre los niveles</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#el-dataset">El dataset</a></li>
 </ul>
             </nav>
         </div>
@@ -374,7 +371,6 @@ Las herramientas utilizadas en esta fase son R y Python, y el reporte se elabora
 <p>Visualización interactiva: Con base en los patrones identificados en el EDA, se construye un dashboard interactivo que permite filtrar por clase, es decir, por won o nowin, explorar cada variable de forma individual y agrupada, y visualizar las matrices con tooltip. Se implementa en Shiny y en Dash.</p>
 <p>Modelado predictivo: Se procederá a construir un modelo de predicción, que, a partir de las variables del tablero, clasifique correctamente si una posición termina en victoria de las blancas (won) o no (nowin), evaluando su desempeño mediante métricas como exactitud, matriz de confusión, F1-score, AUC-ROC, y validación cruzada. Además, se implementará un chatbot en ambos dashboards.</p>
 </section>
-<hr class="docutils" />
 <section id="el-dataset">
 <h2>El dataset<a class="headerlink" href="#el-dataset" title="Permalink to this heading">#</a></h2>
 <p>El dataset KRKPA7 contiene las posiciones del final de ajedrez de 3.196 partidas, correspondientes al final Rey + Torre (blancas) vs Rey + Peón (negras) en la posición a7, es decir, con el peón negro a punto de coronar, y el tablero se mira desde la perspectiva del negro (Shapiro, 1983). Fueron generadas y descritas originalmente por Alen D. Shapiro en su tesis doctoral de 1983 “Structured Induction in Expert Systems”. Cada posición está representada por 36 variables categóricas que describen características específicas del tablero. La variable objetivo (<code class="docutils literal notranslate"><span class="pre">class</span></code>) indica si las blancas pueden ganar (<code class="docutils literal notranslate"><span class="pre">won</span></code>) o no (<code class="docutils literal notranslate"><span class="pre">nowin</span></code>). En la siguiente tabla se definen cada una de las variables y sus niveles.</p>
@@ -808,15 +804,11 @@ Las herramientas utilizadas en esta fase son R y Python, y el reporte se elabora
 </table>
 </div></div></div>
 </div>
-<section id="observacion-sobre-los-niveles">
-<h3>Observación sobre los niveles<a class="headerlink" href="#observacion-sobre-los-niveles" title="Permalink to this heading">#</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">g</span></code> y <code class="docutils literal notranslate"><span class="pre">w</span></code> representan el mismo concepto general (acción o característica de las blancas), pero su uso depende de la variable específica:</p>
+<p>Observación sobre los niveles: <code class="docutils literal notranslate"><span class="pre">g</span></code> y <code class="docutils literal notranslate"><span class="pre">w</span></code> representan el mismo concepto general (acción o característica de las blancas), pero su uso depende de la variable específica:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">w</span></code> (White): Se usa cuando la variable indica directamente una acción o posición de las blancas.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">g</span></code> (Good): Se usa en la variable <code class="docutils literal notranslate"><span class="pre">dwipd</span></code> para indicar una posición favorable (menor o igual a dos casillas) para las blancas.</p></li>
 </ul>
-<hr class="docutils" />
-</section>
 </section>
 </section>
 
@@ -895,10 +887,7 @@ Las herramientas utilizadas en esta fase son R y Python, y el reporte se elabora
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">Metodología</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#el-dataset">El dataset</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observacion-sobre-los-niveles">Observación sobre los niveles</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#el-dataset">El dataset</a></li>
 </ul>
   </nav></div>
 
