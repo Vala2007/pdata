@@ -301,22 +301,13 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos">Objetivos</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo-general">Objetivo general</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-especificos">Objetivos específicos</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos">Objetivos</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marco-teorico">Marco teórico</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finales-de-ajedrez">Finales de ajedrez</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#medidas-de-asociacion-entre-variables-categoricas">Medidas de asociación entre variables categóricas</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">Metodología</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos">Análisis exploratorio de datos</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-interactiva">Visualización interactiva</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelado-predictivo">Modelado predictivo</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">Metodología</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#el-dataset">El dataset</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observacion-sobre-los-niveles">Observación sobre los niveles</a></li>
 </ul>
@@ -344,15 +335,12 @@ document.write(`
 </section>
 <section id="objetivos">
 <h2>Objetivos<a class="headerlink" href="#objetivos" title="Permalink to this heading">#</a></h2>
-<section id="objetivo-general">
-<h3>Objetivo general<a class="headerlink" href="#objetivo-general" title="Permalink to this heading">#</a></h3>
-<p>Analizar el comportamiento del final de ajedrez Rey + Torre vs Rey + Peón a partir del dataset KRKPA7, mediante técnicas de análisis exploratorio de datos, visualización interactiva y modelado predictivo, para identificar los patrones que determinan si las blancas ganan o no la partida.</p>
-</section>
-<section id="objetivos-especificos">
-<h3>Objetivos específicos<a class="headerlink" href="#objetivos-especificos" title="Permalink to this heading">#</a></h3>
-<p>Realizar un análisis que caracterice de forma univariada y bivariada las 36 variables categóricas del dataset, identificando su distribución, asociación con la variable objetivo y relaciones entre predictoras, mediante tablas de frecuencia, matrices de asociación (V de Cramér) y visualizaciones interactivas (Cramér, 1946).</p>
-<p>Construir un modelo predictivo que, a partir de las variables del tablero, que clasifique correctamente si una posición termina en victoria de las blancas (won) o no (nowin), evaluando su desempeño mediante métricas como exactitud, matriz de confusión, F1-score, AUC-ROC, y validación cruzada.</p>
-</section>
+<p>Objetivo general: Analizar el comportamiento del final de ajedrez Rey + Torre vs Rey + Peón a partir del dataset KRKPA7, mediante técnicas de análisis exploratorio de datos, visualización interactiva y modelado predictivo, para identificar los patrones que determinan si las blancas ganan o no la partida.</p>
+<p>Objetivos específicos:</p>
+<ul class="simple">
+<li><p>Realizar un análisis que caracterice de forma univariada y bivariada las 36 variables categóricas del dataset, identificando su distribución, asociación con la variable objetivo y relaciones entre predictoras, mediante tablas de frecuencia, matrices de asociación (V de Cramér) y visualizaciones interactivas (Cramér, 1946).</p></li>
+<li><p>Construir un modelo predictivo que, a partir de las variables del tablero, que clasifique correctamente si una posición termina en victoria de las blancas (won) o no (nowin), evaluando su desempeño mediante métricas como exactitud, matriz de confusión, F1-score, AUC-ROC, y validación cruzada.</p></li>
+</ul>
 </section>
 <section id="marco-teorico">
 <h2>Marco teórico<a class="headerlink" href="#marco-teorico" title="Permalink to this heading">#</a></h2>
@@ -379,21 +367,12 @@ Un residuo mayor a 2 en valor absoluto indica que esa celda aporta significativa
 </section>
 <section id="metodologia">
 <h2>Metodología<a class="headerlink" href="#metodologia" title="Permalink to this heading">#</a></h2>
-<section id="analisis-exploratorio-de-datos">
-<h3>Análisis exploratorio de datos<a class="headerlink" href="#analisis-exploratorio-de-datos" title="Permalink to this heading">#</a></h3>
-<p>En el análisis univariado se examina la distribución de niveles y comportamiento individual de cada una de las 36 variables predictoras y de la variable objetivo class mediante tablas de frecuencia, gráficos de barras, y gráficos de pastel.
+<p>Análisis exploratorio de datos: En el análisis univariado se examina la distribución de niveles y comportamiento individual de cada una de las 36 variables predictoras y de la variable objetivo class mediante tablas de frecuencia, gráficos de barras, y gráficos de pastel.
 En el análisis bivariado se evalúa la relación entre cada variable predictora y class mediante tablas de contingencia, matriz V de Cramér y gráficos de barras agrupados por nivel y clase.
-En el análisis multivariado se construye una matriz V de Cramér entre todas las predictoras para detectar posibles variables redundantes, grupos de variables que miden conceptos similares y posibles problemas de multicolinealidad categórica.</p>
-<p>Las herramientas utilizadas en esta fase son R y Python, y el reporte se elabora en Bookdown y Jupyter Book respectivamente.</p>
-</section>
-<section id="visualizacion-interactiva">
-<h3>Visualización interactiva<a class="headerlink" href="#visualizacion-interactiva" title="Permalink to this heading">#</a></h3>
-<p>Con base en los patrones identificados en el EDA, se construye un dashboard interactivo que permite filtrar por clase, es decir, por won o nowin, explorar cada variable de forma individual y agrupada, y visualizar las matrices con tooltip. Se implementa en Shiny y en Dash.</p>
-</section>
-<section id="modelado-predictivo">
-<h3>Modelado predictivo<a class="headerlink" href="#modelado-predictivo" title="Permalink to this heading">#</a></h3>
-<p>Se procederá a construir un modelo de predicción, que, a partir de las variables del tablero, clasifique correctamente si una posición termina en victoria de las blancas (won) o no (nowin), evaluando su desempeño mediante métricas como exactitud, matriz de confusión, F1-score, AUC-ROC, y validación cruzada. Además, se implementará un chatbot en ambos dashboards.</p>
-</section>
+En el análisis multivariado se construye una matriz V de Cramér entre todas las predictoras para detectar posibles variables redundantes, grupos de variables que miden conceptos similares y posibles problemas de multicolinealidad categórica.
+Las herramientas utilizadas en esta fase son R y Python, y el reporte se elabora en Bookdown y Jupyter Book respectivamente.</p>
+<p>Visualización interactiva: Con base en los patrones identificados en el EDA, se construye un dashboard interactivo que permite filtrar por clase, es decir, por won o nowin, explorar cada variable de forma individual y agrupada, y visualizar las matrices con tooltip. Se implementa en Shiny y en Dash.</p>
+<p>Modelado predictivo: Se procederá a construir un modelo de predicción, que, a partir de las variables del tablero, clasifique correctamente si una posición termina en victoria de las blancas (won) o no (nowin), evaluando su desempeño mediante métricas como exactitud, matriz de confusión, F1-score, AUC-ROC, y validación cruzada. Además, se implementará un chatbot en ambos dashboards.</p>
 </section>
 <hr class="docutils" />
 <section id="el-dataset">
@@ -909,22 +888,13 @@ En el análisis multivariado se construye una matriz V de Cramér entre todas la
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion">Introducción</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos">Objetivos</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo-general">Objetivo general</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos-especificos">Objetivos específicos</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivos">Objetivos</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marco-teorico">Marco teórico</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finales-de-ajedrez">Finales de ajedrez</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#medidas-de-asociacion-entre-variables-categoricas">Medidas de asociación entre variables categóricas</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">Metodología</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos">Análisis exploratorio de datos</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-interactiva">Visualización interactiva</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modelado-predictivo">Modelado predictivo</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodologia">Metodología</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#el-dataset">El dataset</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observacion-sobre-los-niveles">Observación sobre los niveles</a></li>
 </ul>
