@@ -9149,8 +9149,36 @@ Pares con problemas de frecuencia esperada:
 </table>
 </div></div></div>
 </div>
-<p>De las 36 variables predictoras, 35 cumplen con el criterio del 80% de celdas con frecuencia esperada ≥ 5 al cruzarse con class. La única excepción es spcop, cuyo nivel t aparece en solo 1 de las 3.196 posiciones (0.03%). Al ser una variable prácticamente constante, no aporta información al análisis de relación.</p>
-<p>En el caso de los pares entre predictoras, se evaluaron 630 pares, de los cuales 508 cumplen los supuestos y 122 no. Los pares que no cumplen involucran sistemáticamente al menos una de las 14 variables con niveles minoritarios (menos del 10% de las posiciones), destacándose cuatro con frecuencias casi nulas: spcop (0.03%), skach (0.34%), hdchk (0.47%) y reskd (0.81%). Al cruzar dos de estas variables raras, las celdas de la tabla de contingencia quedan con frecuencias esperadas muy por debajo de 5, lo que invalida el uso del chi-cuadrado clásico.</p>
+<p>De las 36 variables predictoras, 35 cumplen con el criterio del 80% de celdas con frecuencia esperada ≥ 5 al cruzarse con class. La única excepción es spcop, cuyo nivel t aparece en solo 1 de las 3.196 posiciones (0.03%). Al ser una variable prácticamente constante, no aporta información al análisis de relación, por lo cual, se elimina inmediatamente.</p>
+<p>En el caso de los pares entre predictoras, se evaluaron 630 pares, de los cuales 508 cumplen los supuestos y 122 no. Los pares que no cumplen involucran sistemáticamente al menos una de las 14 variables con niveles minoritarios (menos del 10% de las posiciones), destacándose cuatro con frecuencias casi nulas: spcop (0.03%), skach (0.34%), hdchk (0.47%) y reskd (0.81%). Al cruzar dos de estas variables raras, las celdas de la tabla de contingencia quedan con frecuencias esperadas muy por debajo de 5, lo que invalida el uso del chi-cuadrado clásico, debido a esto, eliminamos estas variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calcular el porcentaje del nivel menos frecuente por variable</span>
+<span class="n">niveles_minimos</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">datos</span>
+    <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;valor&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;variable&#39;</span><span class="p">,</span> <span class="s1">&#39;valor&#39;</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;variable&#39;</span><span class="p">)[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()]</span>
+    <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">pct_min</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">datos</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Obtener la lista de variables a eliminar</span>
+<span class="n">vars_eliminar</span> <span class="o">=</span> <span class="n">niveles_minimos</span><span class="p">[</span><span class="n">niveles_minimos</span><span class="p">[</span><span class="s1">&#39;pct_min&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;variable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Eliminando </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">vars_eliminar</span><span class="p">)</span><span class="si">}</span><span class="s2"> variables que tienen algún nivel menor al 1%: </span><span class="si">{</span><span class="n">vars_eliminar</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Filtrar el dataset para eliminar esas columnas</span>
+<span class="n">datos</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">vars_eliminar</span><span class="p">)</span>
+
+<span class="c1"># Actualizar la lista de variables predictoras para los siguientes gráficos</span>
+<span class="n">vars_predictoras</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">datos</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="s1">&#39;class&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="analisis-bivariado-class-vs-independientes">
 <h2>Análisis bivariado class vs independientes<a class="headerlink" href="#analisis-bivariado-class-vs-independientes" title="Permalink to this heading">#</a></h2>
